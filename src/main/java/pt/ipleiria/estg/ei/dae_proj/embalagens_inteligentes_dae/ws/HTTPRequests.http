@@ -1,0 +1,37 @@
+##### AllProducts
+GET http://localhost:8080/academics/api/products
+Accept: application/json
+
+##### GetProduct
+GET http://localhost:8080/academics/api/products/1
+Accept: application/json
+
+##### CreateProduct
+POST http://localhost:8080/academics/api/products
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "teste2",
+  "password": "pass2",
+  "name": "John Doe",
+  "email": "teste2",
+  "courseCode": 1
+}
+
+##### EditProduct
+PUT http://localhost:8080/academics/api/products
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "teste2",
+  "password": "pass2",
+  "name": "John Doe",
+  "email": "teste2teste2teste2",
+  "courseCode": 1
+}
+
+##### DeleteProduct
+DELETE http://localhost:8080/academics/api/products/1
+Accept: application/json
