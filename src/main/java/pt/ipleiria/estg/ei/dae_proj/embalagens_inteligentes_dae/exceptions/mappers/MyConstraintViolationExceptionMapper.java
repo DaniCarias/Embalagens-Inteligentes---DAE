@@ -3,7 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.mapp
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
-import pt.ipleiria.estg.dei.ei.dae.academics.exceptions.MyConstraintViolationException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyConstraintViolationException;
 
 import java.util.logging.Logger;
 @Provider

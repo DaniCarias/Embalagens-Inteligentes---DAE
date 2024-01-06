@@ -61,7 +61,7 @@
                 <version>3.3.2</version>
                 <configuration>
                     <outputDirectory>target</outputDirectory>
-                    <warName>academics</warName>
+                    <warName>embalagensinteligentes</warName>
                 </configuration>
             </plugin>
         </plugins>

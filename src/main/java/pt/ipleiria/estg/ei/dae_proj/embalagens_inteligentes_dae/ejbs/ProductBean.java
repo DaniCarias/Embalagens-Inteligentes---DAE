@@ -2,70 +2,69 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
+import java.util.List;
 
 @Stateless
-//Qualquer funcao acedida pelo cliente não guarda estado e pode ser chamada o numero de vezes que queira sem problema
 public class ProductBean {
 
-    @PersistenceContext //vai buscar o contexto da BD
+    @PersistenceContext
     private EntityManager entityManager;
 
-    public boolean exists(String username) {
-        Query query = entityManager.createQuery("SELECT COUNT(p.username) FROM Product p WHERE p.username = :username", Long.class);
-        query.setParameter("username", username);
+    public boolean exists(long id) {
+        Query query = entityManager.createQuery("SELECT COUNT(p.id) FROM Product p WHERE p.id = :id", Long.class);
+        query.setParameter("id", id);
         return (Long)query.getSingleResult() > 0L;
     }
 
-    public void create(/* DATA TO CREATE PRDODUCT */) throws MyEntityExistsException, MyEntityNotFoundException { //indica que vai lançar uma excecao
+    public Product find(long id) {
+        return entityManager.find(Product.class, id);
+    }
 
-        if (exists(username)) {
-            throw new MyEntityExistsException("Product with username: " + username + " already exists"); //lança a excecao
-        }
-        /*
-        Course course = entityManager.find(Course.class, courseCode);
-        if (course == null) {
-            throw new MyEntityNotFoundException("Course with code: " + courseCode + " dont exists"); //lança a excecao
-        }*/
-
-        var product = new Product(/* DATA TO CREATE PRDODUCT */);
-        //course.addStudent(student);
+    public void create(String name, String description, ProductManufacturer productManufacturer) throws MyEntityExistsException {
+        var product = new Product(name, description, productManufacturer);
         entityManager.persist(product);
     }
 
-    public List<Product> getAll() { //metodo que cria a query e vai buscar o resultado a BD e da return do mesmo
+    public List<Product> getAll() {
         return entityManager.createNamedQuery("getAllProducts", Product.class).getResultList();
     }
 
-    public Product find(String username) {
-        return entityManager.find(Product.class, username);
-    }
+    public void update(long id, String name, String description, ProductManufacturer productManufacturer) throws MyEntityNotFoundException {
 
-    public void update(/* DATA TO CREATE PRDODUCT */) throws MyEntityNotFoundException {
-
-        if (!exists(username)) {
-            throw new MyEntityNotFoundException("Product with username: " + username + " not found"); //lança a excecao
+        if (!exists(id)) {
+            throw new MyEntityNotFoundException("Student with id: " + id + " not found");
         }
 
-        /*Course course = entityManager.find(Course.class, courseCode);
-        if (course == null) {
-            throw new MyEntityNotFoundException("Course with code: " + courseCode + " dont exists"); //lança a excecao
-        }*/
+        Product product = entityManager.find(Product.class, id);
+        entityManager.lock(product, LockModeType.OPTIMISTIC);
 
-        var product = new Product(/* DATA TO CREATE PRDODUCT */);
-        //course.addStudent(student);
-        entityManager.persist(product);
+        product.setName(name);
+        product.setDescription(description);
+        product.setProductManufacturer(productManufacturer);
+
+        /*
+        if (product.getProductManufacturer().getUsername() != productManufacturer.getUsername()) {
+            Course course = entityManager.find(Course.class, courseCode);
+            if (course == null) {
+                throw new MyEntityNotFoundException("Course with code: " + courseCode + " not found"); //lança a excecao
+            }
+            student.setCourse(course);
+        }
+        */
 
     }
 
-    public void delete(String username) throws MyEntityNotFoundException {
+    public void delete(long id) throws MyEntityNotFoundException {
 
-        Product product = find(username);
+        Product product = entityManager.find(Product.class, id);
         if (product == null) {
-            throw new MyEntityNotFoundException("Product with username: " + username + " not found"); //lança a excecao
+            throw new MyEntityNotFoundException("Product with id: " + id + " not found");
         }
 
         entityManager.remove(product);
