@@ -30,7 +30,7 @@ public class Order {
         this.packages = new LinkedList<>();
     }
 
-    public Order( EndConsumer endConsumer) {
+    public Order(EndConsumer endConsumer) {
         this.packages = new LinkedList<>();
         this.endConsumer = endConsumer;
     }
