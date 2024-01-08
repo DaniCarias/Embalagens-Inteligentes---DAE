@@ -16,7 +16,8 @@ import java.util.Date;
 )
 public class Package {
 
-    enum PackageType {
+    //Confirmar se pode ser publico para o create no bean do package
+    public enum PackageType {
         PRIMARIA,
         SECUNDARIA,
         TERCIARIA
@@ -33,7 +34,7 @@ public class Package {
         Last time the package was opened, to detect unauthorized access.
     */
     private Date lastTimeOpened;
-    private String materialEmbalagem;
+    private String material;
     @OneToOne
     private Product product;
     @ManyToOne
@@ -46,14 +47,64 @@ public class Package {
         this.sensors = new LinkedList<>();
     }
 
-    public Package(long id, PackageType packageType, Date lastTimeOpened, String materialEmbalagem, Product product) {
-        this.id = id;
+    public Package(PackageType packageType, Date lastTimeOpened, String material, Product product) {
         this.packageType = packageType;
         this.lastTimeOpened = lastTimeOpened;
-        this.materialEmbalagem = materialEmbalagem;
+        this.material = material;
         this.product = product;
         this.sensors = new LinkedList<>();
     }
+
+
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+    public PackageType getPackageType() {
+        return packageType;
+    }
+    public void setPackageType(PackageType packageType) {
+        this.packageType = packageType;
+    }
+    public Date getLastTimeOpened() {
+        return lastTimeOpened;
+    }
+    public void setLastTimeOpened(Date lastTimeOpened) {
+        this.lastTimeOpened = lastTimeOpened;
+    }
+    public String getMaterial() {
+        return material;
+    }
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+    public Product getProduct() {
+        return product;
+    }
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+    public Order getOrder() {
+        return order;
+    }
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+    public List<Sensor> getSensors() {
+        return sensors;
+    }
+    public void setSensors(List<Sensor> sensors) {
+        this.sensors = sensors;
+    }
+    public int getVersion() {
+        return version;
+    }
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
 
     public void addSensor(Sensor sensor) {
         this.sensors.add(sensor);

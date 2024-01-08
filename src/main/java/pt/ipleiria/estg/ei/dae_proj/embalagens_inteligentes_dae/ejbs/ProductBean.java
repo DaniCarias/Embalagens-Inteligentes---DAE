@@ -26,7 +26,16 @@ public class ProductBean {
         return entityManager.find(Product.class, id);
     }
 
-    public void create(String name, String description, ProductManufacturer productManufacturer) throws MyEntityExistsException {
+    public boolean productManufacturer_verify(ProductManufacturer prodManufacture) {
+        ProductManufacturer prod_Manufacture = entityManager.find(ProductManufacturer.class, prodManufacture.getUsername());
+        return prod_Manufacture != null ? true : false;
+    }
+
+    public void create(String name, String description, ProductManufacturer productManufacturer) throws MyEntityNotFoundException {
+
+        if (!productManufacturer_verify(productManufacturer))
+            throw new MyEntityNotFoundException("Product Manufacturer with username: " + productManufacturer.getUsername() + " not found");
+
         var product = new Product(name, description, productManufacturer);
         entityManager.persist(product);
     }
@@ -37,9 +46,11 @@ public class ProductBean {
 
     public void update(long id, String name, String description, ProductManufacturer productManufacturer) throws MyEntityNotFoundException {
 
-        if (!exists(id)) {
-            throw new MyEntityNotFoundException("Student with id: " + id + " not found");
-        }
+        if (!exists(id))
+            throw new MyEntityNotFoundException("Product with id: " + id + " not found");
+
+        if (!productManufacturer_verify(productManufacturer))
+            throw new MyEntityNotFoundException("Product Manufacturer with username: " + productManufacturer.getUsername() + " not found");
 
         Product product = entityManager.find(Product.class, id);
         entityManager.lock(product, LockModeType.OPTIMISTIC);
@@ -47,26 +58,15 @@ public class ProductBean {
         product.setName(name);
         product.setDescription(description);
         product.setProductManufacturer(productManufacturer);
-
-        /*
-        if (product.getProductManufacturer().getUsername() != productManufacturer.getUsername()) {
-            Course course = entityManager.find(Course.class, courseCode);
-            if (course == null) {
-                throw new MyEntityNotFoundException("Course with code: " + courseCode + " not found"); //lança a excecao
-            }
-            student.setCourse(course);
-        }
-        */
-
     }
 
     public void delete(long id) throws MyEntityNotFoundException {
 
         Product product = entityManager.find(Product.class, id);
-        if (product == null) {
+        if (product == null)
             throw new MyEntityNotFoundException("Product with id: " + id + " not found");
-        }
 
+        //entityMannager.lock(product, LockModeType.OPTIMISTIC); ???????????
         entityManager.remove(product);
     }
 
