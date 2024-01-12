@@ -34,13 +34,14 @@ public class PackageBean {
 
 
     //Confirmar  se pode ser public o packageType para usar no create !!!!!!!!!!!!!!!!!!!!
-    public void create(Package.PackageType type, Date lastTimeOpened, String material, Product product) throws MyEntityNotFoundException {
+    public Package create(Package.PackageType type, Date lastTimeOpened, String material, Product product) throws MyEntityNotFoundException {
 
         if (!product_verify(product))
             throw new MyEntityNotFoundException("Product with id: " + product.getId() + " not found");
 
         var new_package = new Package(type, lastTimeOpened, material, product);
         entityManager.persist(new_package);
+        return new_package;
     }
 
     public List<Package> getAll() {
