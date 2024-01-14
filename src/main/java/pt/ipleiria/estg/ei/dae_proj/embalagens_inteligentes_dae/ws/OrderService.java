@@ -1,0 +1,63 @@
+package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import jakarta.ejb.EJB;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.EndConsumerBean;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.OrderBean;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+
+@Path("order")
+@Produces({MediaType.APPLICATION_JSON})
+@Consumes({MediaType.APPLICATION_JSON})
+public class OrderService {
+
+    @EJB
+    private OrderBean orderBean;
+    @EJB
+    private EndConsumerBean endConsumerBean;
+
+    private OrderDTO toDTO(Order order) {
+        return new OrderDTO(
+                order.getId(),
+                order.getEndConsumer().getUsername()
+        );
+    }
+
+    private List<OrderDTO> toDTOs(List<Order> orders) {
+        return orders.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    @GET
+    @Path("/")
+    public List<OrderDTO> getAllOrders() {
+        return toDTOs(orderBean.getAll());
+    }
+
+    @POST
+    @Path("/")
+    public Response createNewOrder(OrderDTO orderDTO) {
+        EndConsumer consumer = endConsumerBean.find(orderDTO.getEndConsmer_username());
+        if(consumer == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        try {
+            orderBean.create(consumer);
+        } catch (MyEntityNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        Order newOrder = orderBean.find(orderDTO.getId());
+        if(newOrder == null)
+            return Response.status(Response.Status.BAD_REQUEST).build();
+
+        return Response.status(Response.Status.CREATED).entity(toDTO(newOrder)).build();
+    }
+}
