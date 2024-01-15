@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -16,6 +17,7 @@ public class ProductManufacturer extends User{
 
     public ProductManufacturer(String username, String name, String password, String address, int phoneNumber) {
         super(username, name, password, address, phoneNumber);
+        products = new LinkedList<>();
     }
 
 

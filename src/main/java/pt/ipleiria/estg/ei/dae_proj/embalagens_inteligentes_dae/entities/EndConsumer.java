@@ -3,6 +3,8 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -13,6 +15,7 @@ public class EndConsumer extends User {
 
     public EndConsumer(String username, String name, String password, String address, int phoneNumber) {
         super(username, name, password, address, phoneNumber);
+        orders = new LinkedList<>();
     }
 
     public EndConsumer() {
