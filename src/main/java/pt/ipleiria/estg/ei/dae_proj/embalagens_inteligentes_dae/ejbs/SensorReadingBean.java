@@ -1,15 +1,13 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
+import jakarta.ejb.EJB;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Hibernate;
 import org.hibernate.jpa.internal.HintsCollector;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.comparators.SensorReadingComparator;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.QualityConstraint;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorReading;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
@@ -22,6 +20,9 @@ public class SensorReadingBean {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @EJB
+    private EmailBean emailBean;
 
     public boolean exists(long id) {
         return entityManager.find(SensorReading.class, id) != null;
@@ -37,8 +38,34 @@ public class SensorReadingBean {
 
         // check the constraints this sensor controls
         try {
-            sensorReading.setViolatesQualityConstraint(!QualityConstraintsVerifier.verifyConstraintListOnReading(
-                    s.getControlledConstraints(), sensorReading));
+            boolean violatesConstraint = !QualityConstraintsVerifier.verifyConstraintListOnReading(
+                    s.getControlledConstraints(), sensorReading);
+
+            sensorReading.setViolatesQualityConstraint(violatesConstraint);
+
+            // send notification email
+            if(violatesConstraint) {
+                /*
+                // get package
+                Hibernate.initialize(s.getPackage());
+                Package p = s.getPackage();
+                // get order
+                Hibernate.initialize(s.getPackage().getOrder());
+                Order o = s.getPackage().getOrder();
+                // get customer
+                Hibernate.initialize(s.getPackage().getOrder().getEndConsumer());
+                EndConsumer e = s.getPackage().getOrder().getEndConsumer();
+
+                // get product
+                Hibernate.initialize(p.getProduct());
+                Product product = p.getProduct();
+
+                // TODO: end consumer has no email address. how to notify?
+                emailBean.send(e.getAddress(), "Order no. " + o.getId() + " in risk", "Product \"" +
+                        product.getName() + "\" just experienced a dangerous situation (" + s.getName() + " reading value).");
+                */
+            }
+
         } catch (Exception e) {
             System.err.println("Given constraint was invalid!");
         }
