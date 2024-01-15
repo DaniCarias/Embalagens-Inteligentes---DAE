@@ -41,9 +41,8 @@ public class SensorReadingBean {
     }
 
     //Verificar onde é q se vai buscar o getAllSensoresReading
-    public List<Sensor> getAllSensor() {
-        //return entityManager.createNamedQuery("getAllSensoresReading", SensorReading.class).getResultList();
-        return null;
+    public List<SensorReading> getAllSensorReadings() {
+        return entityManager.createNamedQuery("getAllSensorReadings", SensorReading.class).getResultList();
     }
 
     public SensorReading getSensorReading(long id) throws MyEntityNotFoundException {
