@@ -12,6 +12,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.EndConsumer
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.OrderBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 @Path("order")
@@ -59,5 +60,37 @@ public class OrderService {
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         return Response.status(Response.Status.CREATED).entity(toDTO(newOrder)).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    public Response editOrder(@PathParam("id") long id, OrderDTO orderDTO) throws MyEntityNotFoundException {
+        EndConsumer endConsumer = endConsumerBean.find(orderDTO.getEndConsmer_username());
+        if(endConsumer == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        orderBean.update(
+                id,
+                endConsumer
+        );
+
+        Order order = orderBean.find(orderDTO.getId());
+        if(order == null){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        return Response.status(Response.Status.OK).entity(toDTO(order)).entity("Order updated").build();
+    }
+
+
+    //TESTAR COM O "id" em string -> Pode nao converter automaticamente
+    @DELETE
+    @Path("/{id}")
+    public Response deleteOrder(@PathParam("id") long id) throws MyEntityNotFoundException {
+        //long id = Long.parseLong(id);
+        Order order = orderBean.find(id);
+        if(order != null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("Order do not exist").build();
     }
 }
