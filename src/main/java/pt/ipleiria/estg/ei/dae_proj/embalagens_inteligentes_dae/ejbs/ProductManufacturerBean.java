@@ -3,6 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.ProductManufacturer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
@@ -17,6 +18,10 @@ public class ProductManufacturerBean {
 
     public boolean exists(String username) {
         return entityManager.find(ProductManufacturer.class, username) != null;
+    }
+
+    public ProductManufacturer find(String username) {
+        return entityManager.find(ProductManufacturer.class, username);
     }
 
     public ProductManufacturer create(String username, String password, String name, String address, int phoneNumber) throws MyEntityExistsException {
