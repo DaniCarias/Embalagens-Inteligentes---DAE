@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" external-system-id="Maven" name="embalagens_inteligentes_DAE:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>embalagens_inteligentes_DAE</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="academics.war">
+      <element id="artifact" artifact-name="embalagens_inteligentes_DAE:war exploded" />
+    </root>
+  </artifact>
+</component>
