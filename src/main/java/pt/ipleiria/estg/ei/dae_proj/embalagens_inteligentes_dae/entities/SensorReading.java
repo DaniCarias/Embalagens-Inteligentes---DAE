@@ -34,8 +34,10 @@ public class SensorReading {
     public Date getDate() {
         return date;
     }
-
     public float getValue() {
         return value;
+    }
+    public void setValue(float value) {
+        this.value = value;
     }
 }
