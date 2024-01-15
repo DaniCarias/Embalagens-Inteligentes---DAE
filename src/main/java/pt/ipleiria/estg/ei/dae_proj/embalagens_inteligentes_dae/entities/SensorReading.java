@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@NamedQueries(
+        @NamedQuery(name = "getAllSensorReadings", query = "SELECT sr FROM SensorReading sr")
+)
 @Table(name="sensor_readings")
 public class SensorReading {
     @Id
