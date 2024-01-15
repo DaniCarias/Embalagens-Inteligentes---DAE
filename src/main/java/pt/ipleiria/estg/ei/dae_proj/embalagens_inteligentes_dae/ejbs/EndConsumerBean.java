@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
@@ -8,6 +9,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEnt
 
 import java.util.List;
 
+@Stateless
 public class EndConsumerBean {
 
     @PersistenceContext

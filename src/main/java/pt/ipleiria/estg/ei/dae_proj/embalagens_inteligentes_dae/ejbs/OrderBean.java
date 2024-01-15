@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
@@ -10,6 +11,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEnt
 
 import java.util.List;
 
+@Stateless
 public class OrderBean {
 
     @PersistenceContext
