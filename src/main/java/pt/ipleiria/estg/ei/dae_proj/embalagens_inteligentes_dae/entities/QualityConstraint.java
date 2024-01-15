@@ -50,9 +50,10 @@ public class QualityConstraint {
 
     }
 
-    public QualityConstraint(float value, ConstraintType type) {
+    public QualityConstraint(float value, ConstraintType type, Sensor sensor) {
         this.value = value;
         this.type = type;
+        this.sensor = sensor;
     }
 
     public long getId() {
@@ -67,12 +68,20 @@ public class QualityConstraint {
         return type;
     }
 
+    public Sensor getSensor() {
+        return sensor;
+    }
+
     public void setValue(float value) {
         this.value = value;
     }
 
     public void setType(ConstraintType type) {
         this.type = type;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
     }
 
 }
