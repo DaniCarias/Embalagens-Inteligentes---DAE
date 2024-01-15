@@ -2,6 +2,9 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 
 import jakarta.persistence.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @Entity
 @NamedQueries({
         @NamedQuery(name= "getAllProducts", query= "SELECT p FROM Product p ORDER BY p.id DESC"),
@@ -21,16 +24,22 @@ public class Product {
     private ProductManufacturer manufacturer;
     @OneToOne
     private Package _package;
+
+    @OneToMany
+    private List<QualityConstraint> qualityConstraints;
+
     @Version
     private int version;
 
     public Product() {
+        this.qualityConstraints = new LinkedList<>();
     }
 
     public Product(String name, String description, ProductManufacturer manufacturer) {
         this.name = name;
         this.description = description;
         this.manufacturer = manufacturer;
+        this.qualityConstraints = new LinkedList<>();
     }
 
 
@@ -57,6 +66,14 @@ public class Product {
     }
     public void setProductManufacturer(ProductManufacturer manufacturer) {
         this.manufacturer = manufacturer;
+    }
+
+    public List<QualityConstraint> getQualityConstraints() {
+        return qualityConstraints;
+    }
+
+    public void addQualityConstraint(QualityConstraint constraint) {
+        this.qualityConstraints.add(constraint);
     }
 
 }
