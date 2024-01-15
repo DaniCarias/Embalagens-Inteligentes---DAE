@@ -58,5 +58,11 @@ public class Product {
     public void setProductManufacturer(ProductManufacturer manufacturer) {
         this.manufacturer = manufacturer;
     }
+    public Package getPackage() {
+        return _package;
+    }
+    public void setPackage(Package _package) {
+        this._package = _package;
+    }
 
 }

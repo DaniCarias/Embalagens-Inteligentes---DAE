@@ -1,5 +1,5 @@
 ##### AllProducts
-GET http://localhost:8080/academics/api/products
+GET http://localhost:8080/embalagens_inteligentes_DAE/api/products
 Accept: application/json
 
 ##### GetProduct
@@ -34,4 +34,10 @@ Content-Type: application/json
 
 ##### DeleteProduct
 DELETE http://localhost:8080/academics/api/products/1
+Accept: application/json
+
+
+
+##### AllOrders
+GET http://localhost:8080/embalagens_inteligentes_DAE/api/orders
 Accept: application/json

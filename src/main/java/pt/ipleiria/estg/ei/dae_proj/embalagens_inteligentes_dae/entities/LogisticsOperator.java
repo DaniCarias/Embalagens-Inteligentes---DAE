@@ -1,8 +1,10 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("LogisticsOperator")
 public class LogisticsOperator extends User {
 
     public LogisticsOperator(String username, String name, String password, String address, int phoneNumber) {
