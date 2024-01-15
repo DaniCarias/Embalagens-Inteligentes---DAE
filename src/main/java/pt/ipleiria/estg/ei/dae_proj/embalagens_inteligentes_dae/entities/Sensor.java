@@ -16,6 +16,9 @@ import java.util.Date;
  * This class represents a specific sensor of a specific package. Not just the sensor type.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name= "getAllSensors", query= "SELECT s FROM Sensor s"),
+})
 @Table(
         name="sensors",
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
