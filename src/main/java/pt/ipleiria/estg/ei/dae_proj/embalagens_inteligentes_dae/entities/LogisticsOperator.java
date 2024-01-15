@@ -2,9 +2,13 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 
 @Entity
-@DiscriminatorValue("LogisticsOperator")
+@NamedQueries({
+        @NamedQuery(name= "getAllLogisticsOperator", query= "SELECT l FROM LogisticsOperator l ORDER BY l.username DESC"),
+})
 public class LogisticsOperator extends User {
 
     public LogisticsOperator(String username, String name, String password, String address, int phoneNumber) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name= "getAllEndConsumers", query= "SELECT o FROM User o ORDER BY o.id DESC"),
+        @NamedQuery(name= "getAllEndConsumers", query= "SELECT e FROM EndConsumer e ORDER BY e.username DESC"),
 })
 public class EndConsumer extends User {
 

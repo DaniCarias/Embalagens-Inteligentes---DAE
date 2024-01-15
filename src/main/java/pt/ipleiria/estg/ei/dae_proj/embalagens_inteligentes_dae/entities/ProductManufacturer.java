@@ -4,9 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name= "getAllProductManufacturer", query= "SELECT p FROM ProductManufacturer p ORDER BY p.username DESC"),
+})
 public class ProductManufacturer extends User{
     @OneToMany
     private List<Product> products;
