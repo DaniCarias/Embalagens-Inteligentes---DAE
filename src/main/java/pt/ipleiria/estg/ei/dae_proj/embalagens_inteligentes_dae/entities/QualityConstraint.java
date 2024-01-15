@@ -72,6 +72,10 @@ public class QualityConstraint {
         return sensor;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
     public void setValue(float value) {
         this.value = value;
     }
@@ -82,6 +86,10 @@ public class QualityConstraint {
 
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
 }
