@@ -38,8 +38,7 @@ public class Sensor {
         this.readings = new LinkedList<>();
     }
 
-    public Sensor(long id, String name){
-        this.id = id;
+    public Sensor(String name){
         this.name = name;
         this.readings = new LinkedList<>();
     }
