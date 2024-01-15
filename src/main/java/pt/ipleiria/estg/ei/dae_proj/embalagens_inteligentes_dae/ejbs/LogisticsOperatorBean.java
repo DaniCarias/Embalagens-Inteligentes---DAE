@@ -28,10 +28,8 @@ public class LogisticsOperatorBean {
         return logisticsOperator;
     }
 
-    //COMO É QUE SE FAZ A QUERY DO "getAllLogisticOperator" na Entity LogisticsOperator ??????????? se o Logistic Operator é guardado na tabela User? -> Fazer sql query com WHERE role = "LogisticOperator" ???????
     public List<LogisticsOperator> getAll() {
-        //return entityManager.createNamedQuery("getAllLogisticsoperator", LogisticsOperator.class).getResultList();
-        return null;
+        return entityManager.createNamedQuery("getAllLogisticsOperator", LogisticsOperator.class).getResultList();
     }
 
     public LogisticsOperator getLogistOperator(String username) throws MyEntityNotFoundException {

@@ -28,10 +28,8 @@ public class ProductManufacturerBean {
         return productManufacturer;
     }
 
-    //COMO É QUE SE FAZ A QUERY DO "getAllProductManufacturer" na Entity ProductManufacturer ??????????? se o Product Manufacturer é guardado na tabela User? -> Fazer sql query com WHERE role = "ProductManufacturer" ???????
     public List<ProductManufacturer> getAll() {
-        //return entityManager.createNamedQuery("getAllProductManufacturer", ProductManufacturer.class).getResultList();
-        return null;
+        return entityManager.createNamedQuery("getAllProductManufacturer", ProductManufacturer.class).getResultList();
     }
 
     public ProductManufacturer getProductManufacturer(String username) throws MyEntityNotFoundException {

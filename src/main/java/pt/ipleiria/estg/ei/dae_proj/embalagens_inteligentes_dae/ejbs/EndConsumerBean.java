@@ -32,10 +32,8 @@ public class EndConsumerBean {
         return endConsumer;
     }
 
-    //COMO É QUE SE FAZ A QUERY DO "getAllEndConsumers" na Entity EndConsumer ??????????? se o EndConsumer é guardado na tabela User? -> Fazer sql query com WHERE role = "EndConsumer" ???????
     public List<EndConsumer> getAll() {
-        //return entityManager.createNamedQuery("getAllEndConsumers", EndConsumer.class).getResultList();
-        return null;
+        return entityManager.createNamedQuery("getAllEndConsumers", EndConsumer.class).getResultList();
     }
 
     public EndConsumer getEndConsumer(String username) throws MyEntityNotFoundException {
