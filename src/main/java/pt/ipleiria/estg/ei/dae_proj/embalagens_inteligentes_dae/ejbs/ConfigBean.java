@@ -24,6 +24,7 @@ public class ConfigBean {
     @EJB
     private EndConsumerBean endConsumerBean;
 
+
     private static final Logger logger = Logger.getLogger("ejbs.ConfigBean");
 
     @PostConstruct
@@ -32,13 +33,16 @@ public class ConfigBean {
 
             Product prod1 = productBean.create("nome do produto1", "descricao do produto1", null);
             Product prod2 = productBean.create("nome do produto2", "descricao do produto2", null);
-            Product prod3 = productBean.create("nome do produto3", "descricao do produto3", null);
+            Product prod3 = productBean.create("nome do produto123123123", "descricao do produto3", null);
 
-            EndConsumer endConsumer1 = endConsumerBean.create("danicarias", "pass123", "Daniel Carias", "urbanização da quinta do conde", 961234567);
+            EndConsumer endConsumer1 = endConsumerBean.create("danicarias", "pass123", "Daniel Carias", "urbanização", 961234567);
 
-            orderBean.create(endConsumer1);
+            //orderBean.create(endConsumer1);
 
-            Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira", prod1);
+            //Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira", prod1);
+
+
+
 
         }catch(Exception exception){
             logger.severe(exception.getMessage());

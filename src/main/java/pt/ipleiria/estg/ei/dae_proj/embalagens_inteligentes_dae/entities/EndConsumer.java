@@ -1,13 +1,14 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name= "getAllOrders", query= "SELECT o FROM User o ORDER BY o.id DESC"),
+})
 public class EndConsumer extends User {
 
     @OneToMany(mappedBy = "endConsumer", cascade = CascadeType.REMOVE)
