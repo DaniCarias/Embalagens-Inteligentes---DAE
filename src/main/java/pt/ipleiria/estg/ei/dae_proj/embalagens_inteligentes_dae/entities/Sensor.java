@@ -12,10 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Date;
 
+/**
+ * This class represents a specific sensor of a specific package. Not just the sensor type.
+ */
 @Entity
-@NamedQueries({
-        @NamedQuery(name= "getAllSensores", query= "SELECT s FROM Sensor s ORDER BY s.name DESC"),
-})
 @Table(
         name="sensors",
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
@@ -26,10 +26,17 @@ public class Sensor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotNull
     private String name;
 
     @OneToMany
     private List<SensorReading> readings;
+
+    @ManyToOne // because this is the sensor of a specific package
+    private Package _package;
+
+    @OneToMany
+    private List<QualityConstraint> controlledConstraints; // the quality constraints this sensor controls
 
     @Version
     private int version;
@@ -37,10 +44,11 @@ public class Sensor {
     public Sensor() {
         this.readings = new LinkedList<>();
     }
-
-    public Sensor(String name){
+    public Sensor(String name, Package _package){
         this.name = name;
+        this._package = _package;
         this.readings = new LinkedList<>();
+        this.controlledConstraints = new LinkedList<>();
     }
 
     public String getName() {
@@ -52,7 +60,20 @@ public class Sensor {
     public List<SensorReading> getReadings() {
         return readings;
     }
-    public void addReading(float value) {
-        this.readings.add(new SensorReading(value));
+
+    public Package getPackage() {
+        return this._package;
+    }
+
+    public List<QualityConstraint> getControlledConstraints() {
+        return controlledConstraints;
+    }
+
+    public void addReading(SensorReading reading) {
+        this.readings.add(reading);
+    }
+
+    public void addControlledConstraint(QualityConstraint constraint) {
+        this.controlledConstraints.add(constraint);
     }
 }
