@@ -2,6 +2,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.LogisticsOperator;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
@@ -56,7 +57,7 @@ public class LogisticsOperatorBean {
         if (logisticsOperator == null)
             throw new MyEntityNotFoundException("logistics Operator with id: " + username + " not found");
 
-        //entityMannager.lock(order, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(logisticsOperator, LockModeType.OPTIMISTIC);
         entityManager.remove(logisticsOperator);
     }
 

@@ -2,6 +2,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
@@ -51,7 +52,7 @@ public class SensorBean {
         if (sensor == null)
             throw new MyEntityNotFoundException("Sensor with name: " + name + " not found");
 
-        //entityMannager.lock(order, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(sensor, LockModeType.OPTIMISTIC);
         entityManager.remove(sensor);
     }
 

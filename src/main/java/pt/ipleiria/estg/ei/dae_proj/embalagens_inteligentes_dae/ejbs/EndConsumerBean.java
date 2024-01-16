@@ -2,6 +2,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Order;
@@ -61,7 +62,7 @@ public class EndConsumerBean {
         if (endConsumer == null)
             throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
 
-        //entityMannager.lock(order, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(endConsumer, LockModeType.OPTIMISTIC);
         entityManager.remove(endConsumer);
     }
 
@@ -73,10 +74,12 @@ public class EndConsumerBean {
             throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
         if(endConsumer == null)
             throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
-        else{
-            endConsumer.addOrder(order);
-            entityManager.merge(endConsumer);
-        }
+
+        entityManager.lock(endConsumer, LockModeType.OPTIMISTIC);
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
+
+        endConsumer.addOrder(order);
+        entityManager.merge(endConsumer);
     }
 
     public void removeOrder(String username, long order_id) throws MyEntityNotFoundException{
@@ -87,10 +90,12 @@ public class EndConsumerBean {
             throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
         if(endConsumer == null)
             throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
-        else{
-            endConsumer.removeOrder(order);
-            entityManager.merge(endConsumer);
-        }
+
+        entityManager.lock(endConsumer, LockModeType.OPTIMISTIC);
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
+
+        endConsumer.removeOrder(order);
+        entityManager.merge(endConsumer);
     }
 
 

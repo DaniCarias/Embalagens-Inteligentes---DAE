@@ -2,6 +2,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorReading;
@@ -26,10 +27,8 @@ public class SensorReadingBean {
         return sensorReading;
     }
 
-    //Verificar onde é q se vai buscar o getAllSensoresReading
-    public List<Sensor> getAllSensor() {
-        //return entityManager.createNamedQuery("getAllSensoresReading", SensorReading.class).getResultList();
-        return null;
+    public List<SensorReading> getAllSensor() {
+        return entityManager.createNamedQuery("getAllSensorReading", SensorReading.class).getResultList();
     }
 
     public SensorReading getSensorReading(long id) throws MyEntityNotFoundException {
@@ -53,7 +52,7 @@ public class SensorReadingBean {
         if (sensorReading == null)
             throw new MyEntityNotFoundException("Sensor with id: " + id + " not found");
 
-        //entityMannager.lock(order, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(sensorReading, LockModeType.OPTIMISTIC);
         entityManager.remove(sensorReading);
     }
 

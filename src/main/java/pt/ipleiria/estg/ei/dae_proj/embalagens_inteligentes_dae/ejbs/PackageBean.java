@@ -75,7 +75,7 @@ public class PackageBean {
             throw new MyEntityNotFoundException("Package with id: " + id + " not found");
         }
 
-        //entityMannager.lock(_package, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(_package, LockModeType.OPTIMISTIC);
         entityManager.remove(_package);
     }
 

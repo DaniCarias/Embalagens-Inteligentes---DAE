@@ -43,6 +43,8 @@ public class Package {
     private List<Sensor> sensors;
     @Version
     private int version;
+
+
     public Package() {
         this.sensors = new LinkedList<>();
     }

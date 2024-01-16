@@ -2,6 +2,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.ProductManufacturer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
@@ -56,7 +57,7 @@ public class ProductManufacturerBean {
         if (productManufacturer == null)
             throw new MyEntityNotFoundException("Product Manufacturer with id: " + username + " not found");
 
-        //entityMannager.lock(order, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(productManufacturer, LockModeType.OPTIMISTIC);
         entityManager.remove(productManufacturer);
     }
 

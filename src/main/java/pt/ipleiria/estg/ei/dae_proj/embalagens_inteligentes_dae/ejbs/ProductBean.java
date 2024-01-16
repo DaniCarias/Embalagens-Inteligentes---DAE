@@ -75,7 +75,7 @@ public class ProductBean {
         if (product == null)
             throw new MyEntityNotFoundException("Product with id: " + id + " not found");
 
-        //entityMannager.lock(product, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(product, LockModeType.OPTIMISTIC);
         entityManager.remove(product);
     }
 

@@ -10,6 +10,9 @@ import java.util.Date;
         name="sensor_readings",
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
 )
+@NamedQueries({
+        @NamedQuery(name= "getAllSensorReading", query= "SELECT s FROM SensorReading s ORDER BY s.sensor.id DESC"),
+})
 public class SensorReading {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
