@@ -21,6 +21,10 @@ public class ProductManufacturerBean {
         return entityManager.find(ProductManufacturer.class, username) != null;
     }
 
+    public ProductManufacturer find(String username) {
+        return entityManager.find(ProductManufacturer.class, username);
+    }
+
     public ProductManufacturer create(String username, String password, String name, String address, int phoneNumber) throws MyEntityExistsException {
         if (exists(username)) {
             throw new MyEntityExistsException("Product Manufacturer with username: " + username + " already exists");
