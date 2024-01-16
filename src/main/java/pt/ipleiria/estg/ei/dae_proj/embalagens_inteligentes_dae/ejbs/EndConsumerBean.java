@@ -4,6 +4,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Order;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
@@ -63,6 +64,43 @@ public class EndConsumerBean {
         //entityMannager.lock(order, LockModeType.OPTIMISTIC); ???????????
         entityManager.remove(endConsumer);
     }
+
+    public void addOrder(String username, long order_id) throws MyEntityNotFoundException{
+        Order order = entityManager.find(Order.class, order_id);
+        EndConsumer endConsumer = entityManager.find(EndConsumer.class, username);
+
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
+        if(endConsumer == null)
+            throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
+        else{
+            endConsumer.addOrder(order);
+            entityManager.merge(endConsumer);
+        }
+    }
+
+    public void removeOrder(String username, long order_id) throws MyEntityNotFoundException{
+        Order order = entityManager.find(Order.class, order_id);
+        EndConsumer endConsumer = entityManager.find(EndConsumer.class, username);
+
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
+        if(endConsumer == null)
+            throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
+        else{
+            endConsumer.removeOrder(order);
+            entityManager.merge(endConsumer);
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

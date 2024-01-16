@@ -23,6 +23,27 @@ public class EndConsumer extends User {
 
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public void addOrder(Order order) {
+        if(!orders.contains(order)) {
+            //this.orders.add(order); -> Verificar
+            orders.add(order);
+        }
+    }
+
+    public void removeOrder(Order order) {
+        if(orders.contains(order)) {
+            //this.orders.remove(order); -> Verificar
+            orders.remove(order);
+        }
+    }
+
     /*
     - Atualizações de entrega: dados sobre a entrega em tempo real, incluindo horários
     estimados de entrega, localização da embalagem e notificações quando a embalagem está em
