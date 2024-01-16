@@ -16,6 +16,7 @@ public class ProductManufacturer extends User{
     @OneToMany
     private List<Product> products;
 
+
     public ProductManufacturer() {
 
     }
@@ -26,7 +27,24 @@ public class ProductManufacturer extends User{
     }
 
 
+    public List<Product> getProducts() {
+        return products;
+    }
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
 
+    public void addProduct(Product product) {
+        if(!products.contains(product)) {
+            this.products.add(product);
+        }
+    }
+
+    public void removeProduct(Product product) {
+        if(products.contains(product)) {
+            this.products.remove(product);
+        }
+    }
 
 }

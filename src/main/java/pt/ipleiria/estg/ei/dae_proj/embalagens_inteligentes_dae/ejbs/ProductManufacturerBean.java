@@ -4,6 +4,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.ProductManufacturer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
@@ -60,5 +61,36 @@ public class ProductManufacturerBean {
         entityManager.lock(productManufacturer, LockModeType.OPTIMISTIC);
         entityManager.remove(productManufacturer);
     }
+
+    public void addProduct(String username, long product_id) throws MyEntityNotFoundException {
+        ProductManufacturer productManufacturer = entityManager.find(ProductManufacturer.class, username);
+        Product product = entityManager.find(Product.class, product_id);
+
+        if (productManufacturer == null)
+            throw new MyEntityNotFoundException("Product Manufacturer with id: " + username + " not found");
+        if (product == null)
+            throw new MyEntityNotFoundException("Product with id: " + product_id + " not found");
+
+        entityManager.lock(productManufacturer, LockModeType.OPTIMISTIC);
+
+        productManufacturer.addProduct(product);
+        entityManager.merge(productManufacturer);
+    }
+
+    public void removeProduct(String username, long product_id) throws MyEntityNotFoundException {
+        ProductManufacturer productManufacturer = entityManager.find(ProductManufacturer.class, username);
+        Product product = entityManager.find(Product.class, product_id);
+
+        if (productManufacturer == null)
+            throw new MyEntityNotFoundException("Product Manufacturer with id: " + username + " not found");
+        if (product == null)
+            throw new MyEntityNotFoundException("Product with id: " + product_id + " not found");
+
+        entityManager.lock(productManufacturer, LockModeType.OPTIMISTIC);
+
+        productManufacturer.removeProduct(product);
+        entityManager.merge(productManufacturer);
+    }
+
 
 }
