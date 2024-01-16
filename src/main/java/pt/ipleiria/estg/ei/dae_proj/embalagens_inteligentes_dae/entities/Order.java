@@ -57,9 +57,11 @@ public class Order {
 
 
     public void addPackage(Package _package){
-        this.packages.add(_package);
+        if(!packages.contains(_package))
+            this.packages.add(_package);
     }
     public void removePackage(Package _package){
-        this.packages.remove(_package);
+        if(packages.contains(_package))
+            this.packages.remove(_package);
     }
 }

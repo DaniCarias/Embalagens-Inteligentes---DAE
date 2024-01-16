@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Order;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 import java.util.List;
@@ -54,8 +55,8 @@ public class OrderBean {
             throw new MyEntityNotFoundException("End Consumer with username: " + endConsumer.getUsername() + " not found");
 
         Order order = find(id);
-        entityManager.lock(order, LockModeType.OPTIMISTIC);
 
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
         order.setEndConsumer(endConsumer);
     }
 
@@ -65,8 +66,46 @@ public class OrderBean {
         if (order == null)
             throw new MyEntityNotFoundException("Order with id: " + id + " not found");
 
-        //entityMannager.lock(order, LockModeType.OPTIMISTIC); ???????????
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
         entityManager.remove(order);
     }
+
+    public void addPackage(long order_id, long package_id) throws MyEntityNotFoundException {
+        Package _package = entityManager.find(Package.class, package_id);
+        Order order = entityManager.find(Order.class, order_id);
+
+        if(_package == null)
+            throw new MyEntityNotFoundException("Package with id: " + package_id + " not found");
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
+
+        entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
+
+        order.addPackage(_package);
+        entityManager.merge(order);
+    }
+
+    public void removePackage(long order_id, long package_id) throws MyEntityNotFoundException {
+        Package _package = entityManager.find(Package.class, package_id);
+        Order order = entityManager.find(Order.class, order_id);
+
+        if(_package == null)
+            throw new MyEntityNotFoundException("Package with id: " + package_id + " not found");
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
+
+        entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
+
+        order.removePackage(_package);
+        entityManager.merge(order);
+    }
+
+
+
+
+
+
 
 }
