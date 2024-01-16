@@ -4,8 +4,8 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
@@ -54,6 +54,38 @@ public class SensorBean {
 
         entityManager.lock(sensor, LockModeType.OPTIMISTIC);
         entityManager.remove(sensor);
+    }
+
+    public void addReading(long sensor_id, long reading_id) throws MyEntityNotFoundException {
+        Sensor sensor = entityManager.find(Sensor.class, sensor_id);
+        SensorReading sensorReading = entityManager.find(SensorReading.class, reading_id);
+
+        if(sensor == null)
+            throw new MyEntityNotFoundException("Sensor with id: " + sensor_id + " not found");
+        if(sensorReading == null)
+            throw new MyEntityNotFoundException("Sensor Reading with id: " + reading_id + " not found");
+
+        //entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        entityManager.lock(sensor, LockModeType.OPTIMISTIC);
+
+        sensor.addReading(sensorReading);
+        entityManager.merge(sensor);
+    }
+
+    public void removeReading(long sensor_id, long reading_id) throws MyEntityNotFoundException {
+        Sensor sensor = entityManager.find(Sensor.class, sensor_id);
+        SensorReading sensorReading = entityManager.find(SensorReading.class, reading_id);
+
+        if(sensor == null)
+            throw new MyEntityNotFoundException("Sensor with id: " + sensor_id + " not found");
+        if(sensorReading == null)
+            throw new MyEntityNotFoundException("Sensor Reading with id: " + reading_id + " not found");
+
+        //entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        entityManager.lock(sensor, LockModeType.OPTIMISTIC);
+
+        sensor.removeReading(sensorReading);
+        entityManager.merge(sensor);
     }
 
 }

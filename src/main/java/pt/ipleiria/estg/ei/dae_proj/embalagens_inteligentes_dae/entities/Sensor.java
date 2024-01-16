@@ -52,7 +52,20 @@ public class Sensor {
     public List<SensorReading> getReadings() {
         return readings;
     }
-    public void addReading(float value) {
-        this.readings.add(new SensorReading(value));
+
+
+    public void addReading(SensorReading reading) {
+        if(!readings.contains(reading)) {
+            this.readings.add(reading);
+        }
     }
+
+    public void removeReading(SensorReading reading) {
+        if(readings.contains(reading)) {
+            this.readings.remove(reading);
+        }
+    }
+
+
+
 }
