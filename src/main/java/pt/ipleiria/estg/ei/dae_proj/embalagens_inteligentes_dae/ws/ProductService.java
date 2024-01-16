@@ -25,6 +25,15 @@ public class ProductService {
     private ProductManufacturerBean productManufacturerBean;
 
     private ProductDTO toDTO(Product product) {
+        if (product.getPackage() == null){
+            return new ProductDTO(
+                    product.getId(),
+                    product.getName(),
+                    product.getDescription(),
+                    product.getProductManufacturer().getUsername()
+                    );
+        }
+
         return new ProductDTO(
                 product.getId(),
                 product.getName(),
@@ -52,16 +61,20 @@ public class ProductService {
             return Response.status(Response.Status.NOT_FOUND).build();
 
         try {
-            productBean.create(productDTO.getName(), productDTO.getDescription(), productManufacturer);
+            Product product = productBean.create(productDTO.getName(), productDTO.getDescription(), productManufacturer);
+
+            if(product == null)
+                return Response.status(Response.Status.BAD_REQUEST).build();
+
+            if(productDTO.getPackage_id() > 0)
+                productBean.addPackage(product.getId(), productDTO.getPackage_id());
+
+            product = productBean.find(product.getId());
+
+            return Response.status(Response.Status.CREATED).entity(toDTO(product)).build();
         } catch (MyEntityNotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
-        Product newProduct = productBean.find(productDTO.getId());
-        if(newProduct == null)
-            return Response.status(Response.Status.BAD_REQUEST).build();
-
-        return Response.status(Response.Status.CREATED).entity(toDTO(newProduct)).build();
     }
 
     @PUT

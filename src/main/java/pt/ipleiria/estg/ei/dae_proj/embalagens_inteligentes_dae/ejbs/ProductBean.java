@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
+import com.sun.istack.Nullable;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
@@ -38,6 +39,7 @@ public class ProductBean {
             throw new MyEntityNotFoundException("Product Manufacturer with username: " + productManufacturer.getUsername() + " not found");
 
         var product = new Product(name, description, productManufacturer);
+
         entityManager.persist(product);
 
         return product;

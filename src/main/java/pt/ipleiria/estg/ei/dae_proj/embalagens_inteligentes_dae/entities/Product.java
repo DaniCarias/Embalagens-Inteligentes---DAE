@@ -1,6 +1,8 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 
+import com.sun.istack.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 
 @Entity
 @NamedQueries({
@@ -31,6 +33,7 @@ public class Product {
         this.name = name;
         this.description = description;
         this.manufacturer = manufacturer;
+        this._package = null;
     }
 
 

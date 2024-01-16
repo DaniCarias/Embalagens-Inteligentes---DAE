@@ -20,6 +20,19 @@ public class ProductDTO {
         this.package_id = package_id;
     }
 
+    public ProductDTO(String name, String description, String username_manufacturer, long package_id) {
+        this.name = name;
+        this.description = description;
+        this.username_manufacturer = username_manufacturer;
+        this.package_id = package_id;
+    }
+
+    public ProductDTO(long id, String name, String description, String username_manufacturer) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.username_manufacturer = username_manufacturer;
+    }
 
     public long getId() {
         return id;

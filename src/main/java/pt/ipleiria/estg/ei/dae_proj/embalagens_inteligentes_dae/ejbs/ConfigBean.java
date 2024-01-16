@@ -43,14 +43,17 @@ public class ConfigBean {
             Product prod2 = productBean.create("nome do produto2", "descricao do produto2", productManufacturer1);
             Product prod3 = productBean.create("nome do produto123123123", "descricao do produto3", productManufacturer1);
 
+        //Package
+            Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira", prod1);
+            prod1.setPackage(package1);
+            prod2.setPackage(package1);
+            prod3.setPackage(package1);
+
         //End Consumer
             EndConsumer endConsumer1 = endConsumerBean.create("danicarias_outro", "pass123", "Daniel Carias", "urbanização", 961234567);
 
         //Order
             orderBean.create(endConsumer1);
-
-        //Package
-            Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira", prod1);
 
         //Logistic Operator
             LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);

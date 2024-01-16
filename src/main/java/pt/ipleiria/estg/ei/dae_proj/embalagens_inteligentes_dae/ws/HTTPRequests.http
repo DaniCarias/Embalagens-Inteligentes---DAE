@@ -1,22 +1,20 @@
 ##### AllProducts
-GET http://localhost:8080/embalagens_inteligentes_DAE/api/products
+GET http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
 
 ##### GetProduct
-GET http://localhost:8080/academics/api/products/1
+GET http://localhost:8080/embalagensinteligentes/api/products/1
 Accept: application/json
 
 ##### CreateProduct
-POST http://localhost:8080/academics/api/products
+POST http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "teste2",
-  "password": "pass2",
-  "name": "John Doe",
-  "email": "teste2",
-  "courseCode": 1
+  "name": "teste_product",
+  "description": "teste",
+  "username_manufacturer": "danicarias"
 }
 
 ##### EditProduct
@@ -39,5 +37,5 @@ Accept: application/json
 
 
 ##### AllOrders
-GET http://localhost:8080/embalagens_inteligentes_DAE/api/orders
+GET http://localhost:8080/embalagensinteligentes/api/orders
 Accept: application/json
