@@ -56,4 +56,35 @@ public class SensorReadingBean {
         entityManager.remove(sensorReading);
     }
 
+    public void addSensor(long sensorReading_id, long sensor_id) throws MyEntityExistsException {
+        SensorReading sensorReading = entityManager.find(SensorReading.class, sensorReading_id);
+        Sensor sensor = entityManager.find(Sensor.class, sensor_id);
+
+        if (sensorReading == null)
+            throw new MyEntityExistsException("Sensor Reading with id: " + sensorReading_id + " not found");
+        if (sensor == null)
+            throw new MyEntityExistsException("Sensor with id: " + sensor_id + " not found");
+
+        entityManager.lock(sensorReading, LockModeType.OPTIMISTIC);
+
+        sensorReading.setSensor(sensor);
+        entityManager.merge(sensorReading);
+    }
+
+    public void removeSensor(long sensorReading_id, long sensor_id) throws MyEntityExistsException{
+        SensorReading sensorReading = entityManager.find(SensorReading.class, sensorReading_id);
+        Sensor sensor = entityManager.find(Sensor.class, sensor_id);
+
+        if (sensorReading == null)
+            throw new MyEntityExistsException("Sensor Reading with id: " + sensorReading_id + " not found");
+        if (sensor == null)
+            throw new MyEntityExistsException("Sensor with id: " + sensor_id + " not found");
+
+        entityManager.lock(sensorReading, LockModeType.OPTIMISTIC);
+
+        sensorReading.setSensor(null);
+        entityManager.merge(sensorReading);
+    }
+
+
 }

@@ -43,4 +43,10 @@ public class SensorReading {
     public void setValue(float value) {
         this.value = value;
     }
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+    public Sensor getSensor() {
+        return sensor;
+    }
 }
