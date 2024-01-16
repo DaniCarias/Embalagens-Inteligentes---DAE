@@ -63,6 +63,7 @@ public class EndConsumerBean {
             throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
 
         entityManager.lock(endConsumer, LockModeType.OPTIMISTIC);
+
         entityManager.remove(endConsumer);
     }
 
@@ -76,7 +77,7 @@ public class EndConsumerBean {
             throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
 
         entityManager.lock(endConsumer, LockModeType.OPTIMISTIC);
-        entityManager.lock(order, LockModeType.OPTIMISTIC);
+        //entityManager.lock(order, LockModeType.OPTIMISTIC);
 
         endConsumer.addOrder(order);
         entityManager.merge(endConsumer);
@@ -92,7 +93,7 @@ public class EndConsumerBean {
             throw new MyEntityNotFoundException("EndConsumer with id: " + username + " not found");
 
         entityManager.lock(endConsumer, LockModeType.OPTIMISTIC);
-        entityManager.lock(order, LockModeType.OPTIMISTIC);
+        //entityManager.lock(order, LockModeType.OPTIMISTIC);
 
         endConsumer.removeOrder(order);
         entityManager.merge(endConsumer);

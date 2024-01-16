@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
@@ -79,6 +80,37 @@ public class ProductBean {
         entityManager.remove(product);
     }
 
+    public void addPackage(long product_id, long package_id) throws MyEntityNotFoundException {
 
+        if (!exists(product_id))
+            throw new MyEntityNotFoundException("Product with id: " + product_id + " not found");
+
+        Package _package = entityManager.find(Package.class, package_id);
+        Product product = entityManager.find(Product.class, product_id);
+
+        if(product.getPackage() != null)
+            throw new MyEntityNotFoundException("Product with id: " + product_id + " has already a package");
+
+        entityManager.lock(product, LockModeType.OPTIMISTIC);
+
+        product.setPackage(_package);
+        entityManager.merge(product);
+    }
+
+    public void removePackage(long product_id) throws MyEntityNotFoundException {
+
+        if (!exists(product_id))
+            throw new MyEntityNotFoundException("Product with id: " + product_id + " not found");
+
+        Product product = entityManager.find(Product.class, product_id);
+
+        if(product.getPackage() == null)
+            throw new MyEntityNotFoundException("Product with id: " + product_id + " has no package");
+
+        entityManager.lock(product, LockModeType.OPTIMISTIC);
+
+        product.setPackage(null);
+        entityManager.merge(product);
+    }
 
 }

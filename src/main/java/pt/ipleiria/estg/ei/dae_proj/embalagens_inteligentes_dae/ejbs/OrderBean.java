@@ -79,7 +79,7 @@ public class OrderBean {
         if(order == null)
             throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
 
-        entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        //entityManager.lock(_package, LockModeType.OPTIMISTIC);
         entityManager.lock(order, LockModeType.OPTIMISTIC);
 
         order.addPackage(_package);
@@ -95,7 +95,7 @@ public class OrderBean {
         if(order == null)
             throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
 
-        entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        //entityManager.lock(_package, LockModeType.OPTIMISTIC);
         entityManager.lock(order, LockModeType.OPTIMISTIC);
 
         order.removePackage(_package);
