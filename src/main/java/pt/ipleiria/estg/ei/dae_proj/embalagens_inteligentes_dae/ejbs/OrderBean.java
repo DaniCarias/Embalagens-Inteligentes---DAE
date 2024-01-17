@@ -10,6 +10,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Order;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -33,13 +34,14 @@ public class OrderBean {
         return end_consumer != null ? true : false;
     }
 
-    public void create(EndConsumer endConsumer) throws MyEntityNotFoundException {
+    public Order create(EndConsumer endConsumer) throws MyEntityNotFoundException {
 
         if (!endConsumer_verify(endConsumer))
             throw new MyEntityNotFoundException("End Consumer with username: " + endConsumer.getUsername() + " not found");
 
-        var order = new Order(endConsumer);
+        Order order = new Order(endConsumer);
         entityManager.persist(order);
+        return order;
     }
 
     public List<Order> getAll() {
@@ -60,14 +62,19 @@ public class OrderBean {
         order.setEndConsumer(endConsumer);
     }
 
-    public void delete(long id) throws MyEntityNotFoundException {
+    public boolean delete(long id) throws MyEntityNotFoundException {
 
         Order order = entityManager.find(Order.class, id);
         if (order == null)
             throw new MyEntityNotFoundException("Order with id: " + id + " not found");
 
+        order.setDeleted_at(new Date());
+        entityManager.persist(order);
+        entityManager.flush();
+
         entityManager.lock(order, LockModeType.OPTIMISTIC);
         entityManager.remove(order);
+        return true;
     }
 
     public void addPackage(long order_id, long package_id) throws MyEntityNotFoundException {

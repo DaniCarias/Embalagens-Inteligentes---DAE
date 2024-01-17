@@ -7,6 +7,7 @@ import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.glassfish.jaxb.runtime.v2.runtime.reflect.Lister;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.PackageDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.ProductDTO;
@@ -120,27 +121,29 @@ public class ProductService {
     }
 
     @POST
-    @Path("/{id}/addpackage")
-    public Response addPackage(@PathParam("id") long id, long package_id) throws MyEntityNotFoundException {
+    @Path("/{id}/package")
+    public Response addPackage(@PathParam("id") long id, PackageDTO _package) throws MyEntityNotFoundException {
+
+        //return Response.status(Response.Status.OK).entity(_package).build();
         Product product = productBean.find(id);
         if(product == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        Package _package = packageBean.find(package_id);
-        if(_package == null)
+        Package package_new = packageBean.find(_package.getId());
+        if(package_new == null)
             return Response.status(Response.Status.NOT_FOUND).entity("Package do not exists").build();
 
         if(product.getPackage() != null)
             return Response.status(Response.Status.BAD_REQUEST).entity("Product already has a package").build();
 
-        productBean.addPackage(id, package_id);
+        productBean.addPackage(id, _package.getId());
 
         product = productBean.find(id);
-        return Response.status(Response.Status.OK).entity(product).entity("Package added").build();
+        return Response.status(Response.Status.OK).entity(toDTO(product)).entity("Package added").build();
     }
 
-    @POST
-    @Path("/{id}/removepackage")
+    @DELETE
+    @Path("/{id}/package")
     public Response removePackage(@PathParam("id") long id) throws MyEntityNotFoundException {
         Product product = productBean.find(id);
         if(product == null)
