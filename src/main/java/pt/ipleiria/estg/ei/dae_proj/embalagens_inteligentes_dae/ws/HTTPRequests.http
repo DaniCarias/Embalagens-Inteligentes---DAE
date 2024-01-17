@@ -49,3 +49,23 @@ Accept: application/json
 
 
 //--------------------PACKAGES
+##### AllPackages
+GET http://localhost:8080/embalagensinteligentes/api/packages
+Accept: application/json
+
+##### GetPackage
+GET http://localhost:8080/embalagensinteligentes/api/packages/1
+Accept: application/json
+
+##### CreatePackage
+POST http://localhost:8080/embalagensinteligentes/api/packages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "package_type": "SIMPLES",
+  "lastTimeOpened": "2018-11-11",
+  "material": "PLASTICO",
+  "product_id": 1,
+  "order_id": 1
+}

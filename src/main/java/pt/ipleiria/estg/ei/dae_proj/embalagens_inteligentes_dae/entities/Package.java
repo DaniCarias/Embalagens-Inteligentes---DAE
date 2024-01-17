@@ -55,6 +55,7 @@ public class Package {
         this.material = material;
         this.product = product;
         this.sensors = new LinkedList<>();
+        this.order = null;
     }
 
 

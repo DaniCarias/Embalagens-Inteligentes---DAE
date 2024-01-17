@@ -30,6 +30,16 @@ public class PackageService {
     private ProductBean productBean;
 
     private PackageDTO toDTO(Package _package) {
+        if (_package.getOrder() == null){
+            return new PackageDTO(
+                    _package.getId(),
+                    _package.getPackageType(),
+                    _package.getLastTimeOpened(),
+                    _package.getMaterial(),
+                    _package.getProduct().getId()
+            );
+        }
+
         return new PackageDTO(
                 _package.getId(),
                 _package.getPackageType(),
@@ -48,6 +58,16 @@ public class PackageService {
     @Path("/")
     public List<PackageDTO> getAllPackage() {
         return toDTOs(packageBean.getAll());
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getPackageDetails(@PathParam("id") long id) {
+        Package _package = packageBean.find(id);
+        if (_package != null) {
+            return Response.status(Response.Status.OK).entity(toDTO(_package)).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("The package do not exists").build();
     }
 
     @POST
