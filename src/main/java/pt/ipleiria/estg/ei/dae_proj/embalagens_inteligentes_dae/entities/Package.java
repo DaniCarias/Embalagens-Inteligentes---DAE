@@ -27,7 +27,7 @@ public class Package {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
+    @Enumerated(EnumType.STRING)
     private PackageType packageType;
 
     /*
@@ -64,6 +64,7 @@ public class Package {
     public void setId(long id) {
         this.id = id;
     }
+    @Enumerated(EnumType.STRING)
     public PackageType getPackageType() {
         return packageType;
     }
