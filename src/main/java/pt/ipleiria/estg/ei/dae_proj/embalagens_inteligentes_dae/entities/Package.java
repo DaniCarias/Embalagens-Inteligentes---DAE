@@ -1,6 +1,8 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.Date;
         name="packages",
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
 )
+@SQLDelete(sql="UPDATE packages SET deleted = true WHERE id = ? AND version = ?")
+@Where(clause = "deleted = false")
 public class Package {
 
     //Confirmar se pode ser publico para o create no bean do package
@@ -43,6 +47,8 @@ public class Package {
     private List<Sensor> sensors;
     @Version
     private int version;
+    private Date deleted_at;
+    private boolean deleted = Boolean.FALSE;
 
 
     public Package() {
@@ -55,6 +61,7 @@ public class Package {
         this.material = material;
         this.product = product;
         this.sensors = new LinkedList<>();
+        this.order = null;
     }
 
 
@@ -107,6 +114,19 @@ public class Package {
     public void setVersion(int version) {
         this.version = version;
     }
+    public Date getDeleted_at() {
+        return deleted_at;
+    }
+    public void setDeleted_at(Date deleted_at) {
+        this.deleted_at = deleted_at;
+    }
+    public boolean isDeleted() {
+        return deleted;
+    }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
 
 
     public void addSensor(Sensor sensor) {

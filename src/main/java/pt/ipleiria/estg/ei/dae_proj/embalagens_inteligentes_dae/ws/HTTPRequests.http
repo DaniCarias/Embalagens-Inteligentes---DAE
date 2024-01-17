@@ -49,3 +49,62 @@ Accept: application/json
 
 
 //--------------------PACKAGES
+##### AllPackages
+GET http://localhost:8080/embalagensinteligentes/api/packages
+Accept: application/json
+
+##### GetPackage
+GET http://localhost:8080/embalagensinteligentes/api/packages/1
+Accept: application/json
+
+##### CreatePackage
+POST http://localhost:8080/embalagensinteligentes/api/packages
+Accept: application/json
+Content-Type: application/json
+
+{
+  "package_type": "PRIMARIA",
+  "lastTimeOpened": "2022-01-01T12:30:00",
+  "material": "PLASTICO2",
+  "product_id": 1,
+  "order_id": 1
+}
+
+##### EditPackage
+PUT http://localhost:8080/embalagensinteligentes/api/packages/3
+Accept: application/json
+Content-Type: application/json
+
+{
+  "package_type": 1,
+  "lastTimeOpened": "2023-01-01T12:30:00",
+  "material": "Pedra",
+  "product_id": 2,
+  "order_id": 1
+}
+
+##### DeletePackage
+DELETE http://localhost:8080/embalagensinteligentes/api/packages/1
+Accept: application/json
+
+##### AddOrder
+POST http://localhost:8080/embalagensinteligentes/api/packages/1/addorder
+Accept: application/json
+
+1
+
+##### RemoveOrder
+POST http://localhost:8080/embalagensinteligentes/api/packages/1/removeorder
+Accept: application/json
+
+
+
+
+
+
+
+
+
+
+
+

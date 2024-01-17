@@ -16,6 +16,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 @Path("packages")
@@ -25,11 +26,22 @@ public class PackageService {
 
     @EJB
     private PackageBean packageBean;
-
     @EJB
     private ProductBean productBean;
+    @EJB
+    private OrderBean orderBean;
 
     private PackageDTO toDTO(Package _package) {
+        if (_package.getOrder() == null){
+            return new PackageDTO(
+                    _package.getId(),
+                    _package.getPackageType(),
+                    _package.getLastTimeOpened(),
+                    _package.getMaterial(),
+                    _package.getProduct().getId()
+            );
+        }
+
         return new PackageDTO(
                 _package.getId(),
                 _package.getPackageType(),
@@ -50,65 +62,101 @@ public class PackageService {
         return toDTOs(packageBean.getAll());
     }
 
+    @GET
+    @Path("/{id}")
+    public Response getPackageDetails(@PathParam("id") long id) {
+        Package _package = packageBean.find(id);
+        if (_package != null) {
+            return Response.status(Response.Status.OK).entity(toDTO(_package)).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("The package do not exists").build();
+    }
+
     @POST
     @Path("/")
-    public Response createNewPackage(PackageDTO packageDTO) {
+    public Response createNewPackage(PackageDTO packageDTO) throws MyEntityNotFoundException, MyEntityExistsException{
         Product product = productBean.find(packageDTO.getProduct_id());
         if(product == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        try {
-            packageBean.create(
-                    packageDTO.getPackageType(),
-                    packageDTO.getLastTimeOpened(),
-                    packageDTO.getMaterial(),
-                    product
-            );
+        Package _package = packageBean.create(packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial(), product);
 
-        } catch (MyEntityNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        if(packageDTO.getOrder_id() > 0)
+            packageBean.addOrder(_package.getId(), packageDTO.getOrder_id());
 
-        Package newPackage = packageBean.find(packageDTO.getId());
+        Package newPackage = packageBean.find(_package.getId());
         if(newPackage == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         return Response.status(Response.Status.CREATED).entity(toDTO(newPackage)).build();
+
     }
 
     @PUT
     @Path("/{id}")
-    public Response editPackage(@PathParam("id") long id, PackageDTO packageDTO) throws MyEntityNotFoundException {
+    public Response editPackage(@PathParam("id") long id, PackageDTO packageDTO) throws MyEntityNotFoundException, MyEntityExistsException {
         Product product = productBean.find(packageDTO.getProduct_id());
         if(product == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        packageBean.update(
-                id,
-                packageDTO.getPackageType(),
-                packageDTO.getLastTimeOpened(),
-                packageDTO.getMaterial(),
-                product
-        );
+        packageBean.update(id, packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial(), product);
 
-        Package _package = packageBean.find(packageDTO.getId());
-        if(_package == null){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        return Response.status(Response.Status.OK).entity(toDTO(_package)).entity("package updated").build();
+        if(packageDTO.getOrder_id() > 0)
+            packageBean.addOrder(id, packageDTO.getOrder_id());
+        else
+            packageBean.removeOrder(id);
+
+        return Response.status(Response.Status.OK).entity("Package updated").build();
     }
 
-
-    //TESTAR COM O "id" em string -> Pode nao converter automaticamente
     @DELETE
     @Path("/{id}")
     public Response deletePackage(@PathParam("id") long id) throws MyEntityNotFoundException {
-        //long id = Long.parseLong(id);
         Package _package = packageBean.find(id);
-        if(_package != null){
+        if(_package == null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Package do not exist").build();
+
+        boolean isDeleted = packageBean.delete(id);
+        if(!isDeleted)
             return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
-        }
-        return Response.status(Response.Status.BAD_REQUEST).entity("Package do not exist").build();
+
+        return Response.status(Response.Status.OK).entity("Package deleted").build();
+    }
+
+    @POST
+    @Path("/{id}/addorder")
+    public Response addOrder(@PathParam("id") long id, long order_id) throws MyEntityNotFoundException, MyEntityExistsException {
+        Package _package = packageBean.find(id);
+        Order order = orderBean.find(order_id);
+
+        if(_package == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Package do not exists").build();
+
+        if(order == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Order do not exists").build();
+
+        if(_package.getOrder() != null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Package already has an order").build();
+
+        packageBean.addOrder(id, order_id);
+
+        return Response.status(Response.Status.OK).entity("Order added").build();
+    }
+
+    @POST
+    @Path("/{id}/removeorder")
+    public Response removeOrder (@PathParam("id") long id) throws MyEntityNotFoundException {
+        Package _package = packageBean.find(id);
+
+        if(_package == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Package do not exists").build();
+
+        if(_package.getOrder() == null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Package does not have a package").build();
+
+        packageBean.removeOrder(id);
+
+        return Response.status(Response.Status.OK).entity("Order removed").build();
     }
 
 

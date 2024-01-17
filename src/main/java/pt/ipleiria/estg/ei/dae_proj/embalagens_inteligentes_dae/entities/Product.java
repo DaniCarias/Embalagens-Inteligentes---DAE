@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name= "getAllProducts", query= "SELECT p FROM Product p WHERE p.deleted = false ORDER BY p.id DESC"),
+        @NamedQuery(name= "getAllProducts", query= "SELECT p FROM Product p ORDER BY p.id DESC"),
 })
 @Table(
         name="products",
