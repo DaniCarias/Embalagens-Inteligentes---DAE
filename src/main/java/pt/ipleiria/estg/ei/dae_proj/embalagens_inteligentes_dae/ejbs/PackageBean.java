@@ -34,7 +34,6 @@ public class PackageBean {
         return prod != null ? true : false;
     }
 
-
     //Confirmar  se pode ser public o packageType para usar no create !!!!!!!!!!!!!!!!!!!!
     public Package create(Package.PackageType type, Date lastTimeOpened, String material, Product product) throws MyEntityNotFoundException {
 
@@ -68,16 +67,49 @@ public class PackageBean {
         _package.setProduct(product);
     }
 
-    public void delete(long id) throws MyEntityNotFoundException {
+    public boolean delete(long id) throws MyEntityNotFoundException {
 
         Package _package = entityManager.find(Package.class, id);
         if (_package == null) {
             throw new MyEntityNotFoundException("Package with id: " + id + " not found");
         }
 
+        _package.setDeleted_at(new Date());
+        entityManager.persist(_package);
+        entityManager.flush();
+
         entityManager.lock(_package, LockModeType.OPTIMISTIC);
         entityManager.remove(_package);
+        return true;
     }
 
+    public void addOrder(long id, long order_id) throws MyEntityNotFoundException, MyEntityExistsException {
+
+        Package _package = entityManager.find(Package.class, id);
+        Order order = entityManager.find(Order.class, order_id);
+
+        if (_package == null)
+            throw new MyEntityNotFoundException("Package with id: " + id + " not found");
+
+        if (order == null)
+            throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
+
+        if (_package.getOrder() != null)
+            throw new MyEntityExistsException("Package with id: " + id + " already has an order");
+
+        entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        _package.setOrder(order);
+    }
+
+    public void removeOrder(long id) throws MyEntityNotFoundException {
+
+        Package _package = entityManager.find(Package.class, id);
+
+        if (_package == null)
+            throw new MyEntityNotFoundException("Package with id: " + id + " not found");
+
+        entityManager.lock(_package, LockModeType.OPTIMISTIC);
+        _package.setOrder(null);
+    }
 
 }
