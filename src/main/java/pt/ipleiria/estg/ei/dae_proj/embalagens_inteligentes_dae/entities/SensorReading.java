@@ -11,7 +11,7 @@ import java.util.Date;
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
 )
 @NamedQueries({
-        @NamedQuery(name= "getAllSensorReading", query= "SELECT s FROM SensorReading s ORDER BY s.sensor.id DESC"),
+        @NamedQuery(name= "getAllSensorReadings", query= "SELECT s FROM SensorReading s ORDER BY s.sensor.id DESC"),
 })
 public class SensorReading {
     @Id
@@ -26,27 +26,46 @@ public class SensorReading {
     @OneToOne
     private Sensor sensor;
 
+    boolean violatesQualityConstraint = false;
+
     public SensorReading(){
     }
 
-    public SensorReading(float value) {
+    public SensorReading(float value, Sensor sensor) {
         this.date = new Date();
         this.value = value;
+        this.sensor = sensor;
     }
 
     public Date getDate() {
         return date;
     }
+
     public float getValue() {
         return value;
     }
+
+    public Sensor getSensor() {
+        return this.sensor;
+    }
+
+    public boolean doesViolateQualityConstraint() {
+        return violatesQualityConstraint;
+    }
+
     public void setValue(float value) {
         this.value = value;
     }
+    
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
     }
+    
     public Sensor getSensor() {
         return sensor;
+    }
+
+    public void setViolatesQualityConstraint(boolean violates) {
+        this.violatesQualityConstraint = violates;
     }
 }

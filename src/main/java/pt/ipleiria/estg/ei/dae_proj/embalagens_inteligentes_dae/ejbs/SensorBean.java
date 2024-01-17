@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
@@ -21,14 +20,19 @@ public class SensorBean {
         return entityManager.find(Sensor.class, id) != null;
     }
 
-    public Sensor create(String name) throws MyEntityExistsException {
-        var sensor = new Sensor(name);
+    public Sensor create(String name, long package_id) throws MyEntityNotFoundException {
+        // find package by id
+        Package p = entityManager.find(Package.class, package_id);
+        if(p == null)
+            throw new MyEntityNotFoundException("The specified package does not exist!");
+
+        var sensor = new Sensor(name, p);
         entityManager.persist(sensor);
         return sensor;
     }
 
     public List<Sensor> getAllSensor() {
-        return entityManager.createNamedQuery("getAllSensores", Sensor.class).getResultList();
+        return entityManager.createNamedQuery("getAllSensors", Sensor.class).getResultList();
     }
 
     public Sensor getSensor(String name) throws MyEntityNotFoundException {

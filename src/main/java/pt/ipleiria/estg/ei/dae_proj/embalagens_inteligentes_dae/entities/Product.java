@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Null;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -29,18 +30,24 @@ public class Product {
     private ProductManufacturer manufacturer;
     @OneToOne
     private Package _package;
+
+    @OneToMany
+    private List<QualityConstraint> qualityConstraints;
+
     @Version
     private int version;
     private Date deleted_at;
     private boolean deleted = Boolean.FALSE;
 
     public Product() {
+        this.qualityConstraints = new LinkedList<>();
     }
 
     public Product(String name, String description, ProductManufacturer manufacturer) {
         this.name = name;
         this.description = description;
         this.manufacturer = manufacturer;
+        this.qualityConstraints = new LinkedList<>();
         this._package = null;
     }
 
@@ -88,5 +95,12 @@ public class Product {
         this.deleted = deleted;
     }
 
+    public List<QualityConstraint> getQualityConstraints() {
+        return qualityConstraints;
+    }
+
+    public void addQualityConstraint(QualityConstraint constraint) {
+        this.qualityConstraints.add(constraint);
+    }
 
 }
