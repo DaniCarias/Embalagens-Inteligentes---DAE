@@ -45,10 +45,6 @@ public class SensorReading {
         return value;
     }
 
-    public Sensor getSensor() {
-        return this.sensor;
-    }
-
     public boolean doesViolateQualityConstraint() {
         return violatesQualityConstraint;
     }

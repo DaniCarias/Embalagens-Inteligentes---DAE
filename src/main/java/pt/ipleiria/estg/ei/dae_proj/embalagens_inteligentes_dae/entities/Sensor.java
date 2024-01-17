@@ -84,10 +84,6 @@ public class Sensor {
         return controlledConstraints;
     }
 
-    public void addReading(SensorReading reading) {
-        this.readings.add(reading);
-    }
-
     public void addControlledConstraint(QualityConstraint constraint) {
         this.controlledConstraints.add(constraint);
     }
