@@ -52,6 +52,7 @@ public class ConfigBean {
 
         //End Consumer
             EndConsumer endConsumer1 = endConsumerBean.create("danicarias_outro", "pass123", "Daniel Carias", "urbanização", 961234567);
+            EndConsumer endConsumer2 = endConsumerBean.create("danicarias_outro2", "teste2", "Daniel teste2", "test2", 919123111);
 
         //Order
             orderBean.create(endConsumer1);

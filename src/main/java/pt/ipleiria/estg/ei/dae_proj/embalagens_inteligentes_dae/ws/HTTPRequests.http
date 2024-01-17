@@ -5,7 +5,7 @@ GET http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
 
 ##### GetProduct
-GET http://localhost:8080/embalagensinteligentes/api/products/2
+GET http://localhost:8080/embalagensinteligentes/api/products/3
 Accept: application/json
 
 ##### CreateProduct
@@ -37,14 +37,16 @@ DELETE http://localhost:8080/embalagensinteligentes/api/products/3
 Accept: application/json
 
 ##### AddPackage
-POST http://localhost:8080/embalagensinteligentes/api/products/1/addpackage
+POST http://localhost:8080/embalagensinteligentes/api/products/1/package
 Accept: application/json
 Content-Type: application/json
 
-1
+{
+    "id": 2
+}
 
 ##### RemovePackage
-POST http://localhost:8080/embalagensinteligentes/api/products/1/removepackage
+DELETE http://localhost:8080/embalagensinteligentes/api/products/1/package
 Accept: application/json
 
 
@@ -88,15 +90,49 @@ DELETE http://localhost:8080/embalagensinteligentes/api/packages/1
 Accept: application/json
 
 ##### AddOrder
-POST http://localhost:8080/embalagensinteligentes/api/packages/1/addorder
+POST http://localhost:8080/embalagensinteligentes/api/packages/1/order
 Accept: application/json
+Content-Type: application/json
 
-1
+{
+    "id": 1
+}
 
 ##### RemoveOrder
-POST http://localhost:8080/embalagensinteligentes/api/packages/1/removeorder
+DELETE http://localhost:8080/embalagensinteligentes/api/packages/1/order
 Accept: application/json
 
+
+//--------------------ORDERS
+##### AllOrders
+GET http://localhost:8080/embalagensinteligentes/api/orders
+Accept: application/json
+
+##### GetOrder
+GET http://localhost:8080/embalagensinteligentes/api/orders/2
+Accept: application/json
+
+##### CreateOrder
+POST http://localhost:8080/embalagensinteligentes/api/orders
+Accept: application/json
+Content-Type: application/json
+
+{
+  "endConsumer_username": "danicarias_outro"
+}
+
+##### EditOrder
+PUT http://localhost:8080/embalagensinteligentes/api/orders/1
+Accept: application/json
+Content-Type: application/json
+
+{
+    "endConsumer_username": "danicarias_outro2"
+}
+
+##### DeleteOrder
+DELETE http://localhost:8080/embalagensinteligentes/api/orders/1
+Accept: application/json
 
 
 

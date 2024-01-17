@@ -124,10 +124,10 @@ public class PackageService {
     }
 
     @POST
-    @Path("/{id}/addorder")
-    public Response addOrder(@PathParam("id") long id, long order_id) throws MyEntityNotFoundException, MyEntityExistsException {
+    @Path("/{id}/order")
+    public Response addOrder(@PathParam("id") long id, OrderDTO orderDTO) throws MyEntityNotFoundException, MyEntityExistsException {
         Package _package = packageBean.find(id);
-        Order order = orderBean.find(order_id);
+        Order order = orderBean.find(orderDTO.getId());
 
         if(_package == null)
             return Response.status(Response.Status.NOT_FOUND).entity("Package do not exists").build();
@@ -138,13 +138,13 @@ public class PackageService {
         if(_package.getOrder() != null)
             return Response.status(Response.Status.BAD_REQUEST).entity("Package already has an order").build();
 
-        packageBean.addOrder(id, order_id);
+        packageBean.addOrder(id, orderDTO.getId());
 
         return Response.status(Response.Status.OK).entity("Order added").build();
     }
 
-    @POST
-    @Path("/{id}/removeorder")
+    @DELETE
+    @Path("/{id}/order")
     public Response removeOrder (@PathParam("id") long id) throws MyEntityNotFoundException {
         Package _package = packageBean.find(id);
 

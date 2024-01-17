@@ -70,9 +70,8 @@ public class PackageBean {
     public boolean delete(long id) throws MyEntityNotFoundException {
 
         Package _package = entityManager.find(Package.class, id);
-        if (_package == null) {
+        if (_package == null)
             throw new MyEntityNotFoundException("Package with id: " + id + " not found");
-        }
 
         _package.setDeleted_at(new Date());
         entityManager.persist(_package);
