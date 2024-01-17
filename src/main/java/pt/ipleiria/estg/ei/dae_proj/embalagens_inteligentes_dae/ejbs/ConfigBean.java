@@ -60,7 +60,7 @@ public class ConfigBean {
             LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);
 
         //Sensor
-            Sensor sensor1 = sensorBean.create("sensor_teste");
+            Sensor sensor1 = sensorBean.create("sensor_teste", package1.getId());
 
         }catch(Exception exception){
             logger.severe(exception.getMessage());
