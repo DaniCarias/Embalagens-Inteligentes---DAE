@@ -125,8 +125,6 @@ public class SensorReadingBean {
         Package _package = entityManager.find(Package.class, package_id);
         Hibernate.initialize(_package.getProduct());
 
-        entityManager.lock(sensorReading, LockModeType.OPTIMISTIC);
-        entityManager.remove(sensorReading);
         List<SensorReading> readings = new LinkedList<>();
 
         // initialize constraints list
