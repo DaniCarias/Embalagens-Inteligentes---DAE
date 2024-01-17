@@ -31,7 +31,7 @@ public class Product {
     @OneToOne
     private Package _package;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<QualityConstraint> qualityConstraints;
 
     @Version

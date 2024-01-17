@@ -32,13 +32,13 @@ public class Sensor {
     @NotNull
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "sensor")
     private List<SensorReading> readings;
 
     @ManyToOne // because this is the sensor of a specific package
     private Package _package;
 
-    @OneToMany
+    @OneToMany(mappedBy = "sensor")
     private List<QualityConstraint> controlledConstraints; // the quality constraints this sensor controls
 
     @Version

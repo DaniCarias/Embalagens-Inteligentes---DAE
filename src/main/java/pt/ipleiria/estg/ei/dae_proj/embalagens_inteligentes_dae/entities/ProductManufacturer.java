@@ -13,7 +13,7 @@ import jakarta.persistence.OneToMany;
         @NamedQuery(name= "getAllProductManufacturer", query= "SELECT p FROM ProductManufacturer p ORDER BY p.username DESC"),
 })
 public class ProductManufacturer extends User{
-    @OneToMany
+    @OneToMany(mappedBy = "manufacturer")
     private List<Product> products;
 
 

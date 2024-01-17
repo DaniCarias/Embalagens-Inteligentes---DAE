@@ -23,7 +23,7 @@ public class SensorReading {
     @NotNull
     private float value;
 
-    @OneToOne
+    @ManyToOne
     private Sensor sensor;
 
     boolean violatesQualityConstraint = false;

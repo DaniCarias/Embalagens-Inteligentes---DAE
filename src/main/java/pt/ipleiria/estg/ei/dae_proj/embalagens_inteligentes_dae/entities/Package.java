@@ -39,7 +39,7 @@ public class Package {
     private Product product;
     @ManyToOne
     private Order order;
-    @OneToMany
+    @OneToMany(mappedBy = "_package")
     private List<Sensor> sensors;
     @Version
     private int version;
