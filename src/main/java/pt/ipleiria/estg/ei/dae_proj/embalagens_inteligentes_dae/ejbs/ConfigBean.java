@@ -45,6 +45,7 @@ public class ConfigBean {
 
         //Package
             Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira", prod1);
+            Package package2 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Ferro", prod2);
             prod1.setPackage(package1);
             prod2.setPackage(package1);
             prod3.setPackage(package1);

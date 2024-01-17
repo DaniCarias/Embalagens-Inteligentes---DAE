@@ -1,9 +1,11 @@
+//--------------------PRODUCTS
+
 ##### AllProducts
 GET http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
 
 ##### GetProduct
-GET http://localhost:8080/embalagensinteligentes/api/products/1
+GET http://localhost:8080/embalagensinteligentes/api/products/2
 Accept: application/json
 
 ##### CreateProduct
@@ -14,28 +16,36 @@ Content-Type: application/json
 {
   "name": "teste_product",
   "description": "teste",
-  "username_manufacturer": "danicarias"
+  "username_manufacturer": "danicarias",
+  "package_id": 0
 }
 
 ##### EditProduct
-PUT http://localhost:8080/academics/api/products
+PUT http://localhost:8080/embalagensinteligentes/api/products/4
 Accept: application/json
 Content-Type: application/json
 
 {
-  "username": "teste2",
-  "password": "pass2",
-  "name": "John Doe",
-  "email": "teste2teste2teste2",
-  "courseCode": 1
+  "name": "produto_alterado2",
+  "description": "alterado",
+  "username_manufacturer": "danicarias",
+  "package_id": 1
 }
 
 ##### DeleteProduct
-DELETE http://localhost:8080/academics/api/products/1
+DELETE http://localhost:8080/embalagensinteligentes/api/products/3
+Accept: application/json
+
+##### AddPackage
+POST http://localhost:8080/embalagensinteligentes/api/products/1/addpackage
+Accept: application/json
+Content-Type: application/json
+
+1
+
+##### RemovePackage
+POST http://localhost:8080/embalagensinteligentes/api/products/1/removepackage
 Accept: application/json
 
 
-
-##### AllOrders
-GET http://localhost:8080/embalagensinteligentes/api/orders
-Accept: application/json
+//--------------------PACKAGES

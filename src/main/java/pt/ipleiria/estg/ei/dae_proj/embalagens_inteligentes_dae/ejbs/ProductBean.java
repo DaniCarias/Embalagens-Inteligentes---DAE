@@ -10,6 +10,8 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
+
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -56,7 +58,7 @@ public class ProductBean {
         return product;
     }
 
-    public void update(long id, String name, String description, ProductManufacturer productManufacturer) throws MyEntityNotFoundException {
+    public void update(long id, String name, String description, ProductManufacturer productManufacturer, long package_id) throws MyEntityNotFoundException {
 
         if (!exists(id))
             throw new MyEntityNotFoundException("Product with id: " + id + " not found");
@@ -70,16 +72,22 @@ public class ProductBean {
         product.setName(name);
         product.setDescription(description);
         product.setProductManufacturer(productManufacturer);
+        product.setPackage(entityManager.find(Package.class, package_id));
     }
 
-    public void delete(long id) throws MyEntityNotFoundException {
+    public boolean delete(long id) throws MyEntityNotFoundException {
 
         Product product = entityManager.find(Product.class, id);
         if (product == null)
             throw new MyEntityNotFoundException("Product with id: " + id + " not found");
 
+        product.setDeleted_at(new Date());
+        entityManager.persist(product);
+        entityManager.flush();
+
         entityManager.lock(product, LockModeType.OPTIMISTIC);
         entityManager.remove(product);
+        return true;
     }
 
     public void addPackage(long product_id, long package_id) throws MyEntityNotFoundException {

@@ -8,10 +8,13 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.PackageDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.ProductDTO;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductManufacturerBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 @Path("products")
@@ -23,6 +26,8 @@ public class ProductService {
     private ProductBean productBean;
     @EJB
     private ProductManufacturerBean productManufacturerBean;
+    @EJB
+    private PackageBean packageBean;
 
     private ProductDTO toDTO(Product product) {
         if (product.getPackage() == null){
@@ -88,26 +93,79 @@ public class ProductService {
                 id,
                 productDTO.getName(),
                 productDTO.getDescription(),
-                productManufacturer
+                productManufacturer,
+                productDTO.getPackage_id()
         );
 
-        Product product = productBean.find(productDTO.getId());
+        Product product = productBean.find(id);
         if(product == null){
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return Response.status(Response.Status.OK).entity(toDTO(product)).entity("Product updated").build();
+        return Response.status(Response.Status.OK).entity("Product updated").build();
     }
 
-
-    //TESTAR COM O "id" em string -> Pode nao converter automaticamente
     @DELETE
     @Path("/{id}")
     public Response deleteProduct(@PathParam("id") long id) throws MyEntityNotFoundException {
-        //long id = Long.parseLong(id);
         Product product = productBean.find(id);
-        if(product != null){
+
+        if(product == null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Product do not exist").build();
+
+        boolean isDeleted = productBean.delete(id);
+        if(!isDeleted)
             return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
-        }
-        return Response.status(Response.Status.BAD_REQUEST).entity("Product do not exist").build();
+
+        return Response.status(Response.Status.OK).entity("Product deleted").build();
     }
+
+    @POST
+    @Path("/{id}/addpackage")
+    public Response addPackage(@PathParam("id") long id, long package_id) throws MyEntityNotFoundException {
+        Product product = productBean.find(id);
+        if(product == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        Package _package = packageBean.find(package_id);
+        if(_package == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Package do not exists").build();
+
+        if(product.getPackage() != null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Product already has a package").build();
+
+        productBean.addPackage(id, package_id);
+
+        product = productBean.find(id);
+        return Response.status(Response.Status.OK).entity(product).entity("Package added").build();
+    }
+
+    @POST
+    @Path("/{id}/removepackage")
+    public Response removePackage(@PathParam("id") long id) throws MyEntityNotFoundException {
+        Product product = productBean.find(id);
+        if(product == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        if(product.getPackage() == null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Product does not have a package").build();
+
+        productBean.removePackage(id);
+
+        product = productBean.find(id);
+        return Response.status(Response.Status.OK).entity(product).entity("Package removed").build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getProductDetails(@PathParam("id") long id) {
+        Product product = productBean.find(id);
+        if (product != null) {
+            return Response.ok(toDTO(product)).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).entity("ERROR_FINDING_PRODUCT").build();
+    }
+
+
+
+
 }
