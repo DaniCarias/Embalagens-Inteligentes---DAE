@@ -37,6 +37,10 @@ public class SensorReading {
         this.sensor = sensor;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public Date getDate() {
         return date;
     }

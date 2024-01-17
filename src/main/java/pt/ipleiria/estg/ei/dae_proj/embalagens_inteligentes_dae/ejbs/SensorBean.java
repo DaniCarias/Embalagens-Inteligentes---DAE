@@ -36,26 +36,26 @@ public class SensorBean {
         return entityManager.createNamedQuery("getAllSensors", Sensor.class).getResultList();
     }
 
-    public Sensor getSensor(String name) throws MyEntityNotFoundException {
-        Sensor sensor = entityManager.find(Sensor.class, name);
+    public Sensor getSensor(long id) throws MyEntityNotFoundException {
+        Sensor sensor = entityManager.find(Sensor.class, id);
         if (sensor == null)
             throw new MyEntityNotFoundException("Sensor with name: " + name + " not found");
         return sensor;
     }
 
-    public void update(String name) {
-        Sensor sensor = entityManager.find(Sensor.class, name);
+    public void update(long id, String name) {
+        Sensor sensor = entityManager.find(Sensor.class, id);
         if (sensor != null) {
             sensor.setName(name);
             entityManager.merge(sensor);
         }
     }
 
-    public void delete(String name) throws MyEntityNotFoundException {
+    public void delete(long id) throws MyEntityNotFoundException {
 
-        Sensor sensor = entityManager.find(Sensor.class, name);
+        Sensor sensor = entityManager.find(Sensor.class, id);
         if (sensor == null)
-            throw new MyEntityNotFoundException("Sensor with name: " + name + " not found");
+            throw new MyEntityNotFoundException("Sensor with ID: " + id + " not found");
 
         entityManager.lock(sensor, LockModeType.OPTIMISTIC);
         entityManager.remove(sensor);
