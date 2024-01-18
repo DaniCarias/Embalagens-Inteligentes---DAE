@@ -21,6 +21,10 @@ public class SensorBean {
         return entityManager.find(Sensor.class, id) != null;
     }
 
+    public Sensor find(long id) {
+        return entityManager.find(Sensor.class, id);
+    }
+
     public Sensor create(String name, long package_id) throws MyEntityNotFoundException {
         // find package by id
         Package p = entityManager.find(Package.class, package_id);
@@ -43,22 +47,31 @@ public class SensorBean {
         return sensor;
     }
 
-    public void update(String name) {
-        Sensor sensor = entityManager.find(Sensor.class, name);
-        if (sensor != null) {
-            sensor.setName(name);
-            entityManager.merge(sensor);
-        }
+    public void update(long id, String nome, long package_id) throws MyEntityNotFoundException {
+        Sensor sensor = entityManager.find(Sensor.class, id);
+        Package p = entityManager.find(Package.class, package_id);
+
+        if (sensor == null)
+            throw new MyEntityNotFoundException("Sensor with id: " + id + " not found");
+
+        if (p == null)
+            throw new MyEntityNotFoundException("Package with id: " + package_id + " not found");
+
+        sensor.setName(nome);
+        sensor.set_package(p);
+        entityManager.merge(sensor);
+
     }
 
-    public void delete(String name) throws MyEntityNotFoundException {
+    public boolean delete(long id) throws MyEntityNotFoundException {
 
-        Sensor sensor = entityManager.find(Sensor.class, name);
+        Sensor sensor = entityManager.find(Sensor.class, id);
         if (sensor == null)
-            throw new MyEntityNotFoundException("Sensor with name: " + name + " not found");
+            throw new MyEntityNotFoundException("Sensor with id: " + id + " not found");
 
         entityManager.lock(sensor, LockModeType.OPTIMISTIC);
         entityManager.remove(sensor);
+        return true;
     }
 
     public void addReading(long sensor_id, long reading_id) throws MyEntityNotFoundException {

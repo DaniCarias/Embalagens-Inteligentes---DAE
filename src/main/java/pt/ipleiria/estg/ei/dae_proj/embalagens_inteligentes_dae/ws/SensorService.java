@@ -8,9 +8,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 @Path("sensors")
@@ -19,15 +21,16 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEnt
 public class SensorService {
 
     @EJB
-    private SensorBean SensorBean;
+    private SensorBean sensorBean;
     @EJB
     private PackageBean packageBean;
 
     private SensorDTO toDTO(Sensor sensor) {
 
         return new SensorDTO(
-                sensor.getId();
-                sensor.getName();
+                sensor.getId(),
+                sensor.getName(),
+                sensor.getPackage().getId()
         );
     }
 
@@ -38,17 +41,27 @@ public class SensorService {
     @GET
     @Path("/")
     public List<SensorDTO> getAllSensors() {
-        return toDTOs(sensorBean.getAll());
+        return toDTOs(sensorBean.getAllSensor());
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getSensorDetails(@PathParam("id") long id) {
+        Sensor sensor = sensorBean.find(id);
+        if (sensor != null) {
+            return Response.status(Response.Status.OK).entity(toDTO(sensor)).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST).entity("Sensor do not exist").build();
     }
 
     @POST
     @Path("/")
     public Response createNewSensor(SensorDTO sensorDTO) {
-        Package pck = packageBean.find(sensorDTO.getPackage());
+        Package pck = packageBean.find(sensorDTO.getPackage_id());
         if(pck == null)
             return Response.status(Response.Status.NOT_FOUND).build();
         try {
-            Sensor sensor = sensorBean.create(sensorDTO.getName().pck.getId());
+            Sensor sensor = sensorBean.create(sensorDTO.getName(), pck.getId());
 
             if(sensor == null)
                 return Response.status(Response.Status.BAD_REQUEST).build();
@@ -63,27 +76,23 @@ public class SensorService {
     @PUT
     @Path("/{id}")
     public Response editSensor(@PathParam("id") long id, SensorDTO sensorDTO) throws MyEntityNotFoundException {
-        Package pck = packageBean.find(sensorDTO.getPackage());
+        Sensor sensor = sensorBean.find(id);
+        if(sensor == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor do not exist").build();
+
+        Package pck = packageBean.find(sensorDTO.getPackage_id());
         if(pck == null)
             return Response.status(Response.Status.NOT_FOUND).build();
-        sensorBean.update(
-                sensorDTO.getName(),
-                pck.getId()
-        );
 
-        Sensor sensor = sensorBean.find(sensorDTO.getId());
-        if(sensor == null){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-        return Response.status(Response.Status.OK).entity(toDTO(product)).entity("Sensor updated").build();
+        sensorBean.update(id, sensorDTO.getName(), sensorDTO.getPackage_id());
+
+        return Response.status(Response.Status.OK).entity(toDTO(sensor)).entity("Sensor updated").build();
     }
 
 
-    //TESTAR COM O "id" em string -> Pode nao converter automaticamente
     @DELETE
     @Path("/{id}")
     public Response deleteSensor(@PathParam("id") long id) throws MyEntityNotFoundException {
-        //long id = Long.parseLong(id);
         Sensor sensor = sensorBean.find(id);
 
         if(sensor == null)

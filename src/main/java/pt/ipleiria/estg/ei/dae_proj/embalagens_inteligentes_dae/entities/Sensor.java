@@ -54,6 +54,30 @@ public class Sensor {
         this.controlledConstraints = new LinkedList<>();
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setReadings(List<SensorReading> readings) {
+        this.readings = readings;
+    }
+
+    public Package get_package() {
+        return _package;
+    }
+
+    public void set_package(Package _package) {
+        this._package = _package;
+    }
+
+    public void setControlledConstraints(List<QualityConstraint> controlledConstraints) {
+        this.controlledConstraints = controlledConstraints;
+    }
+
     public String getName() {
         return name;
     }
