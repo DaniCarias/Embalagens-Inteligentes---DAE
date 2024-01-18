@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndCons
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Order;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Hasher;
 
 import java.util.List;
 
@@ -17,6 +19,9 @@ public class EndConsumerBean {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Inject
+    private Hasher hasher;
 
     public boolean exists(String username) {
         return entityManager.find(EndConsumer.class, username) != null;
@@ -30,7 +35,7 @@ public class EndConsumerBean {
         if (exists(username)) {
             throw new MyEntityExistsException("End Consumer with username: " + username + " already exists");
         }
-        var endConsumer = new EndConsumer(username, password, name, address, phoneNumber);
+        var endConsumer = new EndConsumer(username, name, hasher.hash(password), address, phoneNumber);
         entityManager.persist(endConsumer);
         return endConsumer;
     }

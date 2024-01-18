@@ -182,7 +182,7 @@ Content-Type: application/json
 
 {
     "username": "danicarias",
-    "password": "Daniel Carias"
+    "password": "pass123"
 }
 
 ###END CONSUMER

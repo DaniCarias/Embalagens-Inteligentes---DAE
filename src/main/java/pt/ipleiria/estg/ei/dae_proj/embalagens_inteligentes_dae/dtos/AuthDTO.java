@@ -10,6 +10,7 @@ public class AuthDTO implements Serializable {
     @NotBlank
     private String password;
 
+
     public AuthDTO() {
 
     }
@@ -18,6 +19,7 @@ public class AuthDTO implements Serializable {
         this.username = username;
         this.password = password;
     }
+
 
     public String getUsername() {
         return username;

@@ -1,12 +1,14 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.LogisticsOperator;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Hasher;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class LogisticsOperatorBean {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Inject
+    private Hasher hasher;
+
     public boolean exists(String username) {
         return entityManager.find(LogisticsOperator.class, username) != null;
     }
@@ -24,7 +29,7 @@ public class LogisticsOperatorBean {
         if (exists(username)) {
             throw new MyEntityExistsException("Logistics Operator with username: " + username + " already exists");
         }
-        var logisticsOperator = new LogisticsOperator(username, password, name, address, phoneNumber);
+        var logisticsOperator = new LogisticsOperator(username, name, hasher.hash(password), address, phoneNumber);
         entityManager.persist(logisticsOperator);
         return logisticsOperator;
     }

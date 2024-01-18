@@ -29,7 +29,7 @@ public class UserBean {
 
     public boolean canLogin(String username, String password) {
         var user = find(username);
-        return user != null && user.getPassword().equals(/*hasher.hash(*/password/*)*/);
+        return user != null && user.getPassword().equals(hasher.hash(password));
     }
 
 

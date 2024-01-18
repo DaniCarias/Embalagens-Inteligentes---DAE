@@ -70,7 +70,7 @@ public class EndConsumerService {
         return Response.status(Response.Status.BAD_REQUEST).entity("End Consumer do not exist").build();
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @POST
     @Path("/")
     public Response createNewEndConsumer(EndConsumerDTO endConsumerDTO) throws MyEntityExistsException{

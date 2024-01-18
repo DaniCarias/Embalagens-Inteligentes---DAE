@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
@@ -8,6 +9,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.ProductManufacturer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Hasher;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class ProductManufacturerBean {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Inject
+    private Hasher hasher;
 
     public boolean exists(String username) {
         return entityManager.find(ProductManufacturer.class, username) != null;
@@ -29,7 +34,7 @@ public class ProductManufacturerBean {
         if (exists(username)) {
             throw new MyEntityExistsException("Product Manufacturer with username: " + username + " already exists");
         }
-        var productManufacturer = new ProductManufacturer(username, password, name, address, phoneNumber);
+        var productManufacturer = new ProductManufacturer(username, name, hasher.hash(password), address, phoneNumber);
         entityManager.persist(productManufacturer);
         return productManufacturer;
     }
