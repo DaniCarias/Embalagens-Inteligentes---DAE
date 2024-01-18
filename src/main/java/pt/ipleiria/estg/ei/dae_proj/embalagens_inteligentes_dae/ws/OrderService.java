@@ -39,6 +39,20 @@ public class OrderService {
         return orders.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    private PackageDTO package_toDTO(Package _package) {
+        return new PackageDTO(
+                _package.getId(),
+                _package.getPackageType(),
+                _package.getLastTimeOpened(),
+                _package.getMaterial(),
+                _package.getProduct().getId()
+        );
+    }
+
+    private List<PackageDTO> packages_toDTOs(List<Package> packages) {
+        return packages.stream().map(this::package_toDTO).collect(Collectors.toList());
+    }
+
     @GET
     @Path("/")
     public List<OrderDTO> getAllOrders() {
@@ -105,15 +119,24 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity("Package deleted").build();
     }
 
+    @GET
+    @Path("/{id}/packages")
+    public Response getPackages(@PathParam("id") long id) throws MyEntityNotFoundException {
+        Order order = orderBean.getOrderPackages(id);
 
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + id + " not found");
 
+        var packages = packages_toDTOs(order.getPackages());
 
+        return Response.status(Response.Status.OK).entity(packages).build();
+    }
 
     @POST
-    @Path("/{id}/addpackage")
-    public Response addPackage(@PathParam("id") long id, long package_id) throws MyEntityNotFoundException {
+    @Path("/{id}/package")
+    public Response addPackage(@PathParam("id") long id, PackageDTO packageDTO) throws MyEntityNotFoundException {
         Order order = orderBean.find(id);
-        Package _package = packageBean.find(package_id);
+        Package _package = packageBean.find(packageDTO.getId());
 
         if(order == null)
             return Response.status(Response.Status.NOT_FOUND).entity("Order not found").build();
@@ -121,10 +144,21 @@ public class OrderService {
         if(_package == null)
             return Response.status(Response.Status.NOT_FOUND).entity("Package not found").build();
 
-        orderBean.addPackage(id, package_id);
-        return Response.status(Response.Status.OK).entity("Package added to order").build();
+        boolean res = orderBean.addPackage(id, packageDTO.getId());
+        return Response.status(Response.Status.OK).entity(res).build();
     }
 
+    @DELETE
+    @Path("/{id}/package")
+    public Response removePackage(@PathParam("id") long id) throws MyEntityNotFoundException {
+        Order order = orderBean.find(id);
 
+        if(order == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Order do not exists").build();
+
+        orderBean.removePackage(id);
+
+        return Response.status(Response.Status.OK).entity("Package removed").build();
+    }
 
 }

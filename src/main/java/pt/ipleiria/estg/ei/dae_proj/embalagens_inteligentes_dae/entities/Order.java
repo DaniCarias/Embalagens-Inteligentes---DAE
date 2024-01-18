@@ -34,11 +34,11 @@ public class Order {
     private boolean deleted = Boolean.FALSE;
 
     public Order() {
-        this.packages = new LinkedList<>();
+        this.packages = new LinkedList<Package>();
     }
 
     public Order(EndConsumer endConsumer) {
-        this.packages = new LinkedList<>();
+        this.packages = new LinkedList<Package>();
         this.endConsumer = endConsumer;
     }
 

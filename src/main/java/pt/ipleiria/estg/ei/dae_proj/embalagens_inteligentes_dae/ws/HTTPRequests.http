@@ -90,7 +90,7 @@ DELETE http://localhost:8080/embalagensinteligentes/api/packages/1
 Accept: application/json
 
 ##### AddOrder
-POST http://localhost:8080/embalagensinteligentes/api/packages/1/order
+POST http://localhost:8080/embalagensinteligentes/api/packages/2/order
 Accept: application/json
 Content-Type: application/json
 
@@ -109,7 +109,7 @@ GET http://localhost:8080/embalagensinteligentes/api/orders
 Accept: application/json
 
 ##### GetOrder
-GET http://localhost:8080/embalagensinteligentes/api/orders/2
+GET http://localhost:8080/embalagensinteligentes/api/orders/1
 Accept: application/json
 
 ##### CreateOrder
@@ -132,6 +132,10 @@ Content-Type: application/json
 
 ##### DeleteOrder
 DELETE http://localhost:8080/embalagensinteligentes/api/orders/1
+Accept: application/json
+
+##### GetPackages
+GET http://localhost:8080/embalagensinteligentes/api/orders/1/packages
 Accept: application/json
 
 ##### AddPackage

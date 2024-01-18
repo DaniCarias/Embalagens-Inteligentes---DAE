@@ -56,6 +56,7 @@ public class ConfigBean {
 
         //Order
             orderBean.create(endConsumer1);
+            orderBean.create(endConsumer2);
 
         //Logistic Operator
             LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);

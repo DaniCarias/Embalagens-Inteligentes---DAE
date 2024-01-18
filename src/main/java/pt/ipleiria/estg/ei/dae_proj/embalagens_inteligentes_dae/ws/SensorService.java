@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorBean;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorReadingBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
@@ -24,6 +25,8 @@ public class SensorService {
     private SensorBean sensorBean;
     @EJB
     private PackageBean packageBean;
+    @EJB
+    private SensorReadingBean sensorReadingBean;
 
     private SensorDTO toDTO(Sensor sensor) {
 
@@ -104,4 +107,20 @@ public class SensorService {
 
         return Response.status(Response.Status.OK).entity("Sensor deleted").build();
     }
+
+    /*@POST
+    @Path("/{id}/reading")
+    public Response addReading(@PathParam("id") long id, SensorReadingDTO sensorReadingDTO) throws MyEntityNotFoundException {
+        Sensor sensor = sensorBean.find(id);
+        if(sensor == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor do not exist").build();
+
+        SensorReading sensorReading = sensorReadingBean.find(sensorReadingDTO.getId());
+
+        SensorReading sensorReading = new SensorReading(sensorReadingDTO.getValue(), sensorReadingDTO.getTimestamp(), sensor);
+        sensor.addReading(sensorReading);
+        sensorBean.update(sensor.getId(), sensor.getName(), sensor.getPackage().getId());
+
+        return Response.status(Response.Status.OK).entity("Reading added").build();
+    }*/
 }

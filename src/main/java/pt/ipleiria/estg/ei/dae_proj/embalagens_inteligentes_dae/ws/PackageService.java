@@ -152,7 +152,7 @@ public class PackageService {
             return Response.status(Response.Status.NOT_FOUND).entity("Package do not exists").build();
 
         if(_package.getOrder() == null)
-            return Response.status(Response.Status.BAD_REQUEST).entity("Package does not have a package").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Package does not have a order").build();
 
         packageBean.removeOrder(id);
 

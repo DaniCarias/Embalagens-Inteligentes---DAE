@@ -96,6 +96,9 @@ public class PackageBean {
         if (_package.getOrder() != null)
             throw new MyEntityExistsException("Package with id: " + id + " already has an order");
 
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
+        order.addPackage(_package);
+
         entityManager.lock(_package, LockModeType.OPTIMISTIC);
         _package.setOrder(order);
     }
@@ -106,6 +109,13 @@ public class PackageBean {
 
         if (_package == null)
             throw new MyEntityNotFoundException("Package with id: " + id + " not found");
+
+        Order order = _package.getOrder();
+        if (order == null)
+            throw new MyEntityNotFoundException("Package with id: " + id + " does not have a order");
+
+        entityManager.lock(order, LockModeType.OPTIMISTIC);
+        order.removePackage(_package);
 
         entityManager.lock(_package, LockModeType.OPTIMISTIC);
         _package.setOrder(null);

@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import org.hibernate.Hibernate;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Order;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
@@ -77,7 +78,7 @@ public class OrderBean {
         return true;
     }
 
-    public void addPackage(long order_id, long package_id) throws MyEntityNotFoundException {
+    public boolean addPackage(long order_id, long package_id) throws MyEntityNotFoundException {
         Package _package = entityManager.find(Package.class, package_id);
         Order order = entityManager.find(Order.class, order_id);
 
@@ -87,29 +88,34 @@ public class OrderBean {
             throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
 
         //entityManager.lock(_package, LockModeType.OPTIMISTIC);
-        entityManager.lock(order, LockModeType.OPTIMISTIC);
+        //entityManager.lock(order, LockModeType.OPTIMISTIC);
 
         order.addPackage(_package);
-        entityManager.merge(order);
+        //entityManager.merge(order);
+        //entityManager.persist(order);
+
+        boolean result = order.getPackages().contains(_package);
+        return result;
     }
 
-    public void removePackage(long order_id, long package_id) throws MyEntityNotFoundException {
-        Package _package = entityManager.find(Package.class, package_id);
+    public void removePackage(long order_id) throws MyEntityNotFoundException {
         Order order = entityManager.find(Order.class, order_id);
 
-        if(_package == null)
-            throw new MyEntityNotFoundException("Package with id: " + package_id + " not found");
-        if(order == null)
+        if (order == null)
             throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
 
-        //entityManager.lock(_package, LockModeType.OPTIMISTIC);
         entityManager.lock(order, LockModeType.OPTIMISTIC);
-
-        order.removePackage(_package);
-        entityManager.merge(order);
+        order.setPackage(null);
     }
 
-
+    public Order getOrderPackages(long id) throws MyEntityNotFoundException{
+        Order order = entityManager.find(Order.class, id);
+        if(!exists(order.getId())){
+            throw new MyEntityNotFoundException("Order with id: " + id + " not found");
+        }
+        Hibernate.initialize(order.getPackage());
+        return order;
+    }
 
 
 
