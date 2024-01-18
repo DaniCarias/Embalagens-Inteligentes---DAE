@@ -11,7 +11,12 @@ import java.util.Date;
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
 )
 @NamedQueries({
-        @NamedQuery(name= "getAllSensorReadings", query= "SELECT s FROM SensorReading s ORDER BY s.sensor.id DESC"),
+        @NamedQuery(name = "getAllSensorReadings", query= "SELECT s FROM SensorReading s ORDER BY s.sensor.id DESC"),
+        @NamedQuery(name = "getAllSensorReadingsForSensor", query = "SELECT sr FROM SensorReading sr WHERE sr.sensor.id = :sensorId"),
+        @NamedQuery(name = "getViolatingReadingsForProduct", query = "SELECT sr FROM SensorReading sr " +
+                "INNER JOIN QualityConstraint qc ON sr.sensor.id = qc.sensor.id " +
+                "INNER JOIN Product p ON qc.product.id = p.id " +
+                "WHERE sr.violatesQualityConstraint = true AND p.id = :productId")
 })
 public class SensorReading {
     @Id
@@ -35,6 +40,10 @@ public class SensorReading {
         this.date = new Date();
         this.value = value;
         this.sensor = sensor;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Date getDate() {

@@ -89,62 +89,18 @@ public class SensorReadingBean {
         return sensorReading;
     }
 
-    public List<SensorReading> getViolatingSensorReadingsForProduct(long product_id) throws MyEntityNotFoundException {
-        // TODO: probably this is not how it should be done. should be done with queries
-        // get product by id
-        Product product = entityManager.find(Product.class, product_id);
-        if(product == null)
-            throw new MyEntityNotFoundException("Product does not exist!");
+    public List<SensorReading> getSensorReadingsForSensor(long sensor_id) {
 
-        List<SensorReading> readings = new LinkedList<>();
-
-        // initialize constraints list
-        Hibernate.initialize(product.getQualityConstraints());
-
-        // iterate product constraints
-        for(QualityConstraint c : product.getQualityConstraints()) {
-
-            Hibernate.initialize(c.getSensor());
-            Hibernate.initialize(c.getSensor().getReadings());
-
-            // iterating readings og the sensor monitoring the constraint
-            for(SensorReading r : c.getSensor().getReadings()) {
-                // add violating constraints
-                if(r.doesViolateQualityConstraint())
-                    readings.add(r);
-            }
-        }
-
-        return readings;
+        return entityManager.createNamedQuery("getAllSensorReadingsForSensor", SensorReading.class)
+                .setParameter("sensorId", sensor_id)
+                .getResultList();
     }
 
-    public List<SensorReading> getViolatingSensorReadingsForPackage(long package_id) {
-        // TODO: probably this is not how it should be done. should be done with queries
+    public List<SensorReading> getViolatingSensorReadingsForProduct(long product_id) {
 
-        // get package by id
-        Package _package = entityManager.find(Package.class, package_id);
-        Hibernate.initialize(_package.getProduct());
-
-        List<SensorReading> readings = new LinkedList<>();
-
-        // initialize constraints list
-        Hibernate.initialize(_package.getProduct().getQualityConstraints());
-
-        // iterate product constraints
-        for(QualityConstraint c : _package.getProduct().getQualityConstraints()) {
-
-            Hibernate.initialize(c.getSensor());
-            Hibernate.initialize(c.getSensor().getReadings());
-
-            // iterating readings og the sensor monitoring the constraint
-            for(SensorReading r : c.getSensor().getReadings()) {
-                // add violating constraints
-                if(r.doesViolateQualityConstraint())
-                    readings.add(r);
-            }
-        }
-
-        return readings;
+        return entityManager.createNamedQuery("getViolatingReadingsForProduct", SensorReading.class)
+                .setParameter("productId", product_id)
+                .getResultList();
     }
 
     public void addSensor(long sensorReading_id, long sensor_id) throws MyEntityExistsException {

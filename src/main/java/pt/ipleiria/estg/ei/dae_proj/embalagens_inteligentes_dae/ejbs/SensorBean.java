@@ -41,10 +41,10 @@ public class SensorBean {
         return entityManager.createNamedQuery("getAllSensors", Sensor.class).getResultList();
     }
 
-    public Sensor getSensor(String name) throws MyEntityNotFoundException {
-        Sensor sensor = entityManager.find(Sensor.class, name);
+    public Sensor getSensor(long id) throws MyEntityNotFoundException {
+        Sensor sensor = entityManager.find(Sensor.class, id);
         if (sensor == null)
-            throw new MyEntityNotFoundException("Sensor with name: " + name + " not found");
+            throw new MyEntityNotFoundException("Sensor with ID: " + id + " not found");
         return sensor;
     }
 
