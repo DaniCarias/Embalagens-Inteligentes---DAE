@@ -4,7 +4,9 @@ import jakarta.enterprise.inject.Typed;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.DialectOverride;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 import org.hibernate.mapping.Value;
 import org.hibernate.usertype.UserType;
 
@@ -23,6 +25,8 @@ import java.util.Date;
         name="sensors",
         uniqueConstraints = @UniqueConstraint(columnNames = {"id"})
 )
+@SQLDelete(sql="UPDATE sensors SET deleted = true WHERE id = ? AND version = ?")
+@Where(clause = "deleted = false")
 public class Sensor {
 
     @Id
@@ -44,6 +48,11 @@ public class Sensor {
     @Version
     private int version;
 
+    private Date deleted_at;
+
+    private boolean deleted = Boolean.FALSE;
+
+
     public Sensor() {
         this.readings = new LinkedList<>();
     }
@@ -57,27 +66,21 @@ public class Sensor {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public void setReadings(List<SensorReading> readings) {
         this.readings = readings;
     }
-
     public Package get_package() {
         return _package;
     }
-
     public void set_package(Package _package) {
         this._package = _package;
     }
-
     public void setControlledConstraints(List<QualityConstraint> controlledConstraints) {
         this.controlledConstraints = controlledConstraints;
     }
-
     public String getName() {
         return name;
     }
@@ -87,28 +90,35 @@ public class Sensor {
     public List<SensorReading> getReadings() {
         return readings;
     }
-
     public void addReading(SensorReading reading) {
         if(!readings.contains(reading)) {
             this.readings.add(reading);
         }
     }
-
     public Package getPackage() {
         return this._package;
     }
-
     public void removeReading(SensorReading reading) {
         if(readings.contains(reading)) {
             this.readings.remove(reading);
         }
     }
-
     public List<QualityConstraint> getControlledConstraints() {
         return controlledConstraints;
     }
-
     public void addControlledConstraint(QualityConstraint constraint) {
         this.controlledConstraints.add(constraint);
+    }
+    public Date getDeleted_at() {
+        return deleted_at;
+    }
+    public void setDeleted_at(Date deleted_at) {
+        this.deleted_at = deleted_at;
+    }
+    public boolean isDeleted() {
+        return deleted;
+    }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

@@ -9,6 +9,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
+import java.util.Date;
 import java.util.List;
 
 @Stateless
@@ -68,6 +69,10 @@ public class SensorBean {
         Sensor sensor = entityManager.find(Sensor.class, id);
         if (sensor == null)
             throw new MyEntityNotFoundException("Sensor with id: " + id + " not found");
+
+        sensor.setDeleted_at(new Date());
+        entityManager.persist(sensor);
+        entityManager.flush();
 
         entityManager.lock(sensor, LockModeType.OPTIMISTIC);
         entityManager.remove(sensor);
