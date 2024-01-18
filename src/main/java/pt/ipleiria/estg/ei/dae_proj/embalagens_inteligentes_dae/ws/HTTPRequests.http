@@ -190,3 +190,45 @@ Content-Type: application/json
 
 ###MANUFACTURER
 #####eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NTk0Mjc2LCJleHAiOjE3MDU1OTc4NzZ9.EgB-V8zefh6XpOxcuijGzXjJ8mdMNiFasCN-k50LweUo0qGsYUxHwRDMTaaUjHLS
+
+
+##### GetEndConsumers
+GET http://localhost:8080/embalagensinteligentes/api/endconsumers
+Accept: application/json
+
+##### GetEndConsumer
+GET http://localhost:8080/embalagensinteligentes/api/endconsumers/danicarias_outro
+Accept: application/json
+
+##### CreateEndConsumer
+POST http://localhost:8080/embalagensinteligentes/api/endconsumers
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "danicarias_123",
+  "name": "Daniel Carias",
+  "password": "Daniel Carias",
+  "address": "Rua 1",
+  "phoneNumber": 123456789
+}
+
+##### EditEndConsumer
+PUT http://localhost:8080/embalagensinteligentes/api/endconsumers/danicarias_123
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Daniel Carias",
+  "address": "Rua 2",
+  "phoneNumber": 111111111
+}
+
+##### DeleteEndConsumer
+DELETE http://localhost:8080/embalagensinteligentes/api/endconsumers/danicarias_123
+Accept: application/json
+
+##### GetOrders
+GET http://localhost:8080/embalagensinteligentes/api/endconsumers/danicarias_outro/orders
+Accept: application/json
+

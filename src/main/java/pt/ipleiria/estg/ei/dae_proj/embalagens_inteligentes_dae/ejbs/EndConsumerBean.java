@@ -4,6 +4,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
+import org.hibernate.Hibernate;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Order;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
@@ -45,10 +46,10 @@ public class EndConsumerBean {
         return endConsumer;
     }
 
-    public void update(String username, String password, String name, String address, int phoneNumber) {
+    public void update(String username, String name, String address, int phoneNumber) {
         EndConsumer endConsumer = entityManager.find(EndConsumer.class, username);
         if (endConsumer != null) {
-            endConsumer.setPassword(password);
+            //endConsumer.setPassword(password);
             endConsumer.setName(name);
             endConsumer.setAddress(address);
             endConsumer.setPhoneNumber(phoneNumber);
@@ -56,7 +57,7 @@ public class EndConsumerBean {
         }
     }
 
-    public void delete(String username) throws MyEntityNotFoundException {
+    public boolean delete(String username) throws MyEntityNotFoundException {
 
         EndConsumer endConsumer = entityManager.find(EndConsumer.class, username);
         if (endConsumer == null)
@@ -65,6 +66,7 @@ public class EndConsumerBean {
         entityManager.lock(endConsumer, LockModeType.OPTIMISTIC);
 
         entityManager.remove(endConsumer);
+        return true;
     }
 
     public void addOrder(String username, long order_id) throws MyEntityNotFoundException{
@@ -99,7 +101,14 @@ public class EndConsumerBean {
         entityManager.merge(endConsumer);
     }
 
-
+    public EndConsumer getEndConsumerOrders(String username) throws MyEntityNotFoundException{
+        EndConsumer endConsumer = entityManager.find(EndConsumer.class, username);
+        if(!exists(endConsumer.getUsername())){
+            throw new MyEntityNotFoundException("End Consumer with username: " + username + " not found");
+        }
+        Hibernate.initialize(endConsumer.getOrders());
+        return endConsumer;
+    }
 
 
 

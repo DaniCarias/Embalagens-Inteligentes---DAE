@@ -36,10 +36,19 @@ public class EndConsumerService {
                 endconsumer.getPhoneNumber()
         );
     }
-
-
     private List<EndConsumerDTO> toDTOs(List<EndConsumer> endConsumer) {
         return endConsumer.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+
+    private OrderDTO order_toDTO(Order order) {
+        return new OrderDTO(
+                order.getId(),
+                order.getEndConsumer().getUsername()
+        );
+    }
+    private List<OrderDTO> orders_toDTOs(List<Order> orders) {
+        return orders.stream().map(this::order_toDTO).collect(Collectors.toList());
     }
 
     @GET
@@ -60,8 +69,8 @@ public class EndConsumerService {
 
     @POST
     @Path("/")
-    public Response createNewEndConsumer(EndConsumerDTO endConsumerDTO) {
-        try {
+    public Response createNewEndConsumer(EndConsumerDTO endConsumerDTO) throws MyEntityExistsException{
+
             if(endConsumerBean.exists(endConsumerDTO.getUsername()))
                 return Response.status(Response.Status.CONFLICT).build();
 
@@ -71,21 +80,17 @@ public class EndConsumerService {
                 return Response.status(Response.Status.BAD_REQUEST).build();
 
             return Response.status(Response.Status.CREATED).entity(toDTO(endConsumer)).build();
-
-        } catch (MyEntityNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
     }
 
     @PUT
     @Path("/{username}")
-    public Response editEndConsumer(@PathParam("username") String username,EndConsumerDTO endCons) throws MyEntityNotFoundException {
+    public Response editEndConsumer(@PathParam("username") String username, EndConsumerDTO endCons){
         EndConsumer endConsumer = endConsumerBean.find(username);
 
         if(endConsumer == null)
             return Response.status(Response.Status.NOT_FOUND).entity("Consumer not found").build();
 
-        endConsumerBean.update(endCons.getUsername(),endCons.getName(),endCons.getPassword(), endConsumer.getAddress(), endCons.getPhoneNumber());
+        endConsumerBean.update(username, endCons.getName(), endCons.getAddress(), endCons.getPhoneNumber());
         return Response.status(Response.Status.OK).entity(toDTO(endConsumer)).entity("Consumer updated").build();
     }
 
@@ -103,10 +108,18 @@ public class EndConsumerService {
         return Response.status(Response.Status.OK).entity("End Consumer deleted").build();
     }
 
-   /* @GET
+    @GET
     @Path("/{username}/orders")
     public Response getEndConsumerOrders(@PathParam("username") String username) throws MyEntityNotFoundException{
-        Order List<Order> = orderBean.
-        return Response.status(Response.Status.OK).entity("End Consumer do not exist").build();
-    }*/
+
+        EndConsumer endConsumer = endConsumerBean.getEndConsumerOrders(username);
+
+        if(endConsumer == null)
+            throw new MyEntityNotFoundException("End Consumer with username: " + username + " not found");
+
+        var orders = orders_toDTOs(endConsumer.getOrders());
+
+        return Response.status(Response.Status.OK).entity(orders).build();
+
+    }
 }
