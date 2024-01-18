@@ -50,10 +50,9 @@ public class ProductManufacturerBean {
         return productManufacturer;
     }
 
-    public void update(String username, String password, String name, String address, int phoneNumber) {
+    public void update(String username,  String name, String address, int phoneNumber) {
         ProductManufacturer productManufacturer = entityManager.find(ProductManufacturer.class, username);
         if (productManufacturer != null) {
-            productManufacturer.setPassword(password);
             productManufacturer.setName(name);
             productManufacturer.setAddress(address);
             productManufacturer.setPhoneNumber(phoneNumber);
@@ -61,7 +60,7 @@ public class ProductManufacturerBean {
         }
     }
 
-    public void delete(String username) throws MyEntityNotFoundException {
+    public boolean delete(String username) throws MyEntityNotFoundException {
 
         ProductManufacturer productManufacturer = entityManager.find(ProductManufacturer.class, username);
         if (productManufacturer == null)
@@ -69,6 +68,7 @@ public class ProductManufacturerBean {
 
         entityManager.lock(productManufacturer, LockModeType.OPTIMISTIC);
         entityManager.remove(productManufacturer);
+        return true;
     }
 
     public void addProduct(String username, long product_id) throws MyEntityNotFoundException {

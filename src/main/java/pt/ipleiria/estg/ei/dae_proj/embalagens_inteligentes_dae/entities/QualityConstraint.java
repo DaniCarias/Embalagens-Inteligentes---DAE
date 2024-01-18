@@ -16,7 +16,14 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name="getAllQualityConstraints", query="SELECT q FROM QualityConstraint q")
+        @NamedQuery(name="getAllQualityConstraints", query="SELECT q FROM QualityConstraint q"),
+        @NamedQuery(name="getAllQualityConstraintsForProduct", query="SELECT q FROM QualityConstraint q WHERE q.product.id = :productId"),
+        @NamedQuery(name="getAllQualityConstraintsForSensor", query="SELECT q FROM QualityConstraint q WHERE q.sensor.id = :sensorId"),
+        @NamedQuery(name="getAllQualityConstraintsForOrder", query="SELECT q FROM QualityConstraint q JOIN Product p " +
+                "ON q.product.id = p.id JOIN Package pack ON p.id = pack.product.id JOIN Order o ON pack.order.id = o.id " +
+                "WHERE o.id = :orderId"),
+        @NamedQuery(name="getAllQualityConstraintsForPackage", query="SELECT q FROM QualityConstraint q JOIN Product p " +
+                "ON q.product.id = p.id JOIN Package pack ON p.id = pack.product.id WHERE pack.id = :packageId")
 })
 @Table(
         name = "quality_constraints",
@@ -38,6 +45,7 @@ public class QualityConstraint {
     private float value;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private ConstraintType type;
 
     @ManyToOne
@@ -50,10 +58,11 @@ public class QualityConstraint {
 
     }
 
-    public QualityConstraint(float value, ConstraintType type, Sensor sensor) {
+    public QualityConstraint(float value, ConstraintType type, Sensor sensor, Product product) {
         this.value = value;
         this.type = type;
         this.sensor = sensor;
+        this.product = product;
     }
 
     public long getId() {

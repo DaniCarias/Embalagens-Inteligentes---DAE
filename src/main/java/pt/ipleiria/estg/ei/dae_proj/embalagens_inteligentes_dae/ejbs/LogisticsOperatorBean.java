@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.EndConsumer;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.LogisticsOperator;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
@@ -25,6 +26,9 @@ public class LogisticsOperatorBean {
         return entityManager.find(LogisticsOperator.class, username) != null;
     }
 
+    public LogisticsOperator find(String username) {
+        return entityManager.find(LogisticsOperator.class, username);
+    }
     public LogisticsOperator create(String username, String password, String name, String address, int phoneNumber) throws MyEntityExistsException {
         if (exists(username)) {
             throw new MyEntityExistsException("Logistics Operator with username: " + username + " already exists");
@@ -45,10 +49,9 @@ public class LogisticsOperatorBean {
         return logisticsOperator;
     }
 
-    public void update(String username, String password, String name, String address, int phoneNumber) {
+    public void update(String username, String name, String address, int phoneNumber) {
         LogisticsOperator logisticsOperator = entityManager.find(LogisticsOperator.class, username);
         if (logisticsOperator != null) {
-            logisticsOperator.setPassword(password);
             logisticsOperator.setName(name);
             logisticsOperator.setAddress(address);
             logisticsOperator.setPhoneNumber(phoneNumber);
@@ -56,7 +59,7 @@ public class LogisticsOperatorBean {
         }
     }
 
-    public void delete(String username) throws MyEntityNotFoundException {
+    public boolean delete(String username) throws MyEntityNotFoundException {
 
         LogisticsOperator logisticsOperator = entityManager.find(LogisticsOperator.class, username);
         if (logisticsOperator == null)
@@ -64,6 +67,8 @@ public class LogisticsOperatorBean {
 
         entityManager.lock(logisticsOperator, LockModeType.OPTIMISTIC);
         entityManager.remove(logisticsOperator);
+
+        return true;
     }
 
 }

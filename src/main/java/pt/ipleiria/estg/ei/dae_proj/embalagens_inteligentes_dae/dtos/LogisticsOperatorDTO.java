@@ -6,13 +6,13 @@ public class LogisticsOperatorDTO {
     private String name;
     private String password;
     private String address;
-    private String phoneNumber;
+    private int phoneNumber;
 
 
     public LogisticsOperatorDTO() {
     }
 
-    public LogisticsOperatorDTO(String username, String name, String password, String address, String phoneNumber) {
+    public LogisticsOperatorDTO(String username, String name, String password, String address, int phoneNumber) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -45,10 +45,10 @@ public class LogisticsOperatorDTO {
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getPhoneNumber() {
+    public int getPhoneNumber() {
         return phoneNumber;
     }
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

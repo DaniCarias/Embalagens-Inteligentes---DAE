@@ -198,11 +198,7 @@ Content-Type: application/json
     "password": "pass123"
 }
 
-###END CONSUMER
-#####eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzX291dHJvIiwiaWF0IjoxNzA1NTk0MjE0LCJleHAiOjE3MDU1OTc4MTR9.gASpPygIZDsb0loICr77GibO9AiJI9mmrM46Cg4pPDIpW9R9l1iBDCf-JkxX9eWP
 
-###MANUFACTURER
-#####eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NTk0Mjc2LCJleHAiOjE3MDU1OTc4NzZ9.EgB-V8zefh6XpOxcuijGzXjJ8mdMNiFasCN-k50LweUo0qGsYUxHwRDMTaaUjHLS
 
 
 ##### GetEndConsumers
@@ -245,12 +241,91 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/endconsumers/danicarias_outro/orders
 Accept: application/json
 
+
+
+
+###########LogisticOperator ->>>>>> PASTA LOGISTIC OPERATOR
+##### GetLogisticOperators
+GET http://localhost:8080/embalagensinteligentes/api/logisticoperators
+Accept: application/json
+
 ##### GetSensorsByPackage -> Adicionar na pasta dos Packages do bruno
 GET http://localhost:8080/embalagensinteligentes/api/packages/2/sensors
 Accept: application/json
+
+##### GetLogisticOperator
+GET http://localhost:8080/embalagensinteligentes/api/logisticoperators/danicarias_teste
+Accept: application/json
+
+##### CreateLogisticOperator
+POST http://localhost:8080/embalagensinteligentes/api/logisticoperators
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "novo_logisticoperator",
+  "name": "Carlos Tojal",
+  "password": "pass123",
+  "address": "Rua BBR",
+  "phoneNumber": 123456789
+}
+
+##### EditLogisticOperator
+PUT http://localhost:8080/embalagensinteligentes/api/logisticoperators/novo_logisticoperator
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Carlos Tojal NOVO",
+  "address": "Rua BBR  NOVO",
+  "phoneNumber": 123456789
+}
+
+##### DeleteLogisticOperator
+DELETE http://localhost:8080/embalagensinteligentes/api/logisticoperators/novo_logisticoperator
+Accept: application/json
+
 
 ##### GetProductsByProductmanufactorer -> Adicionar na pasta dos Products do bruno
 GET http://localhost:8080/embalagensinteligentes/api/products/manufacturer/pedro_dev
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjA1MDE5LCJleHAiOjE3MDU2MDg2MTl9.m2UaIz8SMS5ZnIZBu0W5lCoPSNmi_xVSFBATMT2DA6sAA9-wIgAXCh8SZSnnLD9_
 
+
+
+##### ProductManufacturer -> Adicionar na pasta dos ProductManufacturer do bruno
+##### GetProductManufacturers
+GET http://localhost:8080/embalagensinteligentes/api/productmanufacturers
+Accept: application/json
+
+##### GetProductManufacturer
+GET http://localhost:8080/embalagensinteligentes/api/productmanufacturers/pedro_dev
+Accept: application/json
+
+##### CreateProductManufacturer
+POST http://localhost:8080/embalagensinteligentes/api/productmanufacturers
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "novo_productmanufacturer",
+    "name": "Pedro Dev",
+    "password": "pass123",
+    "address": "Rua BBR",
+    "phoneNumber": 123456789
+}
+
+##### EditProductManufacturer
+PUT http://localhost:8080/embalagensinteligentes/api/productmanufacturers/novo_productmanufacturer
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Pedro Dev NOVO",
+    "address": "Rua BBR NOVO",
+    "phoneNumber": 123456789
+}
+
+##### DeleteProductManufacturer
+DELETE http://localhost:8080/embalagensinteligentes/api/productmanufacturers/novo_productmanufacturer
+Accept: application/json
