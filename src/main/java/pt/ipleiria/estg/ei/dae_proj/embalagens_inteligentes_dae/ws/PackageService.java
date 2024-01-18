@@ -177,10 +177,6 @@ public class PackageService {
     //@RolesAllowed({"ProductManufacturer"})
     //TODO: LISTAR SO OS PACKAGES DO MANUFACTURER
 
-    //@RolesAllowed({"LogisticOperator"})
-    //TODO: LISTAR PACKAGES DO LOGISTIC OPERATOR
-
-    //TODO: FAZER ROTA PARA LIST DOS SENSORES ASSOCIADOS AO PACKAGE
     @RolesAllowed({"LogisticOperator", "EndConsumer"})
     @GET
     @Path("/{id}/sensors")

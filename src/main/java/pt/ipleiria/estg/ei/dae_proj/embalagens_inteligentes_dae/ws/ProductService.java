@@ -63,8 +63,15 @@ public class ProductService {
         return toDTOs(productBean.getAll());
     }
 
-    //@RolesAllowed({"ProductManufacturer"})
     //TODO: LISTAR SO OS PRODUTOS DO MANUFACTURER
+    @RolesAllowed({"ProductManufacturer"})
+    @GET
+    @Path("/manufacturer/{username}")
+    public List<ProductDTO> getAllProductsFromManufacturer(@PathParam("username") String username) {
+        return toDTOs(productBean.getAllByManufactor(username));
+    }
+
+
 
     @POST
     @Path("/")
