@@ -3,6 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,10 +18,12 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
-@Path("logisticoperator")
+@Path("logisticoperators")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
+@Authenticated
 public class LogisticOperatorService {
 
     @EJB
@@ -43,12 +46,14 @@ public class LogisticOperatorService {
         return logisticsOperators.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    @RolesAllowed({""})
     @GET
     @Path("/")
     public List<LogisticsOperatorDTO> getAllLogisticsOperators() {
         return toDTOs(logisticsOperatorBean.getAll());
     }
 
+    @RolesAllowed({""})
     @GET
     @Path("/{username}")
     public Response getLogisticsOperatorDetails(@PathParam("username") String username) {
@@ -59,6 +64,7 @@ public class LogisticOperatorService {
         return Response.status(Response.Status.BAD_REQUEST).entity("Logistics Operator do not exist").build();
     }
 
+    @RolesAllowed({""})
     @POST
     @Path("/")
     public Response createNewLogisticsOperator(LogisticsOperatorDTO logisticsOperatorDTO) {
@@ -81,21 +87,23 @@ public class LogisticOperatorService {
 
     }
 
+    @RolesAllowed({""})
     @PUT
     @Path("/{username}")
-    public Response editEndLogisticsOperator(@PathParam("username") String username,LogisticsOperatorDTO logisticsOper) throws MyEntityNotFoundException {
+    public Response editLogisticsOperator(@PathParam("username") String username, LogisticsOperatorDTO logisticsOper){
         LogisticsOperator logisticsOperator = logisticsOperatorBean.find(username);
 
         if(logisticsOperator == null)
-            return Response.status(Response.Status.NOT_FOUND).entity("Consumer not found").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Logistic Operator not found").build();
 
-        logisticsOperatorBean.update(username,logisticsOper.getName(),logisticsOper.getPassword(), logisticsOper.getAddress(), logisticsOper.getPhoneNumber());
-        return Response.status(Response.Status.OK).entity(toDTO(logisticsOperator)).entity("Consumer updated").build();
+        logisticsOperatorBean.update(username, logisticsOper.getName(), logisticsOper.getAddress(), logisticsOper.getPhoneNumber());
+        return Response.status(Response.Status.OK).entity(toDTO(logisticsOperator)).entity("Logistic Operator updated").build();
     }
 
+    @RolesAllowed({""})
     @DELETE
     @Path("/{username}")
-    public Response deleteEndLogisticsOperator(@PathParam("username") String username) throws MyEntityNotFoundException {
+    public Response deleteLogisticsOperator(@PathParam("username") String username) throws MyEntityNotFoundException {
         LogisticsOperator logisticsOperator = logisticsOperatorBean.find(username);
         if(logisticsOperator == null)
             return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
@@ -104,13 +112,7 @@ public class LogisticOperatorService {
         if(!isDeleted)
             return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
 
-        return Response.status(Response.Status.OK).entity("End Consumer deleted").build();
+        return Response.status(Response.Status.OK).entity("Logistic Operator deleted").build();
     }
 
-   /* @GET
-    @Path("/{username}/orders")
-    public Response getEndConsumerOrders(@PathParam("username") String username) throws MyEntityNotFoundException{
-        Order List<Order> = orderBean.
-        return Response.status(Response.Status.OK).entity("End Consumer do not exist").build();
-    }*/
 }

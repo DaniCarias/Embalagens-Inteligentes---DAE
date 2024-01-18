@@ -49,10 +49,9 @@ public class LogisticsOperatorBean {
         return logisticsOperator;
     }
 
-    public void update(String username, String password, String name, String address, int phoneNumber) {
+    public void update(String username, String name, String address, int phoneNumber) {
         LogisticsOperator logisticsOperator = entityManager.find(LogisticsOperator.class, username);
         if (logisticsOperator != null) {
-            logisticsOperator.setPassword(password);
             logisticsOperator.setName(name);
             logisticsOperator.setAddress(address);
             logisticsOperator.setPhoneNumber(phoneNumber);
