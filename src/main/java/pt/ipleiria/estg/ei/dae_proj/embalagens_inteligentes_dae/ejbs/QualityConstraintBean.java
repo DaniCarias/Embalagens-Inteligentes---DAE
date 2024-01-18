@@ -18,6 +18,10 @@ public class QualityConstraintBean {
         return entityManager.find(QualityConstraint.class, id) != null;
     }
 
+    public QualityConstraint find(long id) {
+        return entityManager.find(QualityConstraint.class, id);
+    }
+
     public QualityConstraint create(float value, QualityConstraint.ConstraintType type, long sensor_id, long product_id) throws MyEntityNotFoundException {
 
         // find the sensor controlling this constraint
