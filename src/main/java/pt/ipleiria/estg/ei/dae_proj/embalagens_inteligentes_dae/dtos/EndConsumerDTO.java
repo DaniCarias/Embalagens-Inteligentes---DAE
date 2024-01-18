@@ -8,16 +8,19 @@ public class EndConsumerDTO {
     private String address;
     private int phoneNumber;
 
+    private String email;
+
 
     public EndConsumerDTO() {
     }
 
-    public EndConsumerDTO(String username, String name, String password, String address, int phoneNumber) {
+    public EndConsumerDTO(String username, String name, String password, String address, int phoneNumber, String email) {
         this.username = username;
         this.name = name;
         this.password = password;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.email = email;
     }
 
 
@@ -50,5 +53,13 @@ public class EndConsumerDTO {
     }
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

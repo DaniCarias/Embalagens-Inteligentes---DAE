@@ -14,13 +14,24 @@ public class EndConsumer extends User {
     @OneToMany(mappedBy = "endConsumer", cascade = CascadeType.REMOVE)
     public List<Order> orders;
 
-    public EndConsumer(String username, String name, String password, String address, int phoneNumber) {
+    private String email;
+
+    public EndConsumer(String username, String name, String password, String address, int phoneNumber, String email) {
         super(username, name, password, address, phoneNumber);
         orders = new LinkedList<>();
+        this.email = email;
     }
 
     public EndConsumer() {
         orders = new LinkedList<>();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Order> getOrders() {

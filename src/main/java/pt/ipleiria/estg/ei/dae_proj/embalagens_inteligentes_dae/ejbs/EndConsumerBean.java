@@ -31,11 +31,11 @@ public class EndConsumerBean {
         return entityManager.find(EndConsumer.class, username);
     }
 
-    public EndConsumer create(String username, String password, String name, String address, int phoneNumber) throws MyEntityExistsException {
+    public EndConsumer create(String username, String password, String name, String address, int phoneNumber, String email) throws MyEntityExistsException {
         if (exists(username)) {
             throw new MyEntityExistsException("End Consumer with username: " + username + " already exists");
         }
-        var endConsumer = new EndConsumer(username, name, hasher.hash(password), address, phoneNumber);
+        var endConsumer = new EndConsumer(username, name, hasher.hash(password), address, phoneNumber, email);
         entityManager.persist(endConsumer);
         return endConsumer;
     }

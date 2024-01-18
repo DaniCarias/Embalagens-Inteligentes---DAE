@@ -48,7 +48,6 @@ public class SensorReadingBean {
 
             // send notification email
             if(violatesConstraint) {
-                /*
                 // get package
                 Hibernate.initialize(s.getPackage());
                 Package p = s.getPackage();
@@ -63,10 +62,8 @@ public class SensorReadingBean {
                 Hibernate.initialize(p.getProduct());
                 Product product = p.getProduct();
 
-                // TODO: end consumer has no email address. how to notify?
-                emailBean.send(e.getAddress(), "Order no. " + o.getId() + " in risk", "Product \"" +
+                emailBean.send(e.getEmail(), "Order no. " + o.getId() + " in risk", "Product \"" +
                         product.getName() + "\" just experienced a dangerous situation (" + s.getName() + " reading value).");
-                */
             }
 
         } catch (Exception e) {

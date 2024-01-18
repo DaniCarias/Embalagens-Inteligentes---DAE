@@ -36,7 +36,8 @@ public class EndConsumerService {
                 endconsumer.getName(),
                 endconsumer.getPassword(),
                 endconsumer.getAddress(),
-                endconsumer.getPhoneNumber()
+                endconsumer.getPhoneNumber(),
+                endconsumer.getEmail()
         );
     }
     private List<EndConsumerDTO> toDTOs(List<EndConsumer> endConsumer) {
@@ -80,7 +81,9 @@ public class EndConsumerService {
             if(endConsumerBean.exists(endConsumerDTO.getUsername()))
                 return Response.status(Response.Status.CONFLICT).build();
 
-            EndConsumer endConsumer = endConsumerBean.create(endConsumerDTO.getUsername(),endConsumerDTO.getName(),endConsumerDTO.getPassword(), endConsumerDTO.getAddress(), endConsumerDTO.getPhoneNumber());
+            EndConsumer endConsumer = endConsumerBean.create(endConsumerDTO.getUsername(),endConsumerDTO.getName(),
+                    endConsumerDTO.getPassword(), endConsumerDTO.getAddress(), endConsumerDTO.getPhoneNumber(),
+                    endConsumerDTO.getEmail());
 
             if(endConsumer == null)
                 return Response.status(Response.Status.BAD_REQUEST).build();
