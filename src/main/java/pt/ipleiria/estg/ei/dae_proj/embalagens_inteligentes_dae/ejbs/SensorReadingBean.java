@@ -96,7 +96,7 @@ public class SensorReadingBean {
                 .getResultList();
     }
 
-    public List<SensorReading> getViolatingSensorReadingsForProduct(long product_id) throws MyEntityNotFoundException {
+    public List<SensorReading> getViolatingSensorReadingsForProduct(long product_id) {
 
         return entityManager.createNamedQuery("getViolatingReadingsForProduct", SensorReading.class)
                 .setParameter("productId", product_id)
