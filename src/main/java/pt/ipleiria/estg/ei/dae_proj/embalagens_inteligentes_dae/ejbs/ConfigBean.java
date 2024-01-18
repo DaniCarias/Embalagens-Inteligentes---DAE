@@ -58,8 +58,10 @@ public class ConfigBean {
             EndConsumer endConsumer2 = endConsumerBean.create("danicarias_outro2", "teste2", "Daniel teste2", "test2", 919123111);
 
         //Order
-            orderBean.create(endConsumer1);
-            orderBean.create(endConsumer2);
+            Order order1 = orderBean.create(endConsumer1);
+            Order order2 = orderBean.create(endConsumer2);
+
+            packageBean.addOrder(package1.getId(), order1.getId());
 
         //Logistic Operator
             LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);
@@ -69,6 +71,7 @@ public class ConfigBean {
 
         //Quality Constraint
             QualityConstraint constraint1 = qualityConstraintBean.create(20.0f, QualityConstraint.ConstraintType.LOWER, sensor1.getId(), prod1.getId());
+            QualityConstraint constraint2 = qualityConstraintBean.create(10.0f, QualityConstraint.ConstraintType.UPPER, sensor1.getId(), prod1.getId());
 
         //Sensor Reading
             SensorReading reading1 = sensorReadingBean.create(15.0f, sensor1.getId());
