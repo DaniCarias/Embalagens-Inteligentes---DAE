@@ -329,3 +329,13 @@ Content-Type: application/json
 ##### DeleteProductManufacturer
 DELETE http://localhost:8080/embalagensinteligentes/api/productmanufacturers/novo_productmanufacturer
 Accept: application/json
+
+
+
+################################################33 NOVAS ROTAS ################################################33
+
+
+
+##### GetPackagesByProductManufactorer -> Adicionar na pasta dos Products do bruno
+GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/pedro_dev
+Accept: application/json

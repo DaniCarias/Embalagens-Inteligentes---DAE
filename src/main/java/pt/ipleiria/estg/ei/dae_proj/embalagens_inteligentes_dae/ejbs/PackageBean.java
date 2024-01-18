@@ -12,6 +12,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEnt
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Stateless
@@ -131,7 +132,22 @@ public class PackageBean {
         }
         Hibernate.initialize(_package.getSensors());
         return _package;
+    }
 
+    public List<Package> getPackagesByProducts(List<Product> products){
+
+        List<Package> packages = new LinkedList<>();
+
+        for (Product product : products) {
+            if(product.getPackage() == null)
+                continue;
+
+            var package_id = product.getPackage().getId();
+            Package _package = find(package_id);
+            packages.add(_package);
+        }
+
+        return packages;
     }
 
 }

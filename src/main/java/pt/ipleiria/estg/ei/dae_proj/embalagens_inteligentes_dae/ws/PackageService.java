@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.OrderBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductManufacturerBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
@@ -33,6 +35,8 @@ public class PackageService {
     private ProductBean productBean;
     @EJB
     private OrderBean orderBean;
+    @EJB
+    private ProductManufacturerBean productManufacturerBean;
 
     private PackageDTO toDTO(Package _package) {
         if (_package.getOrder() == null){
@@ -176,8 +180,22 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Order removed").build();
     }
 
-    //@RolesAllowed({"ProductManufacturer"})
-    //TODO: LISTAR SO OS PACKAGES DO MANUFACTURER
+    @GET
+    @Path("/manufacturer/{username}")
+    public Response getPackagesByManufacturer(@PathParam("username") String username) {
+        ProductManufacturer productManufacturer = productManufacturerBean.find(username);
+        if(productManufacturer == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        List<Product> products = productBean.getAllByManufactor(username);
+        if(products == null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Do not have any products").build();
+
+        List<Package> packages = packageBean.getPackagesByProducts(products);
+
+        return Response.status(Response.Status.OK).entity(toDTOs(packages)).build();
+    }
+
 
     @RolesAllowed({"LogisticOperator", "EndConsumer"})
     @GET
