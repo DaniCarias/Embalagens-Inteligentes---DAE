@@ -3,6 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -14,10 +15,12 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
-@Path("productmanufacturer")
+@Path("productmanufacturers")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
+//@Authenticated
 public class ProductManufacturerService {
 
     @EJB
@@ -35,17 +38,19 @@ public class ProductManufacturerService {
         );
     }
 
-
+    @RolesAllowed({""})
     private List<ProductManufacturerDTO> toDTOs(List<ProductManufacturer> productManufacturers) {
         return productManufacturers.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    @RolesAllowed({""})
     @GET
     @Path("/")
     public List<ProductManufacturerDTO> getAllProductManufacturers() {
         return toDTOs(productManufacturerBean.getAll());
     }
 
+    @RolesAllowed({""})
     @GET
     @Path("/{username}")
     public Response getProductManufacturerDetails(@PathParam("username") String username) {
@@ -53,9 +58,10 @@ public class ProductManufacturerService {
         if (productManufacturer != null) {
             return Response.status(Response.Status.OK).entity(toDTO(productManufacturer)).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).entity("Logistics Operator do not exist").build();
+        return Response.status(Response.Status.BAD_REQUEST).entity("Product Manufacturer do not exist").build();
     }
 
+    @RolesAllowed({""})
     @POST
     @Path("/")
     public Response createNewProductManufacturer(ProductManufacturerDTO productManufacturerDTO) throws MyEntityNotFoundException{
@@ -78,18 +84,19 @@ public class ProductManufacturerService {
 
     }
 
+    @RolesAllowed({""})
     @PUT
     @Path("/{username}")
-    public Response editProductManufacturer(@PathParam("username") String username,ProductManufacturerDTO productManu) throws MyEntityNotFoundException {
+    public Response editProductManufacturer(@PathParam("username") String username,ProductManufacturerDTO productManu){
         ProductManufacturer productManufacturer = productManufacturerBean.find(username);
 
         if(productManufacturer == null)
-            return Response.status(Response.Status.NOT_FOUND).entity("Consumer not found").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Product Manufacturer not found").build();
 
-        productManufacturerBean.update(username,productManu.getName(),productManu.getPassword(), productManu.getAddress(), productManu.getPhoneNumber());
+        productManufacturerBean.update(username, productManu.getName(), productManu.getAddress(), productManu.getPhoneNumber());
         return Response.status(Response.Status.OK).entity(toDTO(productManufacturer)).entity("Consumer updated").build();
     }
-
+    @RolesAllowed({""})
     @DELETE
     @Path("/{username}")
     public Response deleteProductManufacturer(@PathParam("username") String username) throws MyEntityNotFoundException {
@@ -104,10 +111,4 @@ public class ProductManufacturerService {
         return Response.status(Response.Status.OK).entity("End Consumer deleted").build();
     }
 
-   /* @GET
-    @Path("/{username}/orders")
-    public Response getEndConsumerOrders(@PathParam("username") String username) throws MyEntityNotFoundException{
-        Order List<Order> = orderBean.
-        return Response.status(Response.Status.OK).entity("End Consumer do not exist").build();
-    }*/
 }
