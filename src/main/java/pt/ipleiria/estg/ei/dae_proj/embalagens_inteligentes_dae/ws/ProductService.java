@@ -149,7 +149,6 @@ public class ProductService {
     @Path("/{id}/package")
     public Response addPackage(@PathParam("id") long id, PackageDTO _package) throws MyEntityNotFoundException {
 
-        //return Response.status(Response.Status.OK).entity(_package).build();
         Product product = productBean.find(id);
         if(product == null)
             return Response.status(Response.Status.NOT_FOUND).build();
