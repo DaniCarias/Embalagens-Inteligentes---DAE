@@ -61,13 +61,20 @@ public class LogisticOperatorService {
 
     @POST
     @Path("/")
-    public Response createNewLogisticsOperator(LogisticsOperatorDTO logisticsOperatorDTO) throws MyEntityNotFoundException{
+    public Response createNewLogisticsOperator(LogisticsOperatorDTO logisticsOperatorDTO) {
             if(logisticsOperatorBean.exists(logisticsOperatorDTO.getUsername()))
                 return Response.status(Response.Status.CONFLICT).build();
 
-            LogisticsOperator logisticsOperator = logisticsOperatorBean.create(logisticsOperatorDTO.getUsername(),logisticsOperatorDTO.getName(),logisticsOperatorDTO.getPassword(), logisticsOperatorDTO.getAddress(), logisticsOperatorDTO.getPhoneNumber());
+        LogisticsOperator logisticsOperator = null;
+        try {
+            logisticsOperator = logisticsOperatorBean.create(logisticsOperatorDTO.getUsername(),
+                    logisticsOperatorDTO.getName(),logisticsOperatorDTO.getPassword(),
+                    logisticsOperatorDTO.getAddress(), logisticsOperatorDTO.getPhoneNumber());
+        } catch (MyEntityExistsException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Logistics operator not created.").build();
+        }
 
-            if(logisticsOperator == null)
+        if(logisticsOperator == null)
                 return Response.status(Response.Status.BAD_REQUEST).build();
 
             return Response.status(Response.Status.CREATED).entity(toDTO(logisticsOperator)).build();

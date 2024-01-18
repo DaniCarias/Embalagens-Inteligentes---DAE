@@ -12,6 +12,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.OrderBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductManufacturerBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 @Path("productmanufacturer")
@@ -61,7 +62,14 @@ public class ProductManufacturerService {
         if(productManufacturerBean.exists(productManufacturerDTO.getUsername()))
             return Response.status(Response.Status.CONFLICT).build();
 
-        ProductManufacturer productManufacturer = productManufacturerBean.create(productManufacturerDTO.getUsername(),productManufacturerDTO.getName(),productManufacturerDTO.getPassword(), productManufacturerDTO.getAddress(), productManufacturerDTO.getPhoneNumber());
+        ProductManufacturer productManufacturer = null;
+        try {
+            productManufacturer = productManufacturerBean.create(productManufacturerDTO.getUsername(),
+                    productManufacturerDTO.getName(),productManufacturerDTO.getPassword(),
+                    productManufacturerDTO.getAddress(), productManufacturerDTO.getPhoneNumber());
+        } catch (MyEntityExistsException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Product manufacturer not created").build();
+        }
 
         if(productManufacturer == null)
             return Response.status(Response.Status.BAD_REQUEST).build();

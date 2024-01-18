@@ -69,7 +69,7 @@ public class ProductManufacturerBean {
 
         entityManager.lock(productManufacturer, LockModeType.OPTIMISTIC);
         entityManager.remove(productManufacturer);
-        return true
+        return true;
     }
 
     public void addProduct(String username, long product_id) throws MyEntityNotFoundException {
