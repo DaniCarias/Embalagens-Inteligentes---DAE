@@ -61,7 +61,7 @@ public class ProductManufacturerBean {
         }
     }
 
-    public void delete(String username) throws MyEntityNotFoundException {
+    public boolean delete(String username) throws MyEntityNotFoundException {
 
         ProductManufacturer productManufacturer = entityManager.find(ProductManufacturer.class, username);
         if (productManufacturer == null)
@@ -69,6 +69,7 @@ public class ProductManufacturerBean {
 
         entityManager.lock(productManufacturer, LockModeType.OPTIMISTIC);
         entityManager.remove(productManufacturer);
+        return true
     }
 
     public void addProduct(String username, long product_id) throws MyEntityNotFoundException {
