@@ -28,6 +28,10 @@ public class ConfigBean {
     private LogisticsOperatorBean logisticsOperatorBean;
     @EJB
     private SensorBean sensorBean;
+    @EJB
+    private QualityConstraintBean qualityConstraintBean;
+    @EJB
+    private SensorReadingBean sensorReadingBean;
 
     private static final Logger logger = Logger.getLogger("ejbs.ConfigBean");
 
@@ -62,6 +66,13 @@ public class ConfigBean {
 
         //Sensor
             Sensor sensor1 = sensorBean.create("sensor_teste", package1.getId());
+
+        //Quality Constraint
+            QualityConstraint constraint1 = qualityConstraintBean.create(20.0f, QualityConstraint.ConstraintType.LOWER, sensor1.getId(), prod1.getId());
+
+        //Sensor Reading
+            SensorReading reading1 = sensorReadingBean.create(15.0f, sensor1.getId());
+            SensorReading reading2 = sensorReadingBean.create(25.0f, sensor1.getId());
 
         }catch(Exception exception){
             logger.severe(exception.getMessage());
