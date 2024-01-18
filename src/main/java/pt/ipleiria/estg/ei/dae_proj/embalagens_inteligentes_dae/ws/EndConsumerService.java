@@ -3,6 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -51,12 +52,14 @@ public class EndConsumerService {
         return orders.stream().map(this::order_toDTO).collect(Collectors.toList());
     }
 
+    @RolesAllowed({""})
     @GET
     @Path("/")
     public List<EndConsumerDTO> getAllConsumers() {
         return toDTOs(endConsumerBean.getAll());
     }
 
+    @RolesAllowed({""})
     @GET
     @Path("/{username}")
     public Response getEndConsumerDetails(@PathParam("username") String username) {
@@ -67,6 +70,7 @@ public class EndConsumerService {
         return Response.status(Response.Status.BAD_REQUEST).entity("End Consumer do not exist").build();
     }
 
+    @RolesAllowed({""})
     @POST
     @Path("/")
     public Response createNewEndConsumer(EndConsumerDTO endConsumerDTO) throws MyEntityExistsException{
@@ -82,6 +86,7 @@ public class EndConsumerService {
             return Response.status(Response.Status.CREATED).entity(toDTO(endConsumer)).build();
     }
 
+    @RolesAllowed({""})
     @PUT
     @Path("/{username}")
     public Response editEndConsumer(@PathParam("username") String username, EndConsumerDTO endCons){
@@ -94,6 +99,7 @@ public class EndConsumerService {
         return Response.status(Response.Status.OK).entity(toDTO(endConsumer)).entity("Consumer updated").build();
     }
 
+    @RolesAllowed({""})
     @DELETE
     @Path("/{username}")
     public Response deleteEndConsumer(@PathParam("username") String username) throws MyEntityNotFoundException {
@@ -108,6 +114,7 @@ public class EndConsumerService {
         return Response.status(Response.Status.OK).entity("End Consumer deleted").build();
     }
 
+    @RolesAllowed({"EndConsumer"})
     @GET
     @Path("/{username}/orders")
     public Response getEndConsumerOrders(@PathParam("username") String username) throws MyEntityNotFoundException{
