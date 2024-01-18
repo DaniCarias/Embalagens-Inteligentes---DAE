@@ -3,6 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -53,12 +54,19 @@ public class OrderService {
         return packages.stream().map(this::package_toDTO).collect(Collectors.toList());
     }
 
+    @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/")
     public List<OrderDTO> getAllOrders() {
         return toDTOs(orderBean.getAll());
     }
 
+
+    //@RolesAllowed({"EndConsumer"})
+    //TODO: LISTAR ORDERS DO ENDCONSUMER
+
+
+    @RolesAllowed({"LogisticOperator", "EndConsumer"})
     @GET
     @Path("/{id}")
     public Response getOrderDetails(@PathParam("id") long id) {
@@ -69,6 +77,7 @@ public class OrderService {
         return Response.status(Response.Status.BAD_REQUEST).entity("Order do not exist").build();
     }
 
+    @RolesAllowed({"EndConsumer"})
     @POST
     @Path("/")
     public Response createNewOrder(OrderDTO orderDTO) {
@@ -89,6 +98,7 @@ public class OrderService {
         }
     }
 
+    @RolesAllowed({"LogisticOperator"})
     @PUT
     @Path("/{id}")
     public Response editOrder(@PathParam("id") long id, OrderDTO orderDTO) throws MyEntityNotFoundException {
@@ -105,6 +115,7 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity(toDTO(order)).entity("Order updated").build();
     }
 
+    @RolesAllowed({"EndConsumer"}) //CANCELAR ENCOMENDA
     @DELETE
     @Path("/{id}")
     public Response deleteOrder(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -119,6 +130,7 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity("Package deleted").build();
     }
 
+    @RolesAllowed({"EndConsumer"})
     @GET
     @Path("/{id}/packages")
     public Response getPackages(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -131,5 +143,9 @@ public class OrderService {
 
         return Response.status(Response.Status.OK).entity(packages).build();
     }
+
+    //@RolesAllowed({"EndConsumer"})
+    //TODO: LISTAR ORDERS DO ENDCONSUMER
+
 
 }

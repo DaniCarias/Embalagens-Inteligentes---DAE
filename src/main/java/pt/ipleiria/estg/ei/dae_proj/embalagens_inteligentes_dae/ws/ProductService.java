@@ -3,6 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,10 +18,13 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductManu
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
 @Path("products")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
+@Authenticated
+@RolesAllowed({"ProductManufacturer"})
 public class ProductService {
 
     @EJB
@@ -58,6 +62,9 @@ public class ProductService {
     public List<ProductDTO> getAllProducts() {
         return toDTOs(productBean.getAll());
     }
+
+    //@RolesAllowed({"ProductManufacturer"})
+    //TODO: LISTAR SO OS PRODUTOS DO MANUFACTURER
 
     @POST
     @Path("/")
@@ -167,8 +174,6 @@ public class ProductService {
         }
         return Response.status(Response.Status.NOT_FOUND).entity("ERROR_FINDING_PRODUCT").build();
     }
-
-
 
 
 }
