@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import org.hibernate.Hibernate;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
@@ -103,6 +104,7 @@ public class PackageBean {
         _package.setOrder(order);
     }
 
+
     public void removeOrder(long id) throws MyEntityNotFoundException {
 
         Package _package = entityManager.find(Package.class, id);
@@ -119,6 +121,17 @@ public class PackageBean {
 
         entityManager.lock(_package, LockModeType.OPTIMISTIC);
         _package.setOrder(null);
+    }
+
+
+    public Package getPackageSensors(long id) throws MyEntityNotFoundException{
+        Package _package = entityManager.find(Package.class, id);
+        if(!exists(_package.getId())){
+            throw new MyEntityNotFoundException("Package with id: " + id + " not found");
+        }
+        Hibernate.initialize(_package.getSensors());
+        return _package;
+
     }
 
 }

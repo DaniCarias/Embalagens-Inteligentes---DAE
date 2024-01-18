@@ -115,10 +115,6 @@ public class SensorService {
         return Response.status(Response.Status.OK).entity("Sensor deleted").build();
     }
 
-
-    //TODO: FAZER ROTA PARA LIST DOS SENSORES ASSOCIADOS AO PACKAGE
-
-
     /*@POST
     @Path("/{id}/reading")
     public Response addReading(@PathParam("id") long id, SensorReadingDTO sensorReadingDTO) throws MyEntityNotFoundException {

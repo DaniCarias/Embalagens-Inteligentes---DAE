@@ -51,6 +51,10 @@ public class ProductBean {
         return entityManager.createNamedQuery("getAllProducts", Product.class).getResultList();
     }
 
+    public List<Product> getAllByManufactor(String username) {
+        return entityManager.createNamedQuery("getAllProductsProductManufacturer", Product.class).setParameter("username", username).getResultList();
+    }
+
     public void verifyPackage(long package_id, Product product) throws MyEntityNotFoundException {
         Package package_ = entityManager.find(Package.class, package_id);
 
