@@ -33,6 +33,7 @@ public class Order {
     private Date deleted_at;
     private boolean deleted = Boolean.FALSE;
 
+
     public Order() {
         this.packages = new LinkedList<Package>();
     }

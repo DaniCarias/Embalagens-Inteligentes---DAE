@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.EndConsumerBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.OrderBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean;
@@ -22,6 +22,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEnt
 @Path("packages")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
+@RolesAllowed({"ProductManufacturer"})
 public class PackageService {
 
     @EJB
@@ -56,12 +57,14 @@ public class PackageService {
         return packages.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/")
     public List<PackageDTO> getAllPackage() {
         return toDTOs(packageBean.getAll());
     }
 
+    @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/{id}")
     public Response getPackageDetails(@PathParam("id") long id) {
@@ -89,7 +92,6 @@ public class PackageService {
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         return Response.status(Response.Status.CREATED).entity(toDTO(newPackage)).build();
-
     }
 
     @PUT
@@ -159,5 +161,12 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Order removed").build();
     }
 
+    //@RolesAllowed({"ProductManufacturer"})
+    //TODO: LISTAR SO OS PACKAGES DO MANUFACTURER
 
+    //@RolesAllowed({"LogisticOperator"})
+    //TODO: LISTAR PACKAGES DO LOGISTIC OPERATOR
+
+    //@RolesAllowed({"LogisticOperator"})
+    //TODO: LISTAR SENSORES DO PACKAGE
 }

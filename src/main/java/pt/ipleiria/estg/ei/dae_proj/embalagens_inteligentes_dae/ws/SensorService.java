@@ -3,6 +3,7 @@ package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -41,12 +42,14 @@ public class SensorService {
         return sensors.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    @RolesAllowed({"ProductManufacturer", "LogisticOperator"})
     @GET
     @Path("/")
     public List<SensorDTO> getAllSensors() {
         return toDTOs(sensorBean.getAllSensor());
     }
 
+    @RolesAllowed({"ProductManufacturer", "LogisticOperator"})
     @GET
     @Path("/{id}")
     public Response getSensorDetails(@PathParam("id") long id) {
@@ -57,6 +60,7 @@ public class SensorService {
         return Response.status(Response.Status.BAD_REQUEST).entity("Sensor do not exist").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @POST
     @Path("/")
     public Response createNewSensor(SensorDTO sensorDTO) {
@@ -76,6 +80,7 @@ public class SensorService {
         }
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @PUT
     @Path("/{id}")
     public Response editSensor(@PathParam("id") long id, SensorDTO sensorDTO) throws MyEntityNotFoundException {
@@ -92,7 +97,7 @@ public class SensorService {
         return Response.status(Response.Status.OK).entity(toDTO(sensor)).entity("Sensor updated").build();
     }
 
-
+    @RolesAllowed({"ProductManufacturer"})
     @DELETE
     @Path("/{id}")
     public Response deleteSensor(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -107,6 +112,9 @@ public class SensorService {
 
         return Response.status(Response.Status.OK).entity("Sensor deleted").build();
     }
+
+
+    //TODO: FAZER ROTA PARA LIST DOS SENSORES ASSOCIADOS AO PACKAGE
 
     /*@POST
     @Path("/{id}/reading")

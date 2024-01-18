@@ -3,6 +3,7 @@
 ##### AllProducts
 GET http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzX291dHJvIiwiaWF0IjoxNzA1NTkzOTg2LCJleHAiOjE3MDU1OTc1ODZ9.8Q6j4XagJvMaF9gJwYDP6SGSacsuLLF6jA37IqT5S5xdrwdazuQkCa1HaLf8k2SO
 
 ##### GetProduct
 GET http://localhost:8080/embalagensinteligentes/api/products/3
@@ -12,6 +13,7 @@ Accept: application/json
 POST http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzX291dHJvIiwiaWF0IjoxNzA1NTk0MjE0LCJleHAiOjE3MDU1OTc4MTR9.gASpPygIZDsb0loICr77GibO9AiJI9mmrM46Cg4pPDIpW9R9l1iBDCf-JkxX9eWP
 
 {
   "name": "teste_product",
@@ -172,9 +174,19 @@ DELETE http://localhost:8080/embalagensinteligentes/api/sensors/1
 Accept: application/json
 
 
+//--------------------LOGIN
+##### Login
+POST http://localhost:8080/embalagensinteligentes/api/auth/login
+Accept: application/json
+Content-Type: application/json
 
+{
+    "username": "danicarias",
+    "password": "Daniel Carias"
+}
 
+###END CONSUMER
+#####eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzX291dHJvIiwiaWF0IjoxNzA1NTk0MjE0LCJleHAiOjE3MDU1OTc4MTR9.gASpPygIZDsb0loICr77GibO9AiJI9mmrM46Cg4pPDIpW9R9l1iBDCf-JkxX9eWP
 
-
-
-
+###MANUFACTURER
+#####eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NTk0Mjc2LCJleHAiOjE3MDU1OTc4NzZ9.EgB-V8zefh6XpOxcuijGzXjJ8mdMNiFasCN-k50LweUo0qGsYUxHwRDMTaaUjHLS
