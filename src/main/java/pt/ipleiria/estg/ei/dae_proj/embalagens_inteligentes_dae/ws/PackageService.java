@@ -57,6 +57,19 @@ public class PackageService {
         return packages.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+
+    private SensorDTO sensor_toDTO(Sensor sensor) {
+        return new SensorDTO(
+                sensor.getId(),
+                sensor.getName(),
+                sensor.getPackage().getId()
+        );
+    }
+
+    private List<SensorDTO> sensors_toDTOs(List<Sensor> sensors) {
+        return sensors.stream().map(this::sensor_toDTO).collect(Collectors.toList());
+    }
+
     @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/")
@@ -167,6 +180,19 @@ public class PackageService {
     //@RolesAllowed({"LogisticOperator"})
     //TODO: LISTAR PACKAGES DO LOGISTIC OPERATOR
 
-    //@RolesAllowed({"LogisticOperator"})
-    //TODO: LISTAR SENSORES DO PACKAGE
+    //TODO: FAZER ROTA PARA LIST DOS SENSORES ASSOCIADOS AO PACKAGE
+    @RolesAllowed({"LogisticOperator", "EndConsumer"})
+    @GET
+    @Path("/{id}/sensors")
+    public Response getSensorsByPackage(@PathParam("id") long id) throws MyEntityNotFoundException {
+        Package pck = packageBean.getPackageSensors(id);
+        if(pck == null)
+            throw new MyEntityNotFoundException("Package with id: " + id + " not found");
+
+        List<Sensor> sensors = pck.getSensors();
+        if(sensors == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        return Response.status(Response.Status.OK).entity(sensors_toDTOs(sensors)).build();
+    }
 }
