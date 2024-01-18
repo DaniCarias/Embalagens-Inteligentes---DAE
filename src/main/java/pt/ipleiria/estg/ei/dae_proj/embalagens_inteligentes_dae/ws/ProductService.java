@@ -63,15 +63,26 @@ public class ProductService {
         return toDTOs(productBean.getAll());
     }
 
-    //TODO: LISTAR SO OS PRODUTOS DO MANUFACTURER
+    @GET
+    @Path("/{id}")
+    public Response getProductDetails(@PathParam("id") long id) {
+        Product product = productBean.find(id);
+        if (product != null) {
+            return Response.ok(toDTO(product)).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).entity("ERROR_FINDING_PRODUCT").build();
+    }
+
     @RolesAllowed({"ProductManufacturer"})
     @GET
     @Path("/manufacturer/{username}")
-    public List<ProductDTO> getAllProductsFromManufacturer(@PathParam("username") String username) {
-        return toDTOs(productBean.getAllByManufactor(username));
+    public Response getAllProductsFromManufacturer(@PathParam("username") String username) throws MyEntityNotFoundException{
+        ProductManufacturer productManufacturer = productManufacturerBean.find(username);
+        if(productManufacturer == null)
+            throw new MyEntityNotFoundException("Product Manufacturer with username: " + username + " not found");
+
+        return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllByManufactor(username))).build();
     }
-
-
 
     @POST
     @Path("/")
@@ -172,15 +183,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(product).entity("Package removed").build();
     }
 
-    @GET
-    @Path("/{id}")
-    public Response getProductDetails(@PathParam("id") long id) {
-        Product product = productBean.find(id);
-        if (product != null) {
-            return Response.ok(toDTO(product)).build();
-        }
-        return Response.status(Response.Status.NOT_FOUND).entity("ERROR_FINDING_PRODUCT").build();
-    }
+
 
 
 }

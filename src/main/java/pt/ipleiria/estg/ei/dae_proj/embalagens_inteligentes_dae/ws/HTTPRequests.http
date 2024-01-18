@@ -250,6 +250,7 @@ GET http://localhost:8080/embalagensinteligentes/api/packages/2/sensors
 Accept: application/json
 
 ##### GetProductsByProductmanufactorer -> Adicionar na pasta dos Products do bruno
-GET http://localhost:8080/embalagensinteligentes/api/products/manufacturer/danicarias
+GET http://localhost:8080/embalagensinteligentes/api/products/manufacturer/pedro_dev
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjA1MDE5LCJleHAiOjE3MDU2MDg2MTl9.m2UaIz8SMS5ZnIZBu0W5lCoPSNmi_xVSFBATMT2DA6sAA9-wIgAXCh8SZSnnLD9_
+
