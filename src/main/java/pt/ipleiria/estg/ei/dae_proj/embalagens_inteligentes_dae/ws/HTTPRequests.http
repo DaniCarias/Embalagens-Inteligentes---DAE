@@ -134,8 +134,52 @@ Content-Type: application/json
 DELETE http://localhost:8080/embalagensinteligentes/api/orders/1
 Accept: application/json
 
+##### AddPackage
+POST http://localhost:8080/embalagensinteligentes/api/orders/1/package
+Accept: application/json
+Content-Type: application/json
+
+{
+    "id": 1
+}
+
+##### RemovePackage
+DELETE http://localhost:8080/embalagensinteligentes/api/orders/1/package
+Accept: application/json
 
 
+//--------------------SENSORS
+##### AllSensors
+GET http://localhost:8080/embalagensinteligentes/api/sensors
+Accept: application/json
+
+##### GetSensor
+GET http://localhost:8080/embalagensinteligentes/api/sensors/1
+Accept: application/json
+
+##### CreateSensor
+POST http://localhost:8080/embalagensinteligentes/api/sensors
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "sensor_novo",
+  "package_id": 1
+}
+
+##### EditSensor
+PUT http://localhost:8080/embalagensinteligentes/api/sensors/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "sensor_alterado",
+  "package_id": 1
+}
+
+##### DeleteSensor
+DELETE http://localhost:8080/embalagensinteligentes/api/sensors/1
+Accept: application/json
 
 
 
