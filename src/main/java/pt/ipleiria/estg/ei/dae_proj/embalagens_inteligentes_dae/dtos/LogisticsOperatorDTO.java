@@ -12,7 +12,7 @@ public class LogisticsOperatorDTO {
     public LogisticsOperatorDTO() {
     }
 
-    public LogisticsOperatorDTO(String username, String name, String password, String address, String phoneNumber) {
+    public LogisticsOperatorDTO(String username, String name, String password, String address, int phoneNumber) {
         this.username = username;
         this.name = name;
         this.password = password;

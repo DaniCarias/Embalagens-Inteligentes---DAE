@@ -45,13 +45,13 @@ public class LogisticOperatorService {
 
     @GET
     @Path("/")
-    public List<LogisticsOperatorDTO> getAllConsumers() {
+    public List<LogisticsOperatorDTO> getAllLogisticsOperators() {
         return toDTOs(logisticsOperatorBean.getAll());
     }
 
     @GET
     @Path("/{username}")
-    public Response getEndConsumerDetails(@PathParam("username") String username) {
+    public Response getLogisticsOperatorDetails(@PathParam("username") String username) {
         LogisticsOperator logisticsOperator = logisticsOperatorBean.find(username);
         if (logisticsOperator != null) {
             return Response.status(Response.Status.OK).entity(toDTO(logisticsOperator)).build();
@@ -61,7 +61,7 @@ public class LogisticOperatorService {
 
     @POST
     @Path("/")
-    public Response createNewEndConsumer(LogisticsOperatorDTO logisticsOperatorDTO) throws MyEntityNotFoundException{
+    public Response createNewLogisticsOperator(LogisticsOperatorDTO logisticsOperatorDTO) throws MyEntityNotFoundException{
             if(logisticsOperatorBean.exists(logisticsOperatorDTO.getUsername()))
                 return Response.status(Response.Status.CONFLICT).build();
 
@@ -76,7 +76,7 @@ public class LogisticOperatorService {
 
     @PUT
     @Path("/{username}")
-    public Response editEndConsumer(@PathParam("username") String username,LogisticsOperatorDTO logisticsOper) throws MyEntityNotFoundException {
+    public Response editEndLogisticsOperator(@PathParam("username") String username,LogisticsOperatorDTO logisticsOper) throws MyEntityNotFoundException {
         LogisticsOperator logisticsOperator = logisticsOperatorBean.find(username);
 
         if(logisticsOperator == null)
@@ -88,7 +88,7 @@ public class LogisticOperatorService {
 
     @DELETE
     @Path("/{username}")
-    public Response deleteEndConsumer(@PathParam("username") String username) throws MyEntityNotFoundException {
+    public Response deleteEndLogisticsOperator(@PathParam("username") String username) throws MyEntityNotFoundException {
         LogisticsOperator logisticsOperator = logisticsOperatorBean.find(username);
         if(logisticsOperator == null)
             return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
