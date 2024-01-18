@@ -16,10 +16,12 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
 @Path("sensors")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
+@Authenticated
 public class SensorService {
 
     @EJB
@@ -115,6 +117,7 @@ public class SensorService {
 
 
     //TODO: FAZER ROTA PARA LIST DOS SENSORES ASSOCIADOS AO PACKAGE
+
 
     /*@POST
     @Path("/{id}/reading")

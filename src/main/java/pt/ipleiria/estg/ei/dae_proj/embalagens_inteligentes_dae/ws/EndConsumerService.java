@@ -17,10 +17,12 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
 @Path("endconsumers")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
+@Authenticated
 public class EndConsumerService {
 
     @EJB
@@ -70,7 +72,7 @@ public class EndConsumerService {
         return Response.status(Response.Status.BAD_REQUEST).entity("End Consumer do not exist").build();
     }
 
-    //@RolesAllowed({""})
+    @RolesAllowed({""})
     @POST
     @Path("/")
     public Response createNewEndConsumer(EndConsumerDTO endConsumerDTO) throws MyEntityExistsException{
