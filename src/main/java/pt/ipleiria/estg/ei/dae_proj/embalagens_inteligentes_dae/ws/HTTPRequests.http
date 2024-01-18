@@ -339,3 +339,8 @@ Accept: application/json
 ##### GetPackagesByProductManufactorer -> Adicionar na pasta dos Products do bruno
 GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/pedro_dev
 Accept: application/json
+
+
+##### GetPackagesByEndConsumer -> Adicionar na pasta dos Order do bruno
+GET http://localhost:8080/embalagensinteligentes/api/orders/endconsumer/danicarias_outro
+Accept: application/json

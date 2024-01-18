@@ -21,7 +21,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("orders")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-@Authenticated
+//@Authenticated
 public class OrderService {
 
     @EJB
@@ -63,10 +63,19 @@ public class OrderService {
         return toDTOs(orderBean.getAll());
     }
 
-
+//TODO: LISTAR ORDERS DO ENDCONSUMER
     //@RolesAllowed({"EndConsumer"})
-    //TODO: LISTAR ORDERS DO ENDCONSUMER
+    @GET
+    @Path("/endconsumer/{username}")
+    public Response getOrdersFromEndConsumer(@PathParam("username") String username) {
+        EndConsumer endConsumer = endConsumerBean.find(username);
+        if(endConsumer == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Consumer not found").build();
 
+        List<Order> orders = orderBean.getOrderByEndConsumer(username);
+
+        return Response.status(Response.Status.OK).entity(toDTOs(orders)).build();
+    }
 
     @RolesAllowed({"LogisticOperator", "EndConsumer"})
     @GET

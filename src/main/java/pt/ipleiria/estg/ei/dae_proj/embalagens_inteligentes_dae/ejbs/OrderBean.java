@@ -49,6 +49,10 @@ public class OrderBean {
         return entityManager.createNamedQuery("getAllOrders", Order.class).getResultList();
     }
 
+    public List<Order> getOrderByEndConsumer(String username) {
+        return entityManager.createNamedQuery("getOrdersByEndConsumer", Order.class).setParameter("username", username).getResultList();
+    }
+
     public void update(long id, EndConsumer endConsumer) throws MyEntityNotFoundException {
 
         if (!exists(id))

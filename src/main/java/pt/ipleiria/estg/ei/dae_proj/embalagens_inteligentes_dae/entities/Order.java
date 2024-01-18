@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name= "getAllOrders", query= "SELECT o FROM Order o ORDER BY o.id DESC"),
+        @NamedQuery(name= "getOrdersByEndConsumer", query= "SELECT o FROM Order o WHERE o.endConsumer.username = :username ORDER BY o.id DESC"),
 })
 @Table(
         name="orders",
