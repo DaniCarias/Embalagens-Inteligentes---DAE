@@ -23,28 +23,17 @@ public class User {
     public User(){
     }
 
-    public User(String username, String name, String password, int phoneNumber){
-        this.username = username;
-        this.name = name;
-        this.password = password;
-        setPhoneNumber(phoneNumber);
-    }
-
     public User(String username, String name, String password, String address, int phoneNumber){
         this.username = username;
         this.name = name;
         this.password = password;
         this.address = address;
-        setPhoneNumber(phoneNumber);
-    }
-
-    public void setPhoneNumber(int phoneNumber) {
-        if(String.valueOf(phoneNumber).length() != 9){
-            throw new IllegalArgumentException("Invalid phone number length");
-        }
         this.phoneNumber = phoneNumber;
     }
 
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     public String getUsername() {
         return username;
     }
