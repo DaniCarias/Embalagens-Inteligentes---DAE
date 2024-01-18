@@ -20,7 +20,7 @@ public class EndConsumer extends User {
     }
 
     public EndConsumer() {
-
+        orders = new LinkedList<>();
     }
 
     public List<Order> getOrders() {

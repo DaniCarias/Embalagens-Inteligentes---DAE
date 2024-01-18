@@ -16,12 +16,11 @@ Content-Type: application/json
 {
   "name": "teste_product",
   "description": "teste",
-  "username_manufacturer": "danicarias",
-  "package_id": 0
+  "username_manufacturer": "danicarias"
 }
 
 ##### EditProduct
-PUT http://localhost:8080/embalagensinteligentes/api/products/4
+PUT http://localhost:8080/embalagensinteligentes/api/products/3
 Accept: application/json
 Content-Type: application/json
 
@@ -37,12 +36,12 @@ DELETE http://localhost:8080/embalagensinteligentes/api/products/3
 Accept: application/json
 
 ##### AddPackage
-POST http://localhost:8080/embalagensinteligentes/api/products/1/package
+POST http://localhost:8080/embalagensinteligentes/api/products/3/package
 Accept: application/json
 Content-Type: application/json
 
 {
-    "id": 2
+    "id": 1
 }
 
 ##### RemovePackage
@@ -90,7 +89,7 @@ DELETE http://localhost:8080/embalagensinteligentes/api/packages/1
 Accept: application/json
 
 ##### AddOrder
-POST http://localhost:8080/embalagensinteligentes/api/packages/2/order
+POST http://localhost:8080/embalagensinteligentes/api/packages/1/order
 Accept: application/json
 Content-Type: application/json
 

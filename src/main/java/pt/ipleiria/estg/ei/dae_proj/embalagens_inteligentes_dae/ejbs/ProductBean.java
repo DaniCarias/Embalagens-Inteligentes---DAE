@@ -51,6 +51,13 @@ public class ProductBean {
         return entityManager.createNamedQuery("getAllProducts", Product.class).getResultList();
     }
 
+    public void verifyPackage(long package_id, Product product) throws MyEntityNotFoundException {
+        Package package_ = entityManager.find(Package.class, package_id);
+
+        if(package_.getProduct() != null)
+            throw new MyEntityNotFoundException("Package with id: " + package_id + " has already a product");
+    }
+
     public Product getProduct(long id) throws MyEntityNotFoundException {
         Product product = entityManager.find(Product.class, id);
         if (product == null)
@@ -72,7 +79,12 @@ public class ProductBean {
         product.setName(name);
         product.setDescription(description);
         product.setProductManufacturer(productManufacturer);
-        product.setPackage(entityManager.find(Package.class, package_id));
+
+        if(package_id != 0){
+            verifyPackage(package_id, product);
+            product.setPackage(entityManager.find(Package.class, package_id));
+        }
+
     }
 
     public boolean delete(long id) throws MyEntityNotFoundException {
@@ -100,6 +112,8 @@ public class ProductBean {
 
         if(product.getPackage() != null)
             throw new MyEntityNotFoundException("Product with id: " + product_id + " has already a package");
+
+        verifyPackage(package_id, entityManager.find(Product.class, product_id));
 
         entityManager.lock(product, LockModeType.OPTIMISTIC);
 
