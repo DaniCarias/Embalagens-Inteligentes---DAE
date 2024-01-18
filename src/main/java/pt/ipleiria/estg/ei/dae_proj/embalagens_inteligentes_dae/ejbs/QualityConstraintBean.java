@@ -1,13 +1,16 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.QualityConstraint;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 
 import java.util.List;
 
+@Stateless
 public class QualityConstraintBean {
 
     @PersistenceContext
@@ -17,14 +20,22 @@ public class QualityConstraintBean {
         return entityManager.find(QualityConstraint.class, id) != null;
     }
 
-    public QualityConstraint create(float value, QualityConstraint.ConstraintType type, long sensor_id) throws MyEntityNotFoundException {
+    public QualityConstraint find(long id) {
+        return entityManager.find(QualityConstraint.class, id);
+    }
+
+    public QualityConstraint create(float value, QualityConstraint.ConstraintType type, long sensor_id, long product_id) throws MyEntityNotFoundException {
 
         // find the sensor controlling this constraint
         Sensor s = entityManager.find(Sensor.class, sensor_id);
         if(s == null)
-            throw new MyEntityNotFoundException("Specified sensor does not exist!");
+            throw new MyEntityNotFoundException("Specified sensor with ID " + sensor_id + " does not exist!");
 
-        QualityConstraint constraint = new QualityConstraint(value, type, s);
+        Product p = entityManager.find(Product.class, product_id);
+        if(p == null)
+            throw new MyEntityNotFoundException("Specified product with ID " + product_id + " does not exist!");
+
+        QualityConstraint constraint = new QualityConstraint(value, type, s, p);
 
         entityManager.persist(constraint);
         return constraint;
@@ -32,6 +43,30 @@ public class QualityConstraintBean {
 
     public List<QualityConstraint> getAllConstraints() {
         return entityManager.createNamedQuery("getAllQualityConstraints", QualityConstraint.class).getResultList();
+    }
+
+    public List<QualityConstraint> getAllConstraintsForProduct(long product_id) {
+        return entityManager.createNamedQuery("getAllQualityConstraintsForProduct", QualityConstraint.class)
+                .setParameter("productId", product_id)
+                .getResultList();
+    }
+
+    public List<QualityConstraint> getAllConstraintsForSensor(long sensor_id) {
+        return entityManager.createNamedQuery("getAllQualityConstraintsForSensor", QualityConstraint.class)
+                .setParameter("sensorId", sensor_id)
+                .getResultList();
+    }
+
+    public List<QualityConstraint> getAllConstraintsForOrder(long order_id) {
+        return entityManager.createNamedQuery("getAllQualityConstraintsForOrder", QualityConstraint.class)
+                .setParameter("orderId", order_id)
+                .getResultList();
+    }
+
+    public List<QualityConstraint> getAllConstraintsForPackage(long package_id) {
+        return entityManager.createNamedQuery("getAllQualityConstraintsForPackage", QualityConstraint.class)
+                .setParameter("packageId", package_id)
+                .getResultList();
     }
 
     public QualityConstraint getConstraint(long id) throws MyEntityNotFoundException {
