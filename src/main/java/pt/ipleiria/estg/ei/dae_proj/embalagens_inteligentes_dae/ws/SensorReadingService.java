@@ -61,20 +61,16 @@ public class SensorReadingService {
 
     @GET
     @Path("/sensor/{sensor_id}")
-    public Response getSensorReadingsForSensor(@PathParam("sensor_id") long sensor_id) {
+    public List<SensorReadingDTO> getSensorReadingsForSensor(@PathParam("sensor_id") long sensor_id) {
 
-        List<SensorReading> sensorReadings = sensorReadingBean.getSensorReadingsForSensor(sensor_id);
-
-        return Response.status(Response.Status.CREATED).entity(toDTOs(sensorReadings)).build();
+        return toDTOs(sensorReadingBean.getSensorReadingsForSensor(sensor_id));
     }
 
     @GET
     @Path("/product/{product_id}")
-    public Response getSensorReadingsForProduct(@PathParam("product_id") long product_id) {
+    public List<SensorReadingDTO> getSensorReadingsForProduct(@PathParam("product_id") long product_id) {
 
-        List<SensorReading> sensorReadings = sensorReadingBean.getViolatingSensorReadingsForProduct(product_id);
-
-        return Response.status(Response.Status.CREATED).entity(toDTOs(sensorReadings)).build();
+        return toDTOs(sensorReadingBean.getViolatingSensorReadingsForProduct(product_id));
     }
 
 }
