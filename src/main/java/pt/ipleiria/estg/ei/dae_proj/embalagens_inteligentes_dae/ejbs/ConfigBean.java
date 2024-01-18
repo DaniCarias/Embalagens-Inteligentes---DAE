@@ -47,8 +47,7 @@ public class ConfigBean {
             Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira", prod1);
             Package package2 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Ferro", prod2);
             prod1.setPackage(package1);
-            prod2.setPackage(package1);
-            prod3.setPackage(package1);
+            prod2.setPackage(package2);
 
         //End Consumer
             EndConsumer endConsumer1 = endConsumerBean.create("danicarias_outro", "pass123", "Daniel Carias", "urbanização", 961234567);
