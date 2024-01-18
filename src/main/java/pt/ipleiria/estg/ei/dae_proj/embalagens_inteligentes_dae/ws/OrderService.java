@@ -132,33 +132,4 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity(packages).build();
     }
 
-    @POST
-    @Path("/{id}/package")
-    public Response addPackage(@PathParam("id") long id, PackageDTO packageDTO) throws MyEntityNotFoundException {
-        Order order = orderBean.find(id);
-        Package _package = packageBean.find(packageDTO.getId());
-
-        if(order == null)
-            return Response.status(Response.Status.NOT_FOUND).entity("Order not found").build();
-
-        if(_package == null)
-            return Response.status(Response.Status.NOT_FOUND).entity("Package not found").build();
-
-        boolean res = orderBean.addPackage(id, packageDTO.getId());
-        return Response.status(Response.Status.OK).entity(res).build();
-    }
-
-    @DELETE
-    @Path("/{id}/package")
-    public Response removePackage(@PathParam("id") long id) throws MyEntityNotFoundException {
-        Order order = orderBean.find(id);
-
-        if(order == null)
-            return Response.status(Response.Status.NOT_FOUND).entity("Order do not exists").build();
-
-        orderBean.removePackage(id);
-
-        return Response.status(Response.Status.OK).entity("Package removed").build();
-    }
-
 }

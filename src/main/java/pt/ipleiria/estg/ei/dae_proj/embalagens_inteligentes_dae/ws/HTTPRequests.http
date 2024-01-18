@@ -138,19 +138,6 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/orders/1/packages
 Accept: application/json
 
-##### AddPackage
-POST http://localhost:8080/embalagensinteligentes/api/orders/1/package
-Accept: application/json
-Content-Type: application/json
-
-{
-    "id": 1
-}
-
-##### RemovePackage
-DELETE http://localhost:8080/embalagensinteligentes/api/orders/1/package
-Accept: application/json
-
 
 //--------------------SENSORS
 ##### AllSensors
