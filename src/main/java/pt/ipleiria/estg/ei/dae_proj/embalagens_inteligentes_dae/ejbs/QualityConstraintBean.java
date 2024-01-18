@@ -55,6 +55,18 @@ public class QualityConstraintBean {
                 .getResultList();
     }
 
+    public List<QualityConstraint> getAllConstraintsForOrder(long order_id) {
+        return entityManager.createNamedQuery("getAllQualityConstraintsForOrder", QualityConstraint.class)
+                .setParameter("orderId", order_id)
+                .getResultList();
+    }
+
+    public List<QualityConstraint> getAllConstraintsForPackage(long package_id) {
+        return entityManager.createNamedQuery("getAllQualityConstraintsForPackage", QualityConstraint.class)
+                .setParameter("packageId", package_id)
+                .getResultList();
+    }
+
     public QualityConstraint getConstraint(long id) throws MyEntityNotFoundException {
         QualityConstraint constraint = entityManager.find(QualityConstraint.class, id);
         if(constraint == null)

@@ -62,6 +62,18 @@ public class QualityConstraintService {
         return toDTOs(qualityConstraintBean.getAllConstraintsForSensor(sensor_id));
     }
 
+    @GET
+    @Path("/order/{order_id}")
+    public List<QualityConstraintDTO> getAllQualityConstraintsForOrderId(@PathParam("order_id") long order_id) {
+        return toDTOs(qualityConstraintBean.getAllConstraintsForOrder(order_id));
+    }
+
+    @GET
+    @Path("/package/{package_id}")
+    public List<QualityConstraintDTO> getAllQualityConstraintsForPackageId(@PathParam("package_id") long package_id) {
+        return toDTOs(qualityConstraintBean.getAllConstraintsForPackage(package_id));
+    }
+
     @POST
     @Path("/")
     public Response addNewQualityConstraint(QualityConstraintDTO qualityConstraintDTO) {
