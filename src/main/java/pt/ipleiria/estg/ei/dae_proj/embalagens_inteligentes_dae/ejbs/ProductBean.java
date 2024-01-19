@@ -145,4 +145,9 @@ public class ProductBean {
         entityManager.merge(product);
     }
 
+    public List<Product> getAllByEndConsumer(String username) {
+
+        return entityManager.createNamedQuery("getProductsByEndConsumer", Product.class).setParameter("username", username).getResultList();
+
+    }
 }

@@ -12,6 +12,7 @@ import org.glassfish.jaxb.runtime.v2.runtime.reflect.Lister;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.PackageDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.ProductDTO;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.EndConsumerBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductManufacturerBean;
@@ -33,6 +34,8 @@ public class ProductService {
     private ProductManufacturerBean productManufacturerBean;
     @EJB
     private PackageBean packageBean;
+    @EJB
+    private EndConsumerBean endConsumerBean;
 
     private ProductDTO toDTO(Product product) {
         if (product.getPackage() == null){
@@ -183,7 +186,15 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(product).entity("Package removed").build();
     }
 
+    @GET
+    @Path("/endconsumer/{username}")
+    public Response getAllProductsFromEndConsumer(@PathParam("username") String username) throws MyEntityNotFoundException{
+        EndConsumer endConsumer = endConsumerBean.find(username);
+        if(endConsumer == null)
+            throw new MyEntityNotFoundException("End Consumer with username: " + username + " not found");
 
+        return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllByEndConsumer(username))).build();
+    }
 
 
 }

@@ -12,7 +12,12 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name= "getAllProducts", query= "SELECT p FROM Product p ORDER BY p.id DESC"),
-        @NamedQuery(name= "getAllProductsProductManufacturer", query= "SELECT p FROM Product p WHERE p.manufacturer.username = :username ORDER BY p.id DESC")
+        @NamedQuery(name= "getAllProductsProductManufacturer", query= "SELECT p FROM Product p WHERE p.manufacturer.username = :username ORDER BY p.id DESC"),
+        @NamedQuery(name= "getProductsByEndConsumer", query= "SELECT p FROM Product p " +
+                "INNER JOIN Order ord ON ord.endConsumer.username LIKE :username " +
+                "INNER JOIN Package pck ON pck.order.id = ord.id " +
+                "WHERE p._package.id = pck.id " +
+                "ORDER BY p.id DESC"),
 })
 @Table(
         name="products",
