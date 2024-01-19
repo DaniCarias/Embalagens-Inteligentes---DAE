@@ -19,7 +19,8 @@ import java.util.Date;
                 "WHERE sr.violatesQualityConstraint = true AND p.id = :productId"),
         @NamedQuery(name = "getAllSensorReadingsForPackage", query = "SELECT sr FROM SensorReading sr " +
                 "JOIN Sensor s ON sr.sensor.id = s.id " +
-                "JOIN Package p ON s._package.id = p.id")
+                "JOIN Package p ON s._package.id = p.id " +
+                "WHERE p.id = :packageId")
 })
 public class SensorReading {
     @Id
