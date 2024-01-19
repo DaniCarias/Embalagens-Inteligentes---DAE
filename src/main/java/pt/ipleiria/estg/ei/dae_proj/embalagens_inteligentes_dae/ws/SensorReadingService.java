@@ -5,8 +5,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.SensorReadingDTO;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorReadingBean;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorReading;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
@@ -17,7 +20,7 @@ import java.util.stream.Collectors;
 @Path("sensor_readings")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-@Authenticated
+//@Authenticated
 public class SensorReadingService {
 
     @EJB
@@ -25,6 +28,8 @@ public class SensorReadingService {
 
     @EJB
     private SensorBean sensorBean;
+    @EJB
+    private ProductBean productBean;
 
     private SensorReadingDTO toDTO(SensorReading sensorReading) {
         return new SensorReadingDTO(
@@ -47,30 +52,38 @@ public class SensorReadingService {
 
     @POST
     @Path("/")
-    public Response addNewSensorReading(SensorReadingDTO sensorReadingDTO) {
-        try {
-            SensorReading sensorReading = sensorReadingBean.create(sensorReadingDTO.getValue(), sensorReadingDTO.getSensor_id());
-            if(sensorReading == null)
-                return Response.status(Response.Status.NOT_FOUND).build();
+    public Response addNewSensorReading(SensorReadingDTO sensorReadingDTO) throws MyEntityNotFoundException {
+        Sensor sensor = sensorBean.find(sensorReadingDTO.getSensor_id());
+        if(sensor == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor not found").build();
 
-            return Response.status(Response.Status.CREATED).entity(toDTO(sensorReading)).build();
-        } catch (MyEntityNotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
+        SensorReading sensorReading = sensorReadingBean.create(sensorReadingDTO.getValue(), sensorReadingDTO.getSensor_id());
+        if(sensorReading == null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Fail to create").build();
+
+        return Response.status(Response.Status.CREATED).entity(toDTO(sensorReading)).build();
     }
 
     @GET
     @Path("/sensor/{sensor_id}")
-    public List<SensorReadingDTO> getSensorReadingsForSensor(@PathParam("sensor_id") long sensor_id) {
+    public Response getSensorReadingsForSensor(@PathParam("sensor_id") long sensor_id) {
+        Sensor sensor = sensorBean.find(sensor_id);
+        if(sensor == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor not found").build();
+        }
 
-        return toDTOs(sensorReadingBean.getSensorReadingsForSensor(sensor_id));
+        return Response.status(Response.Status.OK).entity(toDTOs(sensorReadingBean.getSensorReadingsForSensor(sensor_id))).build();
     }
 
     @GET
     @Path("/product/{product_id}")
-    public List<SensorReadingDTO> getSensorReadingsForProduct(@PathParam("product_id") long product_id) {
+    public Response getSensorReadingsForProduct(@PathParam("product_id") long product_id) {
+        Product product = productBean.find(product_id);
+        if(product == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Product not found").build();
+        }
 
-        return toDTOs(sensorReadingBean.getViolatingSensorReadingsForProduct(product_id));
+        return Response.status(Response.Status.OK).entity(toDTOs(sensorReadingBean.getViolatingSensorReadingsForProduct(product_id))).build();
     }
 
 }

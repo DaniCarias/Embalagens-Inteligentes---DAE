@@ -329,12 +329,6 @@ Content-Type: application/json
 DELETE http://localhost:8080/embalagensinteligentes/api/productmanufacturers/novo_productmanufacturer
 Accept: application/json
 
-
-
-################################################ NOVAS ROTAS ################################################33
-
-
-
 ##### GetPackagesByProductManufactorer -> Adicionar na pasta dos Packages do bruno
 GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/danicarias
 Accept: application/json
@@ -344,9 +338,6 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/orders/endconsumer/danicarias_outro
 Accept: application/json
 
-
-
-######################################## NOVASSSSSSS ROTAASSSSSSS ##########################################
 ####getAllProductsFromManufacturer
 GET http://localhost:8080/embalagensinteligentes/api/products/manufacturer/pedro_dev
 Accept: application/json
@@ -354,4 +345,38 @@ Accept: application/json
 ####getSensorsByPackage
 GET http://localhost:8080/embalagensinteligentes/api/packages/1/sensors
 Accept: application/json
+
+
+
+
+######################################## NOVASSSSSSS ROTAASSSSSSS ##########################################
+####GetAllSensorReadings
+GET http://localhost:8080/embalagensinteligentes/api/sensor_readings
+Accept: application/json
+
+####GetSensorReadingBySensor
+GET http://localhost:8080/embalagensinteligentes/api/sensor_readings/sensor/1
+Accept: application/json
+
+####addNewSensorReading
+POST http://localhost:8080/embalagensinteligentes/api/sensor_readings
+Accept: application/json
+Content-Type: application/json
+
+{
+    "value": 1.0,
+    "date": "2023-01-01T12:30:00",
+    "sensor_id": 1
+}
+
+####getSensorReadingsForProduct
+GET http://localhost:8080/embalagensinteligentes/api/sensor_readings/product/1
+Accept: application/json
+
+
+
+
+
+
+
 

@@ -21,7 +21,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("sensors")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-@Authenticated
+//@Authenticated
 public class SensorService {
 
     @EJB
@@ -115,19 +115,4 @@ public class SensorService {
         return Response.status(Response.Status.OK).entity("Sensor deleted").build();
     }
 
-    /*@POST
-    @Path("/{id}/reading")
-    public Response addReading(@PathParam("id") long id, SensorReadingDTO sensorReadingDTO) throws MyEntityNotFoundException {
-        Sensor sensor = sensorBean.find(id);
-        if(sensor == null)
-            return Response.status(Response.Status.NOT_FOUND).entity("Sensor do not exist").build();
-
-        SensorReading sensorReading = sensorReadingBean.find(sensorReadingDTO.getId());
-
-        SensorReading sensorReading = new SensorReading(sensorReadingDTO.getValue(), sensorReadingDTO.getTimestamp(), sensor);
-        sensor.addReading(sensorReading);
-        sensorBean.update(sensor.getId(), sensor.getName(), sensor.getPackage().getId());
-
-        return Response.status(Response.Status.OK).entity("Reading added").build();
-    }*/
 }
