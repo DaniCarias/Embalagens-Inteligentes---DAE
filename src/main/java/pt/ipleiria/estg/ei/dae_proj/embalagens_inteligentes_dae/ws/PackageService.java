@@ -39,13 +39,15 @@ public class PackageService {
     private ProductManufacturerBean productManufacturerBean;
 
     private PackageDTO toDTO(Package _package) {
-        if (_package.getOrder() == null && _package.getProduct() == null){
-            return new PackageDTO(
-                    _package.getId(),
-                    _package.getPackageType(),
-                    _package.getLastTimeOpened(),
-                    _package.getMaterial()
-            );
+        var order_id = 0;
+        var product_id = 0;
+
+        if(_package.getOrder() != null){
+            order_id = (int) _package.getOrder().getId();
+        }
+
+        if(_package.getProduct() != null){
+            product_id = (int) _package.getProduct().getId();
         }
 
         return new PackageDTO(
@@ -53,9 +55,10 @@ public class PackageService {
                 _package.getPackageType(),
                 _package.getLastTimeOpened(),
                 _package.getMaterial(),
-                _package.getProduct().getId(),
-                _package.getOrder().getId()
+                order_id,
+                product_id
         );
+
     }
 
     private List<PackageDTO> toDTOs(List<Package> packages) {

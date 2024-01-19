@@ -61,7 +61,6 @@ public class Package {
         this.material = material;
         this.product = product;
         this.sensors = new LinkedList<>();
-        this.order = null;
     }
 
     public Package(PackageType packageType, Date lastTimeOpened, String material) {
@@ -69,7 +68,6 @@ public class Package {
         this.lastTimeOpened = lastTimeOpened;
         this.material = material;
         this.sensors = new LinkedList<>();
-        this.order = null;
     }
 
 

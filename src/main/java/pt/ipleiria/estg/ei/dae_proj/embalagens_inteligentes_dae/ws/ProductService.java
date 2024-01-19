@@ -161,6 +161,7 @@ public class ProductService {
             return Response.status(Response.Status.BAD_REQUEST).entity("Product already has a package").build();
 
         productBean.addPackage(id, _package.getId());
+        packageBean.addProduct(_package.getId(), id);
 
         product = productBean.find(id);
         return Response.status(Response.Status.OK).entity(toDTO(product)).entity("Package added").build();
