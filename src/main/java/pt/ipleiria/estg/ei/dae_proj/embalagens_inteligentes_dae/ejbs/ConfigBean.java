@@ -42,6 +42,7 @@ public class ConfigBean {
         //Product Manufactor
             ProductManufacturer productManufacturer1 = productManufacturerBean.create("danicarias", "pass123", "Daniel Carias", "urbanização", 961234567);
             ProductManufacturer productManufacturer2 = productManufacturerBean.create("pedro_dev", "pass123", "Daniel Carias", "urbanização", 961234567);
+            ProductManufacturer productManufacturer3 = productManufacturerBean.create("manufacturer", "pass123", "Test Manufacturer", "acolá", 961234567);
 
         //Product
             Product prod1 = productBean.create("nome do produto1", "descricao do produto1", productManufacturer1);
@@ -60,6 +61,7 @@ public class ConfigBean {
         //End Consumer
             EndConsumer endConsumer1 = endConsumerBean.create("danicarias_outro", "pass123", "Daniel Carias", "urbanização", 961234567);
             EndConsumer endConsumer2 = endConsumerBean.create("danicarias_outro2", "teste2", "Daniel teste2", "test2", 919123111);
+            EndConsumer endConsumer3 = endConsumerBean.create("end_consumer", "pass123", "Test End Consumer", "acolá", 919123111);
 
         //Order
             Order order1 = orderBean.create(endConsumer1);
@@ -69,6 +71,7 @@ public class ConfigBean {
 
         //Logistic Operator
             LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);
+            LogisticsOperator logisticsOperator2 = logisticsOperatorBean.create("logistic_operator", "pass123", "Test Logistic Operator", "acolá", 961234567);
 
         //Sensor
             // belonging to package1
@@ -79,8 +82,14 @@ public class ConfigBean {
             Sensor sensor3 = sensorBean.create("sensor_teste2", package2.getId());
 
         //Quality Constraint
-            QualityConstraint constraint1 = qualityConstraintBean.create(20.0f, QualityConstraint.ConstraintType.LOWER, sensor1.getId(), prod1.getId());
-            QualityConstraint constraint2 = qualityConstraintBean.create(10.0f, QualityConstraint.ConstraintType.UPPER, sensor1.getId(), prod1.getId());
+            QualityConstraint constraint1 = qualityConstraintBean.create(20.0f,
+                    QualityConstraint.ConstraintType.LOWER, prod1.getId());
+            QualityConstraint constraint2 = qualityConstraintBean.create(10.0f,
+                    QualityConstraint.ConstraintType.UPPER, prod1.getId());
+
+            // associate sensors
+            qualityConstraintBean.setSensor(constraint1.getId(), sensor1.getId());
+            qualityConstraintBean.setSensor(constraint2.getId(), sensor1.getId());
 
         //Sensor Reading
             SensorReading reading1 = sensorReadingBean.create(15.0f, sensor1.getId());

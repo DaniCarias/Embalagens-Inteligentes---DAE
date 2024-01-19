@@ -48,20 +48,32 @@ public class QualityConstraint {
     @Enumerated(EnumType.STRING)
     private ConstraintType type;
 
+    @NotNull
     @ManyToOne
     private Product product; // the product imposing this constraint
 
     @ManyToOne
     private Sensor sensor; // the sensor responsible by measuring this constraint
 
+    @Version
+    private int version;
+
     public QualityConstraint() {
 
     }
 
+    // with sensor
     public QualityConstraint(float value, ConstraintType type, Sensor sensor, Product product) {
         this.value = value;
         this.type = type;
         this.sensor = sensor;
+        this.product = product;
+    }
+
+    // without sensor - intended for manufacturer
+    public QualityConstraint(float value, ConstraintType type, Product product) {
+        this.value = value;
+        this.type = type;
         this.product = product;
     }
 
