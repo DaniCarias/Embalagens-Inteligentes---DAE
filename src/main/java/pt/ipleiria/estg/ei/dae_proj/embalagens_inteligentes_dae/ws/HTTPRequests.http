@@ -381,6 +381,7 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/sensordefaults
 Accept: application/json
 
-
-
+####getProductsEndConsumer
+GET http://localhost:8080/embalagensinteligentes/api/products/endconsumers
+Accept: application/json
 

@@ -196,5 +196,12 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllByEndConsumer(username))).build();
     }
 
+    @GET
+    @Path("/endconsumers")
+    public Response getProductsEndConsumer() {
+        return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllProductsEndConsumer())).build();
+    }
+
+
 
 }

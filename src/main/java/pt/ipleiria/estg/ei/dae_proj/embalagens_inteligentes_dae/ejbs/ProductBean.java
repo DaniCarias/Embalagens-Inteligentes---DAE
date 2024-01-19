@@ -51,6 +51,10 @@ public class ProductBean {
         return entityManager.createNamedQuery("getAllProducts", Product.class).getResultList();
     }
 
+    public List<Product> getAllProductsEndConsumer() {
+        return entityManager.createNamedQuery("getProductsForEndConsumer", Product.class).getResultList();
+    }
+
     public List<Product> getAllByManufactor(String username) {
         return entityManager.createNamedQuery("getAllProductsProductManufacturer", Product.class).setParameter("username", username).getResultList();
     }
