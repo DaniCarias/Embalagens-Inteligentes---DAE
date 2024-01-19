@@ -16,7 +16,10 @@ import java.util.Date;
         @NamedQuery(name = "getViolatingReadingsForProduct", query = "SELECT sr FROM SensorReading sr " +
                 "INNER JOIN QualityConstraint qc ON sr.sensor.id = qc.sensor.id " +
                 "INNER JOIN Product p ON qc.product.id = p.id " +
-                "WHERE sr.violatesQualityConstraint = true AND p.id = :productId")
+                "WHERE sr.violatesQualityConstraint = true AND p.id = :productId"),
+        @NamedQuery(name = "getAllSensorReadingsForPackage", query = "SELECT sr FROM SensorReading sr " +
+                "JOIN Sensor s ON sr.sensor.id = s.id " +
+                "JOIN Package p ON s._package.id = p.id")
 })
 public class SensorReading {
     @Id
