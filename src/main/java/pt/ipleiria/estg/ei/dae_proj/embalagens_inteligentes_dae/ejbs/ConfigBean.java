@@ -79,8 +79,14 @@ public class ConfigBean {
             Sensor sensor3 = sensorBean.create("sensor_teste2", package2.getId());
 
         //Quality Constraint
-            QualityConstraint constraint1 = qualityConstraintBean.create(20.0f, QualityConstraint.ConstraintType.LOWER, sensor1.getId(), prod1.getId());
-            QualityConstraint constraint2 = qualityConstraintBean.create(10.0f, QualityConstraint.ConstraintType.UPPER, sensor1.getId(), prod1.getId());
+            QualityConstraint constraint1 = qualityConstraintBean.create(20.0f,
+                    QualityConstraint.ConstraintType.LOWER, prod1.getId());
+            QualityConstraint constraint2 = qualityConstraintBean.create(10.0f,
+                    QualityConstraint.ConstraintType.UPPER, prod1.getId());
+
+            // associate sensors
+            qualityConstraintBean.setSensor(constraint1.getId(), sensor1.getId());
+            qualityConstraintBean.setSensor(constraint2.getId(), sensor1.getId());
 
         //Sensor Reading
             SensorReading reading1 = sensorReadingBean.create(15.0f, sensor1.getId());
