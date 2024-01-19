@@ -47,10 +47,13 @@ public class ConfigBean {
             Product prod1 = productBean.create("nome do produto1", "descricao do produto1", productManufacturer1);
             Product prod2 = productBean.create("nome do produto2", "descricao do produto2", productManufacturer1);
             Product prod3 = productBean.create("nome do produto123123123", "descricao do produto3", productManufacturer2);
+            Product prod4 = productBean.create("produto diferente", "descricao do produto4", productManufacturer1);
 
         //Package
-            Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira", prod1);
-            Package package2 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Ferro", prod2);
+            Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira");
+            Package package2 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Ferro");
+            package1.setProduct(prod1);
+            package2.setProduct(prod2);
             prod1.setPackage(package1);
             prod2.setPackage(package2);
 

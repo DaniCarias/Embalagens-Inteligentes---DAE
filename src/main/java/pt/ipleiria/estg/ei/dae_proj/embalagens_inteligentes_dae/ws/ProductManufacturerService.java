@@ -20,7 +20,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("productmanufacturers")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
+@Authenticated
 public class ProductManufacturerService {
 
     @EJB
@@ -81,7 +81,6 @@ public class ProductManufacturerService {
             return Response.status(Response.Status.BAD_REQUEST).build();
 
         return Response.status(Response.Status.CREATED).entity(toDTO(productManufacturer)).build();
-
     }
 
     @RolesAllowed({""})
@@ -96,6 +95,7 @@ public class ProductManufacturerService {
         productManufacturerBean.update(username, productManu.getName(), productManu.getAddress(), productManu.getPhoneNumber());
         return Response.status(Response.Status.OK).entity(toDTO(productManufacturer)).entity("Consumer updated").build();
     }
+    
     @RolesAllowed({""})
     @DELETE
     @Path("/{username}")

@@ -64,6 +64,14 @@ public class Package {
         this.order = null;
     }
 
+    public Package(PackageType packageType, Date lastTimeOpened, String material) {
+        this.packageType = packageType;
+        this.lastTimeOpened = lastTimeOpened;
+        this.material = material;
+        this.sensors = new LinkedList<>();
+        this.order = null;
+    }
+
 
     public long getId() {
         return id;

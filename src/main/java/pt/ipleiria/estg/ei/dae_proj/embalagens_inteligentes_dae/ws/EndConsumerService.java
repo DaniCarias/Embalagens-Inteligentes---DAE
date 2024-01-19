@@ -57,8 +57,8 @@ public class EndConsumerService {
     @RolesAllowed({""})
     @GET
     @Path("/")
-    public List<EndConsumerDTO> getAllConsumers() {
-        return toDTOs(endConsumerBean.getAll());
+    public Response getAllConsumers() {
+        return Response.status(Response.Status.OK).entity(toDTOs(endConsumerBean.getAll())).build();
     }
 
     @RolesAllowed({""})
@@ -69,7 +69,7 @@ public class EndConsumerService {
         if (endConsumer != null) {
             return Response.status(Response.Status.OK).entity(toDTO(endConsumer)).build();
         }
-        return Response.status(Response.Status.BAD_REQUEST).entity("End Consumer do not exist").build();
+        return Response.status(Response.Status.NOT_FOUND).entity("End Consumer do not exist").build();
     }
 
     @RolesAllowed({""})
@@ -78,12 +78,11 @@ public class EndConsumerService {
     public Response createNewEndConsumer(EndConsumerDTO endConsumerDTO) throws MyEntityExistsException{
 
             if(endConsumerBean.exists(endConsumerDTO.getUsername()))
-                return Response.status(Response.Status.CONFLICT).build();
+                return Response.status(Response.Status.CONFLICT).entity("End Consumer already exists").build();
 
             EndConsumer endConsumer = endConsumerBean.create(endConsumerDTO.getUsername(),endConsumerDTO.getName(),endConsumerDTO.getPassword(), endConsumerDTO.getAddress(), endConsumerDTO.getPhoneNumber());
-
             if(endConsumer == null)
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).entity("Fail to create new End Consumer").build();
 
             return Response.status(Response.Status.CREATED).entity(toDTO(endConsumer)).build();
     }
@@ -120,9 +119,7 @@ public class EndConsumerService {
     @GET
     @Path("/{username}/orders")
     public Response getEndConsumerOrders(@PathParam("username") String username) throws MyEntityNotFoundException{
-
         EndConsumer endConsumer = endConsumerBean.getEndConsumerOrders(username);
-
         if(endConsumer == null)
             throw new MyEntityNotFoundException("End Consumer with username: " + username + " not found");
 

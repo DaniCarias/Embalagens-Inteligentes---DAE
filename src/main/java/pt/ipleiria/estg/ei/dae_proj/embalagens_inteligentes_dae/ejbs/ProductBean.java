@@ -131,13 +131,17 @@ public class ProductBean {
             throw new MyEntityNotFoundException("Product with id: " + product_id + " not found");
 
         Product product = entityManager.find(Product.class, product_id);
+        Package pck = entityManager.find(Package.class, product.getPackage().getId());
 
         if(product.getPackage() == null)
             throw new MyEntityNotFoundException("Product with id: " + product_id + " has no package");
 
         entityManager.lock(product, LockModeType.OPTIMISTIC);
-
         product.setPackage(null);
+
+        entityManager.lock(pck, LockModeType.OPTIMISTIC);
+        pck.setProduct(null);
+
         entityManager.merge(product);
     }
 

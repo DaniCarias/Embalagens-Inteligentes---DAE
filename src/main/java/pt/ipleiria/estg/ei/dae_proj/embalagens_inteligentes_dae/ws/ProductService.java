@@ -23,8 +23,8 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("products")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-@Authenticated
-@RolesAllowed({"ProductManufacturer"})
+//@Authenticated
+//@RolesAllowed({"ProductManufacturer"})
 public class ProductService {
 
     @EJB
@@ -59,8 +59,8 @@ public class ProductService {
 
     @GET
     @Path("/")
-    public List<ProductDTO> getAllProducts() {
-        return toDTOs(productBean.getAll());
+    public Response getAllProducts() {
+        return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAll())).build();
     }
 
     @GET
@@ -68,7 +68,7 @@ public class ProductService {
     public Response getProductDetails(@PathParam("id") long id) {
         Product product = productBean.find(id);
         if (product != null) {
-            return Response.ok(toDTO(product)).build();
+            return Response.status(Response.Status.OK).entity(toDTO(product)).build();
         }
         return Response.status(Response.Status.NOT_FOUND).entity("ERROR_FINDING_PRODUCT").build();
     }
@@ -95,7 +95,7 @@ public class ProductService {
             Product product = productBean.create(productDTO.getName(), productDTO.getDescription(), productManufacturer);
 
             if(product == null)
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.BAD_REQUEST).entity("Fail to create.").build();
 
             if(productDTO.getPackage_id() > 0)
                 productBean.addPackage(product.getId(), productDTO.getPackage_id());

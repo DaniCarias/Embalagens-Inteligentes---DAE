@@ -15,9 +15,9 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.TokenIssuer;
 
 
-@Path("auth") // relative url web path for this service
-@Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
-@Consumes({MediaType.APPLICATION_JSON}) // injects header “Accept: application/json”
+@Path("auth")
+@Produces({MediaType.APPLICATION_JSON})
+@Consumes({MediaType.APPLICATION_JSON})
 public class AuthService {
 
     @Inject
@@ -28,23 +28,6 @@ public class AuthService {
 
     @EJB
     private UserBean userBean;
-
-
-    protected static final byte[] SECRET_KEY = "veRysup3rstr0nginv1ncible5ecretkeY@embalagens_inteligentes_dae.dae.ipleiria".getBytes();
-
-    protected static final String ALGORITHM = "HMACSHA384";
-
-    public static final long EXPIRY_MINS = 60L;
-
-
-    @GET
-    @Authenticated
-    @Path("/user")
-    public Response getAuthenticatedUser() {
-        var username = securityContext.getUserPrincipal().getName();
-        var user = userBean.findOrFail(username);
-        return Response.ok(UserDTO.from(user)).build();
-    }
 
     @POST
     @Path("/login")

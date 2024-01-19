@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.OrderBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductManufacturerBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.*;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
@@ -23,8 +25,8 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("packages")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-@Authenticated
-@RolesAllowed({"ProductManufacturer"})
+//@Authenticated
+//@RolesAllowed({"ProductManufacturer"})
 public class PackageService {
 
     @EJB
@@ -33,15 +35,16 @@ public class PackageService {
     private ProductBean productBean;
     @EJB
     private OrderBean orderBean;
+    @EJB
+    private ProductManufacturerBean productManufacturerBean;
 
     private PackageDTO toDTO(Package _package) {
-        if (_package.getOrder() == null){
+        if (_package.getOrder() == null && _package.getProduct() == null){
             return new PackageDTO(
                     _package.getId(),
                     _package.getPackageType(),
                     _package.getLastTimeOpened(),
-                    _package.getMaterial(),
-                    _package.getProduct().getId()
+                    _package.getMaterial()
             );
         }
 
@@ -75,8 +78,8 @@ public class PackageService {
     @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/")
-    public List<PackageDTO> getAllPackage() {
-        return toDTOs(packageBean.getAll());
+    public Response getAllPackage() {
+        return Response.status(Response.Status.OK).entity(toDTOs(packageBean.getAll())).build();
     }
 
     @RolesAllowed({"LogisticOperator"})
@@ -93,14 +96,15 @@ public class PackageService {
     @POST
     @Path("/")
     public Response createNewPackage(PackageDTO packageDTO) throws MyEntityNotFoundException, MyEntityExistsException{
-        Product product = productBean.find(packageDTO.getProduct_id());
-        if(product == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
-
-        Package _package = packageBean.create(packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial(), product);
+        Package _package = packageBean.create(packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial());
 
         if(packageDTO.getOrder_id() > 0)
             packageBean.addOrder(_package.getId(), packageDTO.getOrder_id());
+
+        if(packageDTO.getProduct_id() > 0){
+            productBean.addPackage(packageDTO.getProduct_id(), _package.getId());
+            packageBean.addProduct(_package.getId(), packageDTO.getProduct_id());
+        }
 
         Package newPackage = packageBean.find(_package.getId());
         if(newPackage == null)
@@ -176,8 +180,22 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Order removed").build();
     }
 
-    //@RolesAllowed({"ProductManufacturer"})
-    //TODO: LISTAR SO OS PACKAGES DO MANUFACTURER
+    @GET
+    @Path("/manufacturer/{username}")
+    public Response getPackagesByManufacturer(@PathParam("username") String username) {
+        ProductManufacturer productManufacturer = productManufacturerBean.find(username);
+        if(productManufacturer == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        List<Product> products = productBean.getAllByManufactor(username);
+        if(products == null)
+            return Response.status(Response.Status.BAD_REQUEST).entity("Do not have any products").build();
+
+        List<Package> packages = packageBean.getPackagesByProducts(products);
+
+        return Response.status(Response.Status.OK).entity(toDTOs(packages)).build();
+    }
+
 
     @RolesAllowed({"LogisticOperator", "EndConsumer"})
     @GET

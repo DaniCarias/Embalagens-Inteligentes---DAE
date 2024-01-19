@@ -59,14 +59,22 @@ public class OrderService {
     @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/")
-    public List<OrderDTO> getAllOrders() {
-        return toDTOs(orderBean.getAll());
+    public Response getAllOrders() {
+        return Response.status(Response.Status.OK).entity(toDTOs(orderBean.getAll())).build();
     }
 
+    @RolesAllowed({"EndConsumer"})
+    @GET
+    @Path("/endconsumer/{username}")
+    public Response getOrdersFromEndConsumer(@PathParam("username") String username) {
+        EndConsumer endConsumer = endConsumerBean.find(username);
+        if(endConsumer == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Consumer not found").build();
 
-    //@RolesAllowed({"EndConsumer"})
-    //TODO: LISTAR ORDERS DO ENDCONSUMER
+        List<Order> orders = orderBean.getOrderByEndConsumer(username);
 
+        return Response.status(Response.Status.OK).entity(toDTOs(orders)).build();
+    }
 
     @RolesAllowed({"LogisticOperator", "EndConsumer"})
     @GET
@@ -117,7 +125,7 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity(toDTO(order)).entity("Order updated").build();
     }
 
-    @RolesAllowed({"EndConsumer"}) //CANCELAR ENCOMENDA
+    @RolesAllowed({"EndConsumer"}) //CANCELAR Order
     @DELETE
     @Path("/{id}")
     public Response deleteOrder(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -145,9 +153,5 @@ public class OrderService {
 
         return Response.status(Response.Status.OK).entity(packages).build();
     }
-
-    //@RolesAllowed({"EndConsumer"})
-    //TODO: LISTAR ORDERS DO ENDCONSUMER
-
 
 }
