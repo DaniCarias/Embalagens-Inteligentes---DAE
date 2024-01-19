@@ -18,8 +18,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxN
 {
   "name": "teste_product",
   "description": "teste",
-  "username_manufacturer": "danicarias",
-  "package_id": 1
+  "username_manufacturer": "danicarias"
 }
 
 ##### EditProduct
@@ -48,7 +47,7 @@ Content-Type: application/json
 }
 
 ##### RemovePackage
-DELETE http://localhost:8080/embalagensinteligentes/api/products/3/package
+DELETE http://localhost:8080/embalagensinteligentes/api/products/4/package
 Accept: application/json
 
 
@@ -87,11 +86,11 @@ Content-Type: application/json
 }
 
 ##### DeletePackage
-DELETE http://localhost:8080/embalagensinteligentes/api/packages/1
+DELETE http://localhost:8080/embalagensinteligentes/api/packages/2
 Accept: application/json
 
 ##### AddOrder
-POST http://localhost:8080/embalagensinteligentes/api/packages/1/order
+POST http://localhost:8080/embalagensinteligentes/api/packages/2/order
 Accept: application/json
 Content-Type: application/json
 
@@ -100,7 +99,7 @@ Content-Type: application/json
 }
 
 ##### RemoveOrder
-DELETE http://localhost:8080/embalagensinteligentes/api/packages/1/order
+DELETE http://localhost:8080/embalagensinteligentes/api/packages/2/order
 Accept: application/json
 
 
@@ -332,15 +331,27 @@ Accept: application/json
 
 
 
-################################################33 NOVAS ROTAS ################################################33
+################################################ NOVAS ROTAS ################################################33
 
 
 
-##### GetPackagesByProductManufactorer -> Adicionar na pasta dos Products do bruno
-GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/pedro_dev
+##### GetPackagesByProductManufactorer -> Adicionar na pasta dos Packages do bruno
+GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/danicarias
 Accept: application/json
 
 
-##### GetPackagesByEndConsumer -> Adicionar na pasta dos Order do bruno
+##### GetOrdersByEndConsumer -> Adicionar na pasta dos Order do bruno
 GET http://localhost:8080/embalagensinteligentes/api/orders/endconsumer/danicarias_outro
 Accept: application/json
+
+
+
+######################################## NOVASSSSSSS ROTAASSSSSSS ##########################################
+####getAllProductsFromManufacturer
+GET http://localhost:8080/embalagensinteligentes/api/products/manufacturer/pedro_dev
+Accept: application/json
+
+####getSensorsByPackage
+GET http://localhost:8080/embalagensinteligentes/api/packages/1/sensors
+Accept: application/json
+
