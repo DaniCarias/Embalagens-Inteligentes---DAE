@@ -55,6 +55,9 @@ public class QualityConstraint {
     @ManyToOne
     private Sensor sensor; // the sensor responsible by measuring this constraint
 
+    @Version
+    private int version;
+
     public QualityConstraint() {
 
     }

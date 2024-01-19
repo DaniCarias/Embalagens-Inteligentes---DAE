@@ -25,6 +25,14 @@ public class QualityConstraintService {
     private QualityConstraintBean qualityConstraintBean;
 
     private QualityConstraintDTO toDTO(QualityConstraint qualityConstraint) {
+        if(qualityConstraint.getSensor() == null) {
+            return new QualityConstraintDTO(
+                    qualityConstraint.getId(),
+                    qualityConstraint.getValue(),
+                    qualityConstraint.getType(),
+                    qualityConstraint.getProduct().getId()
+            );
+        }
         return new QualityConstraintDTO(
                 qualityConstraint.getId(),
                 qualityConstraint.getValue(),
@@ -65,21 +73,21 @@ public class QualityConstraintService {
 
     @GET
     @Path("/sensor/{sensor_id}")
-    @RolesAllowed({"LogisticOperator"})
+    @RolesAllowed({"LogisticsOperator"})
     public List<QualityConstraintDTO> getAllQualityConstraintsForSensor(@PathParam("sensor_id") long sensor_id) {
         return toDTOs(qualityConstraintBean.getAllConstraintsForSensor(sensor_id));
     }
 
     @GET
     @Path("/order/{order_id}")
-    @RolesAllowed({"LogisticOperator", "EndConsumer"})
+    @RolesAllowed({"LogisticsOperator", "EndConsumer"})
     public List<QualityConstraintDTO> getAllQualityConstraintsForOrderId(@PathParam("order_id") long order_id) {
         return toDTOs(qualityConstraintBean.getAllConstraintsForOrder(order_id));
     }
 
     @GET
     @Path("/package/{package_id}")
-    @RolesAllowed({"LogisticOperator", "EndConsumer"})
+    @RolesAllowed({"LogisticsOperator", "EndConsumer"})
     public List<QualityConstraintDTO> getAllQualityConstraintsForPackageId(@PathParam("package_id") long package_id) {
         return toDTOs(qualityConstraintBean.getAllConstraintsForPackage(package_id));
     }
@@ -105,7 +113,7 @@ public class QualityConstraintService {
 
     @POST
     @Path("/{quality_constraint_id}/sensor")
-    @RolesAllowed({"LogisticOperator"})
+    @RolesAllowed({"LogisticsOperator"})
     public Response setSensor(@PathParam("quality_constraint_id") long quality_constraint_id, SensorDTO sensorDTO) {
 
         try {
