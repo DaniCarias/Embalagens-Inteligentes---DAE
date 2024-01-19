@@ -51,6 +51,15 @@ public class SensorService {
         return toDTOs(sensorBean.getAllSensor());
     }
 
+
+    @RolesAllowed({"ProductManufacturer", "LogisticOperator"})
+    @GET
+    @Path("/manufacturer/{username}")
+    public List<SensorDTO> getSensorsByManufactor(@PathParam("username") String username) {
+        return toDTOs(sensorBean.getSensorsByManufaturer(username));
+    }
+
+
     @RolesAllowed({"ProductManufacturer", "LogisticOperator"})
     @GET
     @Path("/{id}")

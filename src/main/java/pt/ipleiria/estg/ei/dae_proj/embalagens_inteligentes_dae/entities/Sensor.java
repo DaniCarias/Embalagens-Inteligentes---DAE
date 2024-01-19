@@ -20,6 +20,10 @@ import java.util.Date;
 @Entity
 @NamedQueries({
         @NamedQuery(name= "getAllSensors", query= "SELECT s FROM Sensor s"),
+        @NamedQuery(name= "getSensorsByManufacturer", query="SELECT s FROM Sensor s" +
+                " JOIN Package pck ON pck.id = s._package.id " +
+                " JOIN Product p ON p.id = pck.product.id " +
+                " WHERE p.manufacturer.username LIKE :username"),
 })
 @Table(
         name="sensors",
