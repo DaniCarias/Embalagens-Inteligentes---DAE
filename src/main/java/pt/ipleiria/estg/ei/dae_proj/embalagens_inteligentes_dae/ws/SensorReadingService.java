@@ -5,9 +5,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.SensorReadingDTO;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.PackageBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.ProductBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorReadingBean;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorReading;
@@ -30,6 +32,9 @@ public class SensorReadingService {
     private SensorBean sensorBean;
     @EJB
     private ProductBean productBean;
+
+    @EJB
+    private PackageBean packageBean;
 
     private SensorReadingDTO toDTO(SensorReading sensorReading) {
         return new SensorReadingDTO(
@@ -84,6 +89,17 @@ public class SensorReadingService {
         }
 
         return Response.status(Response.Status.OK).entity(toDTOs(sensorReadingBean.getViolatingSensorReadingsForProduct(product_id))).build();
+    }
+
+    @GET
+    @Path("/package/{package_id}")
+    public Response getSensorReadingsForPackage(@PathParam("package_id") long package_id) {
+        Package _package = packageBean.find(package_id);
+        if(_package == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("PACKAGE_NOT_FOUND").build();
+        }
+
+        return Response.status(Response.Status.OK).entity(toDTOs(sensorReadingBean.getSensorReadingsForPackage(package_id))).build();
     }
 
 }

@@ -103,6 +103,13 @@ public class SensorReadingBean {
                 .getResultList();
     }
 
+    public List<SensorReading> getSensorReadingsForPackage(long package_id) {
+
+        return entityManager.createNamedQuery("getAllSensorReadingsForPackage", SensorReading.class)
+                .setParameter("packageId", package_id)
+                .getResultList();
+    }
+
     public void addSensor(long sensorReading_id, long sensor_id) throws MyEntityExistsException {
         SensorReading sensorReading = entityManager.find(SensorReading.class, sensorReading_id);
         Sensor sensor = entityManager.find(Sensor.class, sensor_id);
