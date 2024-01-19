@@ -40,7 +40,8 @@ public class SensorReadingService {
                 sensorReading.getId(),
                 sensorReading.getDate(),
                 sensorReading.getValue(),
-                sensorReading.getSensor().getId()
+                sensorReading.getSensor().getId(),
+                sensorReading.doesViolateQualityConstraint()
         );
     }
 

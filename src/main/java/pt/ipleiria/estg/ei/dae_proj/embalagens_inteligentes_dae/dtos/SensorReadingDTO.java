@@ -8,16 +8,17 @@ public class SensorReadingDTO {
     private Date date;
     private float value;
     private long sensor_id;
-
+    private boolean violated;
 
     public SensorReadingDTO() {
     }
 
-    public SensorReadingDTO(long id, Date date, float value, long sensor_id) {
+    public SensorReadingDTO(long id, Date date, float value, long sensor_id, boolean violated) {
         this.id = id;
         this.date = date;
         this.value = value;
         this.sensor_id = sensor_id;
+        this.violated = violated;
     }
 
 
@@ -44,5 +45,11 @@ public class SensorReadingDTO {
     }
     public void setSensor_id(long sensor_id) {
         this.sensor_id = sensor_id;
+    }
+    public boolean isViolated() {
+        return violated;
+    }
+    public void setViolated(boolean violated) {
+        this.violated = violated;
     }
 }
