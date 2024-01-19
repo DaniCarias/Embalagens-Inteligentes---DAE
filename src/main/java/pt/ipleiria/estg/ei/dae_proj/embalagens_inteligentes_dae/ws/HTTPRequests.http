@@ -364,13 +364,13 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "value": 1.0,
+    "value": 50.0,
     "date": "2023-01-01T12:30:00",
     "sensor_id": 1
 }
 
 ####getSensorReadingsForProduct
-GET http://localhost:8080/embalagensinteligentes/api/sensor_readings/product/1
+GET http://localhost:8080/embalagensinteligentes/api/sensor_readings/product/1?violating=false
 Accept: application/json
 
 ####getProductsByEndConsumer

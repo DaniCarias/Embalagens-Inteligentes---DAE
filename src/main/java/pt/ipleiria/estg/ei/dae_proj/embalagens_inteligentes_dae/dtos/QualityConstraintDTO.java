@@ -22,6 +22,13 @@ public class QualityConstraintDTO {
         this.sensor_id = sensor_id;
     }
 
+    public QualityConstraintDTO(long id, float value, QualityConstraint.ConstraintType type, long product_id) {
+        this.id = id;
+        this.value = value;
+        this.type = type;
+        this.product_id = product_id;
+    }
+
     public long getId() {
         return id;
     }

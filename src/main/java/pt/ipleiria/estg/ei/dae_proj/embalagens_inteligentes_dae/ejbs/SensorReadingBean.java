@@ -4,18 +4,12 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
-import org.hibernate.Hibernate;
-import org.hibernate.jpa.internal.HintsCollector;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.comparators.SensorReadingComparator;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.*;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Package;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityExistsException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.utils.QualityConstraintsVerifier;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Stateless
@@ -96,11 +90,18 @@ public class SensorReadingBean {
                 .getResultList();
     }
 
-    public List<SensorReading> getViolatingSensorReadingsForProduct(long product_id) {
+    public List<SensorReading> getSensorReadingsForProduct(long product_id, boolean violating){
 
-        return entityManager.createNamedQuery("getViolatingReadingsForProduct", SensorReading.class)
+        if(violating){
+            return entityManager.createNamedQuery("getViolatingReadingsForProduct", SensorReading.class)
+                    .setParameter("productId", product_id)
+                    .getResultList();
+        }
+
+        return entityManager.createNamedQuery("getReadingsForProduct", SensorReading.class)
                 .setParameter("productId", product_id)
                 .getResultList();
+
     }
 
     public List<SensorReading> getSensorReadingsForPackage(long package_id) {

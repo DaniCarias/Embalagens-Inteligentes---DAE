@@ -14,7 +14,6 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorReading;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
-import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -82,13 +81,13 @@ public class SensorReadingService {
 
     @GET
     @Path("/product/{product_id}")
-    public Response getSensorReadingsForProduct(@PathParam("product_id") long product_id) {
+    public Response getSensorReadingsForProduct(@PathParam("product_id") long product_id, @QueryParam("violating") boolean violating) {
         Product product = productBean.find(product_id);
         if(product == null){
             return Response.status(Response.Status.NOT_FOUND).entity("Product not found").build();
         }
 
-        return Response.status(Response.Status.OK).entity(toDTOs(sensorReadingBean.getViolatingSensorReadingsForProduct(product_id))).build();
+        return Response.status(Response.Status.OK).entity(toDTOs(sensorReadingBean.getSensorReadingsForProduct(product_id, violating))).build();
     }
 
     @GET
