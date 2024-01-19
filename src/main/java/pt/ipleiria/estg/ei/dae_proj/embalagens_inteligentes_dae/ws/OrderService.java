@@ -21,7 +21,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("orders")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
+@Authenticated
 public class OrderService {
 
     @EJB
@@ -59,12 +59,11 @@ public class OrderService {
     @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/")
-    public List<OrderDTO> getAllOrders() {
-        return toDTOs(orderBean.getAll());
+    public Response getAllOrders() {
+        return Response.status(Response.Status.OK).entity(toDTOs(orderBean.getAll())).build();
     }
 
-//TODO: LISTAR ORDERS DO ENDCONSUMER
-    //@RolesAllowed({"EndConsumer"})
+    @RolesAllowed({"EndConsumer"})
     @GET
     @Path("/endconsumer/{username}")
     public Response getOrdersFromEndConsumer(@PathParam("username") String username) {
@@ -126,7 +125,7 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity(toDTO(order)).entity("Order updated").build();
     }
 
-    @RolesAllowed({"EndConsumer"}) //CANCELAR ENCOMENDA
+    @RolesAllowed({"EndConsumer"}) //CANCELAR Order
     @DELETE
     @Path("/{id}")
     public Response deleteOrder(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -154,9 +153,5 @@ public class OrderService {
 
         return Response.status(Response.Status.OK).entity(packages).build();
     }
-
-    //@RolesAllowed({"EndConsumer"})
-    //TODO: LISTAR ORDERS DO ENDCONSUMER
-
 
 }

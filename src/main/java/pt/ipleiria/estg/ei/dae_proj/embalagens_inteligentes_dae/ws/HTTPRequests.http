@@ -3,7 +3,7 @@
 ##### AllProducts
 GET http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzX291dHJvIiwiaWF0IjoxNzA1NTkzOTg2LCJleHAiOjE3MDU1OTc1ODZ9.8Q6j4XagJvMaF9gJwYDP6SGSacsuLLF6jA37IqT5S5xdrwdazuQkCa1HaLf8k2SO
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
 
 ##### GetProduct
 GET http://localhost:8080/embalagensinteligentes/api/products/3
@@ -13,12 +13,13 @@ Accept: application/json
 POST http://localhost:8080/embalagensinteligentes/api/products
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzX291dHJvIiwiaWF0IjoxNzA1NTk0MjE0LCJleHAiOjE3MDU1OTc4MTR9.gASpPygIZDsb0loICr77GibO9AiJI9mmrM46Cg4pPDIpW9R9l1iBDCf-JkxX9eWP
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
 
 {
   "name": "teste_product",
   "description": "teste",
-  "username_manufacturer": "danicarias"
+  "username_manufacturer": "danicarias",
+  "package_id": 1
 }
 
 ##### EditProduct
@@ -38,16 +39,16 @@ DELETE http://localhost:8080/embalagensinteligentes/api/products/3
 Accept: application/json
 
 ##### AddPackage
-POST http://localhost:8080/embalagensinteligentes/api/products/3/package
+POST http://localhost:8080/embalagensinteligentes/api/products/4/package
 Accept: application/json
 Content-Type: application/json
 
 {
-    "id": 1
+    "id": 3
 }
 
 ##### RemovePackage
-DELETE http://localhost:8080/embalagensinteligentes/api/products/1/package
+DELETE http://localhost:8080/embalagensinteligentes/api/products/3/package
 Accept: application/json
 
 
@@ -64,13 +65,12 @@ Accept: application/json
 POST http://localhost:8080/embalagensinteligentes/api/packages
 Accept: application/json
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIyNDkwLCJleHAiOjE3MDU2MjI2MTB9.5skuVmOmtYHfcWAluRdJAOLbBBRdz-UQibewK9kiBB13WE11lskahM9k57nHWE6H
 
 {
-  "package_type": "PRIMARIA",
+  "packageType": "PRIMARIA",
   "lastTimeOpened": "2022-01-01T12:30:00",
-  "material": "PLASTICO2",
-  "product_id": 1,
-  "order_id": 1
+  "material": "PLASTICO2"
 }
 
 ##### EditPackage
@@ -79,7 +79,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "package_type": 1,
+  "packageType": 1,
   "lastTimeOpened": "2023-01-01T12:30:00",
   "material": "Pedra",
   "product_id": 2,

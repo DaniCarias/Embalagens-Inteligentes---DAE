@@ -36,13 +36,9 @@ public class PackageBean {
         return prod != null ? true : false;
     }
 
-    //Confirmar  se pode ser public o packageType para usar no create !!!!!!!!!!!!!!!!!!!!
-    public Package create(Package.PackageType type, Date lastTimeOpened, String material, Product product) throws MyEntityNotFoundException {
+    public Package create(Package.PackageType type, Date lastTimeOpened, String material) throws MyEntityNotFoundException {
 
-        if (!product_verify(product))
-            throw new MyEntityNotFoundException("Product with id: " + product.getId() + " not found");
-
-        var new_package = new Package(type, lastTimeOpened, material, product);
+        var new_package = new Package(type, lastTimeOpened, material);
         entityManager.persist(new_package);
         return new_package;
     }
@@ -150,4 +146,20 @@ public class PackageBean {
         return packages;
     }
 
+    public void addProduct(long id, long productId) throws MyEntityNotFoundException {
+
+        Package pck = entityManager.find(Package.class, id);
+        Product product = entityManager.find(Product.class, productId);
+
+        if (pck == null){
+            throw new MyEntityNotFoundException("Package with id: " + id + " not found");
+        }
+        if (product == null){
+            throw new MyEntityNotFoundException("Product with id: " + productId + " not found");
+        }
+
+        entityManager.lock(pck, LockModeType.OPTIMISTIC);
+        pck.setProduct(product);
+
+    }
 }
