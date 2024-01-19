@@ -377,7 +377,9 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/products/endconsumer/danicarias_outro
 Accept: application/json
 
-
+####getSensorDefauls
+GET http://localhost:8080/embalagensinteligentes/api/sensordefaults
+Accept: application/json
 
 
 

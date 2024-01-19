@@ -32,12 +32,24 @@ public class ConfigBean {
     private QualityConstraintBean qualityConstraintBean;
     @EJB
     private SensorReadingBean sensorReadingBean;
+    @EJB
+    private SensorDefaultBean sensorDefaultBean;
 
     private static final Logger logger = Logger.getLogger("ejbs.ConfigBean");
 
     @PostConstruct
     public void populateDB() {
         try{
+
+        //Sensors Default
+            SensorsDefault sensorDefault1 = sensorDefaultBean.createNewSensorDefault("Temperatura");
+            SensorsDefault sensorDefault2 = sensorDefaultBean.createNewSensorDefault("Humidade");
+            SensorsDefault sensorDefault3 = sensorDefaultBean.createNewSensorDefault("Luminosidade");
+            SensorsDefault sensorDefault4 = sensorDefaultBean.createNewSensorDefault("Pressão");
+            SensorsDefault sensorDefault5 = sensorDefaultBean.createNewSensorDefault("Peso");
+
+
+
 
         //Product Manufactor
             ProductManufacturer productManufacturer1 = productManufacturerBean.create("danicarias", "pass123", "Daniel Carias", "urbanização", 961234567);
