@@ -71,7 +71,12 @@ public class ConfigBean {
             LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);
 
         //Sensor
+            // belonging to package1
             Sensor sensor1 = sensorBean.create("sensor_teste", package1.getId());
+            Sensor sensor2 = sensorBean.create("sensor_teste1", package1.getId());
+
+            // belonging to package2
+            Sensor sensor3 = sensorBean.create("sensor_teste2", package2.getId());
 
         //Quality Constraint
             QualityConstraint constraint1 = qualityConstraintBean.create(20.0f, QualityConstraint.ConstraintType.LOWER, sensor1.getId(), prod1.getId());
@@ -80,6 +85,11 @@ public class ConfigBean {
         //Sensor Reading
             SensorReading reading1 = sensorReadingBean.create(15.0f, sensor1.getId());
             SensorReading reading2 = sensorReadingBean.create(25.0f, sensor1.getId());
+
+            SensorReading reading3 = sensorReadingBean.create(700.0f, sensor2.getId());
+            SensorReading reading4 = sensorReadingBean.create(682.3f, sensor2.getId());
+
+            SensorReading reading5 = sensorReadingBean.create(34.65f, sensor3.getId());
 
         }catch(Exception exception){
             logger.severe(exception.getMessage());
