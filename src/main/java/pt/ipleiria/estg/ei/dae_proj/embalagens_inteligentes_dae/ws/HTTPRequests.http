@@ -64,12 +64,14 @@ Accept: application/json
 POST http://localhost:8080/embalagensinteligentes/api/packages
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIyNDkwLCJleHAiOjE3MDU2MjI2MTB9.5skuVmOmtYHfcWAluRdJAOLbBBRdz-UQibewK9kiBB13WE11lskahM9k57nHWE6H
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NDU0MSwiZXhwIjoxNzA1NzkzMzQxfQ.myg1YX7KHioJyuMOMzgnDF7J_lzJKMxVHz01FH3DbvdO6k3fNDoyokTvF52TMae_
 
 {
   "packageType": "PRIMARIA",
   "lastTimeOpened": "2022-01-01T12:30:00",
-  "material": "PLASTICO2"
+  "material": "PLASTICO2",
+  "product_id": 0,
+  "order_id": 0
 }
 
 ##### EditPackage
@@ -178,7 +180,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "username": "end_consumer 1",
+    "username": "manufacturer 1",
     "password": "pass123"
 }
 

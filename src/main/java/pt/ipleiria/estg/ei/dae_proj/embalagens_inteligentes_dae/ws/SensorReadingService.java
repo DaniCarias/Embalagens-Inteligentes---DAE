@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"LogisticOperator"})
+@RolesAllowed({"LogisticOperator", "ProductManufacturer", "EndConsumer"})
 public class SensorReadingService {
 
     @EJB
