@@ -18,13 +18,13 @@ import java.util.Date;
                 "INNER JOIN Product p ON qc.product.id = p.id " +
                 "WHERE sr.violatesQualityConstraint = true AND p.id = :productId"),
         @NamedQuery(name = "getReadingsForProduct", query = "SELECT sr FROM SensorReading sr " +
-                "INNER JOIN QualityConstraint qc ON sr.sensor.id = qc.sensor.id " +
-                "INNER JOIN Product p ON qc.product.id = p.id " +
-                "WHERE p.id = :productId"),
+                "INNER JOIN Sensor s ON s.id = sr.sensor.id " +
+                "INNER JOIN Package p ON p.id = s._package.id " +
+                "WHERE p.product.id = :productId"),
         @NamedQuery(name = "getAllSensorReadingsForPackage", query = "SELECT sr FROM SensorReading sr " +
                 "JOIN Sensor s ON sr.sensor.id = s.id " +
                 "JOIN Package p ON s._package.id = p.id " +
-                "WHERE p.id = :packageId")
+                "WHERE p.id = :packageId"),
 })
 public class SensorReading {
     @Id

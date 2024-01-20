@@ -105,4 +105,5 @@ public class SensorReadingService {
         return Response.status(Response.Status.OK).entity(toDTOs(sensorReadingBean.getSensorReadingsForPackage(package_id))).build();
     }
 
+
 }

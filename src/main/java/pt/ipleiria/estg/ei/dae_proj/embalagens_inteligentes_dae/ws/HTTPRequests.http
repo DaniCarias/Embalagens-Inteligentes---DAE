@@ -352,9 +352,23 @@ Content-Type: application/json
     "sensor_id": 1
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 ####getSensorReadingsForProduct
-GET http://localhost:8080/embalagensinteligentes/api/sensor_readings/product/1?violating=false
+GET http://localhost:8080/embalagensinteligentes/api/sensor_readings/product/2
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2ODk3NCwiZXhwIjoxNzA1Nzk3Nzc0fQ.QPo9__yj3DriflGV7D01IRvgAqOjKkU9WUq-RzyvdPAE1_VjjTm2TOzp9maQGyEH
 
 ####getProductsByEndConsumer
 GET http://localhost:8080/embalagensinteligentes/api/products/endconsumer/danicarias_outro
