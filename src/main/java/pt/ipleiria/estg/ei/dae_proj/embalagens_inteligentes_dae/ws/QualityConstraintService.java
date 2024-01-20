@@ -55,7 +55,7 @@ public class QualityConstraintService {
 
     @GET
     @Path("/{constraint_id}")
-    //@RolesAllowed({""})
+    @RolesAllowed({"ProductManufacturer", "LogisticsOperator"})
     public Response getQualityConstraint(@PathParam("constraint_id") long constraint_id) {
         QualityConstraint constraint = qualityConstraintBean.find(constraint_id);
         if(constraint != null) {
