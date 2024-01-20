@@ -45,6 +45,8 @@ public class Package {
     private Order order;
     @OneToMany(mappedBy = "_package")
     private List<Sensor> sensors;
+    @ManyToOne
+    private ProductManufacturer manufacturer;
     @Version
     private int version;
     private Date deleted_at;
@@ -55,19 +57,21 @@ public class Package {
         this.sensors = new LinkedList<>();
     }
 
-    public Package(PackageType packageType, Date lastTimeOpened, String material, Product product) {
+    public Package(PackageType packageType, Date lastTimeOpened, String material, Product product, ProductManufacturer manufacturer) {
         this.packageType = packageType;
         this.lastTimeOpened = lastTimeOpened;
         this.material = material;
         this.product = product;
         this.sensors = new LinkedList<>();
+        this.manufacturer = manufacturer;
     }
 
-    public Package(PackageType packageType, Date lastTimeOpened, String material) {
+    public Package(PackageType packageType, Date lastTimeOpened, String material, ProductManufacturer manufacturer) {
         this.packageType = packageType;
         this.lastTimeOpened = lastTimeOpened;
         this.material = material;
         this.sensors = new LinkedList<>();
+        this.manufacturer = manufacturer;
     }
 
 
@@ -132,7 +136,12 @@ public class Package {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
-
+    public ProductManufacturer getManufacturer() {
+        return manufacturer;
+    }
+    public void setManufacturer(ProductManufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 
 
     public void addSensor(Sensor sensor) {

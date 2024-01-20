@@ -12,33 +12,37 @@ public class PackageDTO {
     private String material;
     private long product_id;
     private long order_id;
+    private String username_manufacturer;
 
 
     public PackageDTO() {
     }
 
-    public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material, long product_id, long order_id) {
+    public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material, long product_id, long order_id, String username_manufacturer) {
         this.id = id;
         this.packageType = packageType;
         this.lastTimeOpened = lastTimeOpened;
         this.material = material;
         this.product_id = product_id;
         this.order_id = order_id;
+        this.username_manufacturer = username_manufacturer;
     }
 
-    public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material) {
+    public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material, String username_manufacturer) {
         this.id = id;
         this.packageType = packageType;
         this.lastTimeOpened = lastTimeOpened;
         this.material = material;
+        this.username_manufacturer = username_manufacturer;
     }
 
-    public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material, long product_id) {
+    public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material, long product_id, String username_manufacturer) {
         this.id = id;
         this.packageType = packageType;
         this.lastTimeOpened = lastTimeOpened;
         this.material = material;
         this.product_id = product_id;
+        this.username_manufacturer = username_manufacturer;
     }
 
 
@@ -80,5 +84,11 @@ public class PackageDTO {
     }
     public void setOrder_id(long order_id) {
         this.order_id = order_id;
+    }
+    public String getUsername_manufacturer() {
+        return username_manufacturer;
+    }
+    public void setUsername_manufacturer(String username_manufacturer) {
+        this.username_manufacturer = username_manufacturer;
     }
 }

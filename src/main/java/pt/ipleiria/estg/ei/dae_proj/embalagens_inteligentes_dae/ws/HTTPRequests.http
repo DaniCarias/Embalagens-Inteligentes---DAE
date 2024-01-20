@@ -55,6 +55,7 @@ Accept: application/json
 ##### AllPackages
 GET http://localhost:8080/embalagensinteligentes/api/packages
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NzM5OCwiZXhwIjoxNzA1Nzk2MTk3fQ.k1IRFyhyxB0Nangy1MFSiX4k7PU7UUeB95HiLZedCBB1Gf7iLyiUpgOpNsiU3LSS
 
 ##### GetPackage
 GET http://localhost:8080/embalagensinteligentes/api/packages/1
@@ -64,16 +65,17 @@ Accept: application/json
 POST http://localhost:8080/embalagensinteligentes/api/packages
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NDU0MSwiZXhwIjoxNzA1NzkzMzQxfQ.myg1YX7KHioJyuMOMzgnDF7J_lzJKMxVHz01FH3DbvdO6k3fNDoyokTvF52TMae_
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NjU3NywiZXhwIjoxNzA1Nzk1Mzc3fQ.vcCtqc6Uu-NqK81Ubk2CXJBOcGgIifSd4oz9MP94cATQUNu0oZ19TyfzvUsgVh1t
 
 {
   "packageType": "PRIMARIA",
   "lastTimeOpened": "2022-01-01T12:30:00",
   "material": "PLASTICO2",
   "product_id": 0,
-  "order_id": 0
+  "order_id": 0,
+  "username_manufacturer": "manufacturer 1"
 }
-
+#####-> ROTA GET PCK BY MANUFACTURER
 ##### EditPackage
 PUT http://localhost:8080/embalagensinteligentes/api/packages/3
 Accept: application/json
@@ -313,10 +315,11 @@ Content-Type: application/json
 DELETE http://localhost:8080/embalagensinteligentes/api/productmanufacturers/novo_productmanufacturer
 Accept: application/json
 
-##### GetPackagesByProductManufactorer -> Adicionar na pasta dos Packages do bruno
-GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/danicarias
-Accept: application/json
 
+##### GetPackagesByProductManufactorer
+GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/manufacturer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NzM5OCwiZXhwIjoxNzA1Nzk2MTk3fQ.k1IRFyhyxB0Nangy1MFSiX4k7PU7UUeB95HiLZedCBB1Gf7iLyiUpgOpNsiU3LSS
 
 ##### GetOrdersByEndConsumer -> Adicionar na pasta dos Order do bruno
 GET http://localhost:8080/embalagensinteligentes/api/orders/endconsumer/danicarias_outro

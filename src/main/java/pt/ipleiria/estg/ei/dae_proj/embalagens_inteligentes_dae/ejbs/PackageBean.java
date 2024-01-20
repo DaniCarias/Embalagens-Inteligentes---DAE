@@ -36,9 +36,11 @@ public class PackageBean {
         return prod != null ? true : false;
     }
 
-    public Package create(Package.PackageType type, Date lastTimeOpened, String material) throws MyEntityNotFoundException {
+    public Package create(Package.PackageType type, Date lastTimeOpened, String material, String username_manufacturer) throws MyEntityNotFoundException {
 
-        var new_package = new Package(type, lastTimeOpened, material);
+        ProductManufacturer manufacturer = entityManager.find(ProductManufacturer.class, username_manufacturer);
+
+        var new_package = new Package(type, lastTimeOpened, material, manufacturer);
         entityManager.persist(new_package);
         return new_package;
     }
@@ -174,5 +176,15 @@ public class PackageBean {
         Query query = entityManager.createQuery("SELECT p FROM Package p WHERE p.product.id = :product_id", Package.class);
         query.setParameter("product_id", product_id);
         return (Package) query.getSingleResult();
+    }
+
+    public List<Package> getPackagesByManufacturer(String username) throws MyEntityNotFoundException{
+        ProductManufacturer productManufacturer = entityManager.find(ProductManufacturer.class, username);
+        if(productManufacturer == null)
+            throw new MyEntityNotFoundException("Product Manufacturer with username: " + username + " not found");
+
+        Query query = entityManager.createQuery("SELECT p FROM Package p WHERE p.manufacturer.username = :username", Package.class);
+        query.setParameter("username", username);
+        return query.getResultList();
     }
 }

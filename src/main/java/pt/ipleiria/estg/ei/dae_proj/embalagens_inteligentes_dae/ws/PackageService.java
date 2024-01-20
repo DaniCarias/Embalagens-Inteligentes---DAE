@@ -55,7 +55,8 @@ public class PackageService {
                 _package.getLastTimeOpened(),
                 _package.getMaterial(),
                 order_id,
-                product_id
+                product_id,
+                _package.getManufacturer().getUsername()
         );
 
     }
@@ -99,7 +100,11 @@ public class PackageService {
     @POST
     @Path("/")
     public Response createNewPackage(PackageDTO packageDTO) throws MyEntityNotFoundException, MyEntityExistsException{
-        Package _package = packageBean.create(packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial());
+        ProductManufacturer productManufacturer = productManufacturerBean.find(packageDTO.getUsername_manufacturer());
+        if (productManufacturer == null)
+            return Response.status(Response.Status.NOT_FOUND).entity("Product Manufacturer not found").build();
+
+        Package _package = packageBean.create(packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial(), packageDTO.getUsername_manufacturer());
 
         if(packageDTO.getOrder_id() > 0)
             packageBean.addOrder(_package.getId(), packageDTO.getOrder_id());
@@ -190,16 +195,12 @@ public class PackageService {
     @RolesAllowed({"ProductManufacturer"})
     @GET
     @Path("/manufacturer/{username}")
-    public Response getPackagesByManufacturer(@PathParam("username") String username) {
+    public Response getPackagesByManufacturer(@PathParam("username") String username) throws MyEntityNotFoundException {
         ProductManufacturer productManufacturer = productManufacturerBean.find(username);
         if(productManufacturer == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        List<Product> products = productBean.getAllByManufactor(username);
-        if(products == null)
-            return Response.status(Response.Status.BAD_REQUEST).entity("Do not have any products").build();
-
-        List<Package> packages = packageBean.getPackagesByProducts(products);
+        List<Package> packages = packageBean.getPackagesByManufacturer(username);
 
         return Response.status(Response.Status.OK).entity(toDTOs(packages)).build();
     }

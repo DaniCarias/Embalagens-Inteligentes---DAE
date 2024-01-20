@@ -49,7 +49,8 @@ public class OrderService {
                 _package.getPackageType(),
                 _package.getLastTimeOpened(),
                 _package.getMaterial(),
-                _package.getProduct().getId()
+                _package.getProduct().getId(),
+                _package.getManufacturer().getUsername()
         );
     }
 
