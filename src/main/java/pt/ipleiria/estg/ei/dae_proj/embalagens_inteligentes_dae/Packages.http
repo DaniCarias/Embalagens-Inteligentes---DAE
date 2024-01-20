@@ -1,0 +1,81 @@
+#####AllPackages
+GET http://localhost:8080/embalagensinteligentes/api/packages
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NzM5OCwiZXhwIjoxNzA1Nzk2MTk3fQ.k1IRFyhyxB0Nangy1MFSiX4k7PU7UUeB95HiLZedCBB1Gf7iLyiUpgOpNsiU3LSS
+
+#####GetPackage
+GET http://localhost:8080/embalagensinteligentes/api/packages/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####CreatePackage
+POST http://localhost:8080/embalagensinteligentes/api/packages
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NjU3NywiZXhwIjoxNzA1Nzk1Mzc3fQ.vcCtqc6Uu-NqK81Ubk2CXJBOcGgIifSd4oz9MP94cATQUNu0oZ19TyfzvUsgVh1t
+
+{
+  "packageType": "PRIMARIA",
+  "lastTimeOpened": "2022-01-01T12:30:00",
+  "material": "PLASTICO2",
+  "username_manufacturer": "manufacturer 1"
+}
+
+#####EditPackage
+PUT http://localhost:8080/embalagensinteligentes/api/packages/3
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "packageType": "SECUNDARIA",
+  "lastTimeOpened": "2023-01-01T12:30:00",
+  "material": "Ferro"
+}
+
+#####DeletePackage
+DELETE http://localhost:8080/embalagensinteligentes/api/packages/2
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####AddOrderToPackage
+POST http://localhost:8080/embalagensinteligentes/api/packages/2/order
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "id": 1
+}
+
+#####RemoveOrderFromPackage
+DELETE http://localhost:8080/embalagensinteligentes/api/packages/2/order
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####GetPackagesByProductManufactorer
+GET http://localhost:8080/embalagensinteligentes/api/packages/manufacturer/manufacturer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtYW51ZmFjdHVyZXIgMSIsImlhdCI6MTcwNTc2NzM5OCwiZXhwIjoxNzA1Nzk2MTk3fQ.k1IRFyhyxB0Nangy1MFSiX4k7PU7UUeB95HiLZedCBB1Gf7iLyiUpgOpNsiU3LSS
+
+####GetPackageByProduct
+GET http://localhost:8080/embalagensinteligentes/api/packages/product/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbmRfY29uc3VtZXIgMSIsImlhdCI6MTcwNTc1OTE3NywiZXhwIjoxNzA1Nzg3OTc3fQ.n8XCdzp1MupyyX86K-kvjudMQXxDURtLujhsvgo2w2qJLB-27aOV-g_muPajbL3a
+
+####GetPackageByOrder
+GET http://localhost:8080/embalagensinteligentes/api/packages/order/2
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJsb2dpc3RpY19vcGVyYXRvciAxIiwiaWF0IjoxNzA1NzczMDcwLCJleHAiOjE3MDU4MDE4NzB9._lPH6N1QGsn74iVN6W37BPotilKS5ryQjDVkFvy0WNbEgZVm03DBxIeudANBg5gc
+
+
+
+
+
+
+
+
+
+
+
+

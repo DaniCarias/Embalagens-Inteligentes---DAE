@@ -1,0 +1,14 @@
+##### Login
+POST http://localhost:8080/embalagensinteligentes/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "manufacturer 1",
+  "password": "pass123"
+}
+
+####GetSensorDefauls
+GET http://localhost:8080/embalagensinteligentes/api/sensordefaults
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b

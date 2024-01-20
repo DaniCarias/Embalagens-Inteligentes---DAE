@@ -1,0 +1,84 @@
+##### AllProducts
+GET http://localhost:8080/embalagensinteligentes/api/products
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+##### GetProduct
+GET http://localhost:8080/embalagensinteligentes/api/products/3
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+##### CreateProduct
+POST http://localhost:8080/embalagensinteligentes/api/products
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "name": "teste_product",
+  "description": "teste",
+  "username_manufacturer": "manufacturer 1"
+}
+
+##### EditProduct
+PUT http://localhost:8080/embalagensinteligentes/api/products/3
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "name": "produto_alterado2",
+  "description": "alterado",
+  "username_manufacturer": "manufacturer 1",
+  "package_id": 1
+}
+
+##### DeleteProduct
+DELETE http://localhost:8080/embalagensinteligentes/api/products/3
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+##### AddPackageFromProduct
+POST http://localhost:8080/embalagensinteligentes/api/products/4/package
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "id": 3
+}
+
+##### RemovePackageFromProduct
+DELETE http://localhost:8080/embalagensinteligentes/api/products/4/package
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+####GetProductsByOrder
+GET http://localhost:8080/embalagensinteligentes/api/products/order/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+####GetProductsEndConsumerbyID (ProductsEndConsumer -> Products that have Package but not Order)
+GET http://localhost:8080/embalagensinteligentes/api/products/endconsumers?id=0
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+####GetProductsEndConsumer (ProductsEndConsumer -> Products that have Package but not Order)
+GET http://localhost:8080/embalagensinteligentes/api/products/endconsumers
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+####GetProductsByEndConsumer
+GET http://localhost:8080/embalagensinteligentes/api/products/endconsumer/end_consumer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+####GetAllProductsFromManufacturer
+GET http://localhost:8080/embalagensinteligentes/api/products/manufacturer/manufacturer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+
+
+
+

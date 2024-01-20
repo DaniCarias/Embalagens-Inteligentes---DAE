@@ -1,0 +1,61 @@
+#####AllSensors
+GET http://localhost:8080/embalagensinteligentes/api/sensors
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJsb2dpc3RpY19vcGVyYXRvciAxIiwiaWF0IjoxNzA1NzcyNDI5LCJleHAiOjE3MDU4MDEyMjl9.Xoq_UP-TnaC0Do8DLTrz-BqCTvTDnJ9gsFJIj9pk0ENv35LZtFx3cqyd0JNWEkoV
+
+#####GetSensor
+GET http://localhost:8080/embalagensinteligentes/api/sensors/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####CreateSensor
+POST http://localhost:8080/embalagensinteligentes/api/sensors
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "name": "sensor_novo",
+  "package_id": 1
+}
+
+#####EditSensor
+PUT http://localhost:8080/embalagensinteligentes/api/sensors/1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "name": "sensor_alterado",
+  "package_id": 1
+}
+
+#####DeleteSensor
+DELETE http://localhost:8080/embalagensinteligentes/api/sensors/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+####GetSensorsByPackage
+GET http://localhost:8080/embalagensinteligentes/api/packages/1/sensors
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+####GetSensorByManufacturer
+GET http://localhost:8080/embalagensinteligentes/api/sensors/manufacturer/danicarias
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

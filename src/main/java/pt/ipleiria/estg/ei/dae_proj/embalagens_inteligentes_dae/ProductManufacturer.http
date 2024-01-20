@@ -1,0 +1,40 @@
+#####GetProductManufacturers
+GET http://localhost:8080/embalagensinteligentes/api/productmanufacturers
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####GetProductManufacturer
+GET http://localhost:8080/embalagensinteligentes/api/productmanufacturers/manufacturer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####CreateProductManufacturer
+POST http://localhost:8080/embalagensinteligentes/api/productmanufacturers
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "username": "novo_ProductManufacturer",
+  "name": "Novo ProductManufacturer",
+  "password": "pass123",
+  "address": "Rua BBR",
+  "phoneNumber": 123456789
+}
+
+#####EditProductManufacturer
+PUT http://localhost:8080/embalagensinteligentes/api/productmanufacturers/manufacturer 1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "name": "ProductManufacturer Senior",
+  "address": "Rua BBR NOVO",
+  "phoneNumber": 123456789
+}
+
+#####DeleteProductManufacturer
+DELETE http://localhost:8080/embalagensinteligentes/api/productmanufacturers/manufacturer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
