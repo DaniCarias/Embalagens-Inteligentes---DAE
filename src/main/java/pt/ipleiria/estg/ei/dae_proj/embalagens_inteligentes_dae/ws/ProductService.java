@@ -25,7 +25,6 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"ProductManufacturer"})
 public class ProductService {
 
     @EJB
@@ -60,12 +59,14 @@ public class ProductService {
         return products.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @GET
     @Path("/")
     public Response getAllProducts() {
         return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAll())).build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @GET
     @Path("/{id}")
     public Response getProductDetails(@PathParam("id") long id) {
@@ -76,6 +77,7 @@ public class ProductService {
         return Response.status(Response.Status.NOT_FOUND).entity("ERROR_FINDING_PRODUCT").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @GET
     @Path("/manufacturer/{username}")
     public Response getAllProductsFromManufacturer(@PathParam("username") String username) throws MyEntityNotFoundException{
@@ -86,6 +88,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllByManufactor(username))).build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @POST
     @Path("/")
     public Response createNewProduct(ProductDTO productDTO) {
@@ -110,6 +113,7 @@ public class ProductService {
         }
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @PUT
     @Path("/{id}")
     public Response editProduct(@PathParam("id") long id, ProductDTO productDTO) throws MyEntityNotFoundException {
@@ -132,6 +136,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity("Product updated").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @DELETE
     @Path("/{id}")
     public Response deleteProduct(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -147,6 +152,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity("Product deleted").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @POST
     @Path("/{id}/package")
     public Response addPackage(@PathParam("id") long id, PackageDTO _package) throws MyEntityNotFoundException {
@@ -169,6 +175,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(toDTO(product)).entity("Package added").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @DELETE
     @Path("/{id}/package")
     public Response removePackage(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -185,7 +192,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(product).entity("Package removed").build();
     }
 
-    @RolesAllowed({"EndConsumer"})
+    @RolesAllowed({"EndConsumer","ProductManufacturer"})
     @GET
     @Path("/endconsumer/{username}")
     public Response getAllProductsFromEndConsumer(@PathParam("username") String username) throws MyEntityNotFoundException{
@@ -196,7 +203,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllByEndConsumer(username))).build();
     }
 
-    @RolesAllowed({"EndConsumer"})
+    @RolesAllowed({"EndConsumer","ProductManufacturer"})
     @GET
     @Path("/endconsumers")
     public Response getProductsEndConsumer(@QueryParam("id") long id) {
@@ -206,7 +213,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllProductsEndConsumerById(id))).build();
     }
 
-    @RolesAllowed({"EndConsumer"})
+    @RolesAllowed({"EndConsumer","ProductManufacturer"})
     @GET
     @Path("/order/{id}")
     public Response getProductsByOrder(@PathParam("id") long id) {

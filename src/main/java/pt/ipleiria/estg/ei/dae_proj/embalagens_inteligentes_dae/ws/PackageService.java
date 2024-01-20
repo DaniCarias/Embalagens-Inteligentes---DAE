@@ -26,7 +26,6 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"ProductManufacturer", "EndConsumer"})
 public class PackageService {
 
     @EJB
@@ -78,14 +77,14 @@ public class PackageService {
         return sensors.stream().map(this::sensor_toDTO).collect(Collectors.toList());
     }
 
-    @RolesAllowed({"LogisticOperator"})
+    @RolesAllowed({"LogisticOperator","ProductManufacturer"})
     @GET
     @Path("/")
     public Response getAllPackage() {
         return Response.status(Response.Status.OK).entity(toDTOs(packageBean.getAll())).build();
     }
 
-    @RolesAllowed({"LogisticOperator"})
+    @RolesAllowed({"LogisticOperator","ProductManufacturer"})
     @GET
     @Path("/{id}")
     public Response getPackageDetails(@PathParam("id") long id) {
@@ -96,6 +95,7 @@ public class PackageService {
         return Response.status(Response.Status.BAD_REQUEST).entity("The package do not exists").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @POST
     @Path("/")
     public Response createNewPackage(PackageDTO packageDTO) throws MyEntityNotFoundException, MyEntityExistsException{
@@ -116,6 +116,7 @@ public class PackageService {
         return Response.status(Response.Status.CREATED).entity(toDTO(newPackage)).build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @PUT
     @Path("/{id}")
     public Response editPackage(@PathParam("id") long id, PackageDTO packageDTO) throws MyEntityNotFoundException {
@@ -133,6 +134,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Package updated").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @DELETE
     @Path("/{id}")
     public Response deletePackage(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -147,7 +149,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Package deleted").build();
     }
 
-    @RolesAllowed({"EndConsumer"})
+    @RolesAllowed({"EndConsumer","ProductManufacturer"})
     @POST
     @Path("/{id}/order") //link order to package
     public Response addOrder(@PathParam("id") long id, OrderDTO orderDTO) throws MyEntityNotFoundException, MyEntityExistsException {
@@ -168,7 +170,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Order added").build();
     }
 
-    @RolesAllowed({"EndConsumer"})
+    @RolesAllowed({"EndConsumer","ProductManufacturer"})
     @DELETE
     @Path("/{id}/order") //unlink order to package
     public Response removeOrder (@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -185,6 +187,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Order removed").build();
     }
 
+    @RolesAllowed({"ProductManufacturer"})
     @GET
     @Path("/manufacturer/{username}")
     public Response getPackagesByManufacturer(@PathParam("username") String username) {
@@ -201,7 +204,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity(toDTOs(packages)).build();
     }
 
-    @RolesAllowed({"LogisticOperator"})
+    @RolesAllowed({"LogisticOperator","ProductManufacturer"})
     @GET
     @Path("/{id}/sensors")
     public Response getSensorsByPackage(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -216,7 +219,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity(sensors_toDTOs(sensors)).build();
     }
 
-    @RolesAllowed({"LogisticOperator", "EndConsumer"})
+    @RolesAllowed({"LogisticOperator", "EndConsumer","ProductManufacturer"})
     @GET
     @Path("/product/{id}")
     public Response getPackageByProduct(@PathParam("id") long id) throws MyEntityNotFoundException {
