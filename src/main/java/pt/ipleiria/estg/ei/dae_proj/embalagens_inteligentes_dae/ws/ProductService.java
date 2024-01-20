@@ -24,8 +24,8 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("products")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
-//@RolesAllowed({"ProductManufacturer"})
+@Authenticated
+@RolesAllowed({"ProductManufacturer"})
 public class ProductService {
 
     @EJB
@@ -76,7 +76,6 @@ public class ProductService {
         return Response.status(Response.Status.NOT_FOUND).entity("ERROR_FINDING_PRODUCT").build();
     }
 
-    @RolesAllowed({"ProductManufacturer"})
     @GET
     @Path("/manufacturer/{username}")
     public Response getAllProductsFromManufacturer(@PathParam("username") String username) throws MyEntityNotFoundException{
@@ -186,6 +185,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(product).entity("Package removed").build();
     }
 
+    @RolesAllowed({"EndConsumer"})
     @GET
     @Path("/endconsumer/{username}")
     public Response getAllProductsFromEndConsumer(@PathParam("username") String username) throws MyEntityNotFoundException{
@@ -196,6 +196,7 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllByEndConsumer(username))).build();
     }
 
+    @RolesAllowed({"EndConsumer"})
     @GET
     @Path("/endconsumers")
     public Response getProductsEndConsumer(@QueryParam("id") long id) {

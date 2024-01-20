@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -14,6 +15,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Product
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.Sensor;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorReading;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.exceptions.MyEntityNotFoundException;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +23,8 @@ import java.util.stream.Collectors;
 @Path("sensor_readings")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
+@Authenticated
+@RolesAllowed({"LogisticOperator"})
 public class SensorReadingService {
 
     @EJB

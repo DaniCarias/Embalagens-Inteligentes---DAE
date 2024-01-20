@@ -46,14 +46,14 @@ public class LogisticOperatorService {
         return logisticsOperators.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @GET
     @Path("/")
     public List<LogisticsOperatorDTO> getAllLogisticsOperators() {
         return toDTOs(logisticsOperatorBean.getAll());
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @GET
     @Path("/{username}")
     public Response getLogisticsOperatorDetails(@PathParam("username") String username) {
@@ -64,7 +64,7 @@ public class LogisticOperatorService {
         return Response.status(Response.Status.BAD_REQUEST).entity("Logistics Operator do not exist").build();
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @POST
     @Path("/")
     public Response createNewLogisticsOperator(LogisticsOperatorDTO logisticsOperatorDTO) {
@@ -87,7 +87,7 @@ public class LogisticOperatorService {
 
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @PUT
     @Path("/{username}")
     public Response editLogisticsOperator(@PathParam("username") String username, LogisticsOperatorDTO logisticsOper){
@@ -100,7 +100,7 @@ public class LogisticOperatorService {
         return Response.status(Response.Status.OK).entity(toDTO(logisticsOperator)).entity("Logistic Operator updated").build();
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @DELETE
     @Path("/{username}")
     public Response deleteLogisticsOperator(@PathParam("username") String username) throws MyEntityNotFoundException {

@@ -26,6 +26,13 @@ public class PackageDTO {
         this.order_id = order_id;
     }
 
+    public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material) {
+        this.id = id;
+        this.packageType = packageType;
+        this.lastTimeOpened = lastTimeOpened;
+        this.material = material;
+    }
+
     public PackageDTO(long id, Package.PackageType packageType, Date lastTimeOpened, String material, long product_id) {
         this.id = id;
         this.packageType = packageType;
@@ -33,6 +40,9 @@ public class PackageDTO {
         this.material = material;
         this.product_id = product_id;
     }
+
+
+
 
 
     public long getId() {

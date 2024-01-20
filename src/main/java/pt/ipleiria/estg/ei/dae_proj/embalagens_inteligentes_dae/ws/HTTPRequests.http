@@ -78,11 +78,9 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "packageType": 1,
+  "packageType": "SECUNDARIA",
   "lastTimeOpened": "2023-01-01T12:30:00",
-  "material": "Pedra",
-  "product_id": 2,
-  "order_id": 1
+  "material": "Ferroo"
 }
 
 ##### DeletePackage

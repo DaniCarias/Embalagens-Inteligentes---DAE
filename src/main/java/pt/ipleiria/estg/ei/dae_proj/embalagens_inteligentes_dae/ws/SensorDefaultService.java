@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ws;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -13,6 +14,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorDefau
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.SensorReadingBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorReading;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.entities.SensorsDefault;
+import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authenticated;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +22,7 @@ import java.util.stream.Collectors;
 @Path("sensordefaults")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
+@Authenticated
 public class SensorDefaultService {
 
     @EJB
@@ -37,6 +39,7 @@ public class SensorDefaultService {
         return sensorsDefaults.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    //@RolesAllowed({""})
     @GET
     @Path("/")
     public Response getAllSensorDefault() {

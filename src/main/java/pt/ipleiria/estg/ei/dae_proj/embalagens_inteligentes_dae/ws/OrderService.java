@@ -21,7 +21,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("orders")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
+@Authenticated
 public class OrderService {
 
     @EJB
@@ -142,7 +142,7 @@ public class OrderService {
 
     @RolesAllowed({"EndConsumer"})
     @GET
-    @Path("/{id}/packages")
+    @Path("/{id}/packages") //GET Packages from an Order by id
     public Response getPackages(@PathParam("id") long id) throws MyEntityNotFoundException {
         Order order = orderBean.getOrderPackages(id);
 
@@ -156,7 +156,7 @@ public class OrderService {
 
     @RolesAllowed({"EndConsumer"})
     @GET
-    @Path("/{id}/endconsumer/{username}")
+    @Path("/{id}/endconsumer/{username}") //GET Order by id and EndConsumer
     public Response getOrderByIdByEndConsumer(@PathParam("id") long id, @PathParam("username") String username) throws MyEntityNotFoundException {
         Order order = orderBean.find(id);
         if(order == null)

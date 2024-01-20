@@ -26,7 +26,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 //@Authenticated
-//@RolesAllowed({"ProductManufacturer"})
+@RolesAllowed({"ProductManufacturer"})
 public class PackageService {
 
     @EJB
@@ -118,17 +118,17 @@ public class PackageService {
 
     @PUT
     @Path("/{id}")
-    public Response editPackage(@PathParam("id") long id, PackageDTO packageDTO) throws MyEntityNotFoundException, MyEntityExistsException {
-        Product product = productBean.find(packageDTO.getProduct_id());
+    public Response editPackage(@PathParam("id") long id, PackageDTO packageDTO) throws MyEntityNotFoundException {
+        /*Product product = productBean.find(packageDTO.getProduct_id());
         if(product == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return Response.status(Response.Status.NOT_FOUND).build();*/
 
-        packageBean.update(id, packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial(), product);
+        packageBean.update(id, packageDTO.getPackageType(), packageDTO.getLastTimeOpened(), packageDTO.getMaterial()/*, product*/);
 
-        if(packageDTO.getOrder_id() > 0)
+        /*if(packageDTO.getOrder_id() > 0)
             packageBean.addOrder(id, packageDTO.getOrder_id());
-        else
-            packageBean.removeOrder(id);
+        else if(packageDTO.getOrder_id() < 0)
+            packageBean.removeOrder(id);*/
 
         return Response.status(Response.Status.OK).entity("Package updated").build();
     }
@@ -147,8 +147,9 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Package deleted").build();
     }
 
+    @RolesAllowed({"EndConsumer"})
     @POST
-    @Path("/{id}/order")
+    @Path("/{id}/order") //link order to package
     public Response addOrder(@PathParam("id") long id, OrderDTO orderDTO) throws MyEntityNotFoundException, MyEntityExistsException {
         Package _package = packageBean.find(id);
         Order order = orderBean.find(orderDTO.getId());
@@ -167,8 +168,9 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity("Order added").build();
     }
 
+    @RolesAllowed({"EndConsumer"})
     @DELETE
-    @Path("/{id}/order")
+    @Path("/{id}/order") //unlink order to package
     public Response removeOrder (@PathParam("id") long id) throws MyEntityNotFoundException {
         Package _package = packageBean.find(id);
 
@@ -199,8 +201,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity(toDTOs(packages)).build();
     }
 
-
-    @RolesAllowed({"LogisticOperator", "EndConsumer"})
+    @RolesAllowed({"LogisticOperator"})
     @GET
     @Path("/{id}/sensors")
     public Response getSensorsByPackage(@PathParam("id") long id) throws MyEntityNotFoundException {

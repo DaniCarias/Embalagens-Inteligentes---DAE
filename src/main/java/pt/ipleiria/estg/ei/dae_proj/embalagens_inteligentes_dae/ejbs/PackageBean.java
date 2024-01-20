@@ -47,14 +47,14 @@ public class PackageBean {
         return entityManager.createNamedQuery("getAllPackages", Package.class).getResultList();
     }
 
-    public void update(long id, Package.PackageType type, Date lastTimeOpened, String material, Product product) throws MyEntityNotFoundException {
+    public void update(long id, Package.PackageType type, Date lastTimeOpened, String material/*, Product product*/) throws MyEntityNotFoundException {
 
         if (!exists(id)) {
             throw new MyEntityNotFoundException("Package with id: " + id + " not found");
         }
 
-        if (!product_verify(product))
-            throw new MyEntityNotFoundException("Product with id: " + product.getId() + " not found");
+        /*if (!product_verify(product))
+            throw new MyEntityNotFoundException("Product with id: " + product.getId() + " not found");*/
 
         Package _package = entityManager.find(Package.class, id);
         entityManager.lock(_package, LockModeType.OPTIMISTIC);
@@ -62,7 +62,7 @@ public class PackageBean {
         _package.setPackageType(type);
         _package.setLastTimeOpened(lastTimeOpened);
         _package.setMaterial(material);
-        _package.setProduct(product);
+        //_package.setProduct(product);
     }
 
     public boolean delete(long id) throws MyEntityNotFoundException {

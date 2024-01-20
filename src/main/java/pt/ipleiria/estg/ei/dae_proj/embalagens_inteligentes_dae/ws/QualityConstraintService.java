@@ -48,14 +48,14 @@ public class QualityConstraintService {
 
     @GET
     @Path("/")
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     public List<QualityConstraintDTO> getAllQualityConstraints() {
         return toDTOs(qualityConstraintBean.getAllConstraints());
     }
 
     @GET
     @Path("/{constraint_id}")
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     public Response getQualityConstraint(@PathParam("constraint_id") long constraint_id) {
         QualityConstraint constraint = qualityConstraintBean.find(constraint_id);
         if(constraint != null) {

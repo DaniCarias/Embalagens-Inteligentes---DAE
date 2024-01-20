@@ -38,19 +38,19 @@ public class ProductManufacturerService {
         );
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     private List<ProductManufacturerDTO> toDTOs(List<ProductManufacturer> productManufacturers) {
         return productManufacturers.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @GET
     @Path("/")
     public List<ProductManufacturerDTO> getAllProductManufacturers() {
         return toDTOs(productManufacturerBean.getAll());
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @GET
     @Path("/{username}")
     public Response getProductManufacturerDetails(@PathParam("username") String username) {
@@ -61,7 +61,7 @@ public class ProductManufacturerService {
         return Response.status(Response.Status.BAD_REQUEST).entity("Product Manufacturer do not exist").build();
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @POST
     @Path("/")
     public Response createNewProductManufacturer(ProductManufacturerDTO productManufacturerDTO) throws MyEntityNotFoundException{
@@ -83,7 +83,7 @@ public class ProductManufacturerService {
         return Response.status(Response.Status.CREATED).entity(toDTO(productManufacturer)).build();
     }
 
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @PUT
     @Path("/{username}")
     public Response editProductManufacturer(@PathParam("username") String username,ProductManufacturerDTO productManu){
@@ -96,7 +96,7 @@ public class ProductManufacturerService {
         return Response.status(Response.Status.OK).entity(toDTO(productManufacturer)).entity("Consumer updated").build();
     }
     
-    @RolesAllowed({""})
+    //@RolesAllowed({""})
     @DELETE
     @Path("/{username}")
     public Response deleteProductManufacturer(@PathParam("username") String username) throws MyEntityNotFoundException {
