@@ -25,7 +25,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Path("packages")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
-//@Authenticated
+@Authenticated
 @RolesAllowed({"ProductManufacturer"})
 public class PackageService {
 
