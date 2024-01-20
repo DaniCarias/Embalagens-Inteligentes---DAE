@@ -26,7 +26,7 @@ import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.security.Authent
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"ProductManufacturer"})
+@RolesAllowed({"ProductManufacturer", "EndConsumer"})
 public class PackageService {
 
     @EJB
@@ -214,5 +214,20 @@ public class PackageService {
             return Response.status(Response.Status.NOT_FOUND).build();
 
         return Response.status(Response.Status.OK).entity(sensors_toDTOs(sensors)).build();
+    }
+
+    @RolesAllowed({"LogisticOperator", "EndConsumer"})
+    @GET
+    @Path("/product/{id}")
+    public Response getPackageByProduct(@PathParam("id") long id) throws MyEntityNotFoundException {
+        Product product = productBean.find(id);
+        if(product == null)
+            throw new MyEntityNotFoundException("Product with id: " + id + " not found");
+
+        Package _package = packageBean.getPackageByProduct(id);
+        if(_package == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        return Response.status(Response.Status.OK).entity(toDTO(_package)).build();
     }
 }

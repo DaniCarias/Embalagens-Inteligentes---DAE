@@ -168,6 +168,11 @@ public class PackageBean {
 
         entityManager.lock(pck, LockModeType.OPTIMISTIC);
         pck.setProduct(product);
+    }
 
+    public Package getPackageByProduct(long product_id) {
+        Query query = entityManager.createQuery("SELECT p FROM Package p WHERE p.product.id = :product_id", Package.class);
+        query.setParameter("product_id", product_id);
+        return (Package) query.getSingleResult();
     }
 }

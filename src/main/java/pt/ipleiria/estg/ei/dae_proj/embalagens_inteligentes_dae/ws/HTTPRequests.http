@@ -131,7 +131,7 @@ Content-Type: application/json
 ##### DeleteOrder
 DELETE http://localhost:8080/embalagensinteligentes/api/orders/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbmRfY29uc3VtZXIgMSIsImlhdCI6MTcwNTc1NDg3NiwiZXhwIjoxNzA1NzgzNjc2fQ.uhY0vLODARd8NZvoCuiFDzy-2tqPcX3Yp8gCz3uqmYvuTVX902c4GdcOtlrblxbM
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbmRfY29uc3VtZXIgMSIsImlhdCI6MTcwNTc1OTE3NywiZXhwIjoxNzA1Nzg3OTc3fQ.n8XCdzp1MupyyX86K-kvjudMQXxDURtLujhsvgo2w2qJLB-27aOV-g_muPajbL3a
 
 ##### GetPackages
 GET http://localhost:8080/embalagensinteligentes/api/orders/1/packages
@@ -387,4 +387,11 @@ Accept: application/json
 ####GetOrdersByIdByEndConsumer
 GET http://localhost:8080/embalagensinteligentes/api/orders/2/endconsumer/danicarias_outro
 Accept: application/json
+
+####GetPackageByProduct
+GET http://localhost:8080/embalagensinteligentes/api/packages/product/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbmRfY29uc3VtZXIgMSIsImlhdCI6MTcwNTc1OTE3NywiZXhwIjoxNzA1Nzg3OTc3fQ.n8XCdzp1MupyyX86K-kvjudMQXxDURtLujhsvgo2w2qJLB-27aOV-g_muPajbL3a
+
+
 
