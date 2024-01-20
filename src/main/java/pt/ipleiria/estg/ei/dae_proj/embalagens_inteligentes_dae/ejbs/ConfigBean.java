@@ -48,13 +48,10 @@ public class ConfigBean {
             SensorsDefault sensorDefault4 = sensorDefaultBean.createNewSensorDefault("Pressão");
             SensorsDefault sensorDefault5 = sensorDefaultBean.createNewSensorDefault("Peso");
 
-
-
-
         //Product Manufactor
-            ProductManufacturer productManufacturer1 = productManufacturerBean.create("danicarias", "pass123", "Daniel Carias", "urbanização", 961234567);
-            ProductManufacturer productManufacturer2 = productManufacturerBean.create("pedro_dev", "pass123", "Daniel Carias", "urbanização", 961234567);
-            ProductManufacturer productManufacturer3 = productManufacturerBean.create("manufacturer", "pass123", "Test Manufacturer", "acolá", 961234567);
+            ProductManufacturer productManufacturer1 = productManufacturerBean.create("manufacturer 1", "pass123", "Dev pedro", "urbanização", 961234567);
+            ProductManufacturer productManufacturer2 = productManufacturerBean.create("manufacturer 2", "pass123", "Dev carias", "urbanização", 961234567);
+            ProductManufacturer productManufacturer3 = productManufacturerBean.create("manufacturer 3", "pass123", "Test Manufacturer", "acolá", 961234567);
 
         //Product
             Product prod1 = productBean.create("nome do produto 1", "descricao do produto 1", productManufacturer1);
@@ -80,9 +77,9 @@ public class ConfigBean {
             prod4.setPackage(package4);
 
         //End Consumer
-            EndConsumer endConsumer1 = endConsumerBean.create("danicarias_outro", "pass123", "Daniel Carias", "urbanização", 961234567);
-            EndConsumer endConsumer2 = endConsumerBean.create("danicarias_outro2", "teste2", "Daniel teste2", "test2", 919123111);
-            EndConsumer endConsumer3 = endConsumerBean.create("end_consumer", "pass123", "Test End Consumer", "acolá", 919123111);
+            EndConsumer endConsumer1 = endConsumerBean.create("end_consumer 1", "pass123", "Dev tojal", "urbanização", 961234567);
+            EndConsumer endConsumer2 = endConsumerBean.create("end_consumer 2", "pass123", "Dev fred", "vim de casa", 919123111);
+            EndConsumer endConsumer3 = endConsumerBean.create("end_consumer 3", "pass123", "Test End Consumer", "acolá", 919123111);
 
         //Order
             Order order1 = orderBean.create(endConsumer1);
@@ -94,16 +91,16 @@ public class ConfigBean {
             packageBean.addOrder(package3.getId(), order2.getId());
 
         //Logistic Operator
-            LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);
-            LogisticsOperator logisticsOperator2 = logisticsOperatorBean.create("logistic_operator", "pass123", "Test Logistic Operator", "acolá", 961234567);
+            LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("logistic_operator 1", "pass123", "Dev auxiliar", "urbanização", 961234567);
+            LogisticsOperator logisticsOperator2 = logisticsOperatorBean.create("logistic_operator 2", "pass123", "Test Logistic Operator", "acolá", 961234567);
 
         //Sensor
             // belonging to package1
-            Sensor sensor1 = sensorBean.create("sensor_teste", package1.getId());
-            Sensor sensor2 = sensorBean.create("sensor_teste1", package1.getId());
+            Sensor sensor1 = sensorBean.create("sensor_teste1", package1.getId());
+            Sensor sensor2 = sensorBean.create("sensor_teste2", package1.getId());
 
             // belonging to package2
-            Sensor sensor3 = sensorBean.create("sensor_teste2", package2.getId());
+            Sensor sensor3 = sensorBean.create("sensor_teste3", package2.getId());
 
         //Quality Constraint
             QualityConstraint constraint1 = qualityConstraintBean.create(20.0f,
