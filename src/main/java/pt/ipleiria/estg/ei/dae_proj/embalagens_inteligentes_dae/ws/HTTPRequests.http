@@ -381,10 +381,26 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/sensordefaults
 Accept: application/json
 
+####getSensorByManufacturer
+GET http://localhost:8080/embalagensinteligentes/api/sensors/manufacturer/danicarias
+Accept: application/json
+
 ####getProductsEndConsumer
 GET http://localhost:8080/embalagensinteligentes/api/products/endconsumers
 Accept: application/json
 
-####getSensorByManufacturer
-GET http://localhost:8080/embalagensinteligentes/api/sensors/manufacturer/danicarias
+####getProductsEndConsumerbyID
+GET http://localhost:8080/embalagensinteligentes/api/products/endconsumers?id=0
 Accept: application/json
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,6 +21,9 @@ import java.util.List;
         @NamedQuery(name= "getProductsForEndConsumer", query= "SELECT p FROM Product p "+
                 "INNER JOIN Package pck ON pck.id = p._package.id " +
                 "WHERE p._package.id != null AND pck.order.id = NULL"),
+        @NamedQuery(name= "getProductsForEndConsumerById", query= "SELECT p FROM Product p "+
+                "INNER JOIN Package pck ON pck.id = p._package.id " +
+                "WHERE p._package.id != null AND pck.order.id = NULL AND p.id = :id"),
 })
 @Table(
         name="products",

@@ -198,8 +198,11 @@ public class ProductService {
 
     @GET
     @Path("/endconsumers")
-    public Response getProductsEndConsumer() {
-        return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllProductsEndConsumer())).build();
+    public Response getProductsEndConsumer(@QueryParam("id") long id) {
+        if(id == 0)
+            return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllProductsEndConsumer())).build();
+
+        return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllProductsEndConsumerById(id))).build();
     }
 
 
