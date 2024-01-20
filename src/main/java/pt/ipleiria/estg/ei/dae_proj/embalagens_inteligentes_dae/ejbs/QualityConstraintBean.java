@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs;
 
+import jakarta.ejb.Lock;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
@@ -29,7 +30,7 @@ public class QualityConstraintBean {
 
         Product p = entityManager.find(Product.class, product_id);
         if(p == null)
-            throw new MyEntityNotFoundException("Specified product with ID " + product_id + " does not exist!");
+            throw new MyEntityNotFoundException("PRODUCT_NOT_FOUND");
 
         QualityConstraint constraint = new QualityConstraint(value, type, p);
 
@@ -84,6 +85,8 @@ public class QualityConstraintBean {
             c.setValue(value);
             c.setType(type);
             c.setSensor(s);
+
+            entityManager.lock(c, LockModeType.OPTIMISTIC);
             entityManager.merge(c);
         }
     }
@@ -107,12 +110,28 @@ public class QualityConstraintBean {
         entityManager.merge(c);
     }
 
+    public void removeSensor(long constraint_id) throws MyEntityNotFoundException {
+
+        // get constraint by ID
+        QualityConstraint c = entityManager.find(QualityConstraint.class, constraint_id);
+        if(c == null)
+            throw new MyEntityNotFoundException("CONSTRAINT_NOT_FOUND");
+
+        // remove the sensor
+        c.setSensor(null);
+
+        // persist the change
+        entityManager.lock(c, LockModeType.OPTIMISTIC);
+        entityManager.merge(c);
+    }
+
     public void delete(long id) throws MyEntityNotFoundException {
 
         QualityConstraint c = entityManager.find(QualityConstraint.class, id);
         if(c == null)
             throw new MyEntityNotFoundException("Quality constraint does not exist!");
 
+        entityManager.lock(c, LockModeType.OPTIMISTIC);
         entityManager.remove(c);
     }
 }
