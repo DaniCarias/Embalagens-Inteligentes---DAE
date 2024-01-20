@@ -137,7 +137,7 @@ public class QualityConstraintService {
         }
     }
 
-    @PATCH
+    @PUT
     @Path("/{quality_constraint_id}")
     @RolesAllowed({"ProductManufacturer"})
     public Response updateQualityConstraint(@PathParam("quality_constraint_id") long quality_constraint_id,
