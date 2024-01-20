@@ -384,5 +384,8 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/products/order/1
 Accept: application/json
 
-
+/{id}/endconsumer/{username}
+####GetOrdersByIdByEndConsumer
+GET http://localhost:8080/embalagensinteligentes/api/orders/2/endconsumer/danicarias_outro
+Accept: application/json
 

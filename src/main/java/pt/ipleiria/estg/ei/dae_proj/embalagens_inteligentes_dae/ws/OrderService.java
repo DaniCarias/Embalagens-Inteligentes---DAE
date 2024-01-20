@@ -154,4 +154,20 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity(packages).build();
     }
 
+    @RolesAllowed({"EndConsumer"})
+    @GET
+    @Path("/{id}/endconsumer/{username}")
+    public Response getOrderByIdByEndConsumer(@PathParam("id") long id, @PathParam("username") String username) throws MyEntityNotFoundException {
+        Order order = orderBean.find(id);
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + id + " not found");
+
+        EndConsumer endConsumer = endConsumerBean.find(username);
+        if(endConsumer == null)
+            throw new MyEntityNotFoundException("End Consumer with username: " + username + " not found");
+
+        List<Order> orders = orderBean.getOrderByIdByEndConsumer(username, id);
+
+        return Response.status(Response.Status.OK).entity(toDTOs(orders)).build();
+    }
 }

@@ -57,18 +57,27 @@ public class ConfigBean {
             ProductManufacturer productManufacturer3 = productManufacturerBean.create("manufacturer", "pass123", "Test Manufacturer", "acolá", 961234567);
 
         //Product
-            Product prod1 = productBean.create("nome do produto1", "descricao do produto1", productManufacturer1);
-            Product prod2 = productBean.create("nome do produto2", "descricao do produto2", productManufacturer1);
-            Product prod3 = productBean.create("nome do produto123123123", "descricao do produto3", productManufacturer2);
-            Product prod4 = productBean.create("produto diferente", "descricao do produto4", productManufacturer1);
+            Product prod1 = productBean.create("nome do produto 1", "descricao do produto 1", productManufacturer1);
+            Product prod2 = productBean.create("nome do produto 2", "descricao do produto 2", productManufacturer1);
+            Product prod3 = productBean.create("nome do produto 3", "descricao do produto 3", productManufacturer2);
+            Product prod4 = productBean.create("nome do produto 4", "descricao do produto 4", productManufacturer1);
+            Product prod5 = productBean.create("nome do produto 5", "descricao do produto 5", productManufacturer2);
 
         //Package
             Package package1 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira");
             Package package2 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Ferro");
+            Package package3 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Plastico");
+            Package package4 = packageBean.create(Package.PackageType.PRIMARIA, Date.from(java.time.Instant.now()), "Madeira");
+
             package1.setProduct(prod1);
             package2.setProduct(prod2);
+            package3.setProduct(prod3);
+            package4.setProduct(prod4);
+
             prod1.setPackage(package1);
             prod2.setPackage(package2);
+            prod3.setPackage(package3);
+            prod4.setPackage(package4);
 
         //End Consumer
             EndConsumer endConsumer1 = endConsumerBean.create("danicarias_outro", "pass123", "Daniel Carias", "urbanização", 961234567);
@@ -77,9 +86,12 @@ public class ConfigBean {
 
         //Order
             Order order1 = orderBean.create(endConsumer1);
-            Order order2 = orderBean.create(endConsumer2);
+            Order order2 = orderBean.create(endConsumer1);
+            Order order3 = orderBean.create(endConsumer2);
 
             packageBean.addOrder(package1.getId(), order1.getId());
+            packageBean.addOrder(package2.getId(), order2.getId());
+            packageBean.addOrder(package3.getId(), order2.getId());
 
         //Logistic Operator
             LogisticsOperator logisticsOperator1 = logisticsOperatorBean.create("danicarias_teste", "pass123", "Daniel Carias", "urbanização", 961234567);
