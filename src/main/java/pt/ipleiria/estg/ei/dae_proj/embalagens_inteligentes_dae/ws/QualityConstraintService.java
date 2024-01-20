@@ -124,6 +124,19 @@ public class QualityConstraintService {
         }
     }
 
+    @DELETE
+    @Path("/{quality_constraint_id}/sensor")
+    @RolesAllowed({"LogisticsOperator"})
+    public Response removeSensor(@PathParam("quality_constraint_id") long quality_constraint_id) {
+
+        try {
+            qualityConstraintBean.removeSensor(quality_constraint_id);
+            return Response.status(Response.Status.OK).entity("SENSOR_REMOVED").build();
+        } catch (MyEntityNotFoundException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
+
     @PATCH
     @Path("/{quality_constraint_id}")
     @RolesAllowed({"ProductManufacturer"})
