@@ -175,17 +175,6 @@ Content-Type: application/json
 DELETE http://localhost:8080/embalagensinteligentes/api/sensors/1
 Accept: application/json
 
-//--------------------LOGIN
-##### Login
-POST http://localhost:8080/embalagensinteligentes/api/auth/login
-Accept: application/json
-Content-Type: application/json
-
-{
-    "username": "manufacturer 1",
-    "password": "pass123"
-}
-
 ##### GetEndConsumers
 GET http://localhost:8080/embalagensinteligentes/api/endconsumers
 Accept: application/json
@@ -352,19 +341,6 @@ Content-Type: application/json
     "sensor_id": 1
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ####getSensorReadingsForProduct
 GET http://localhost:8080/embalagensinteligentes/api/sensor_readings/product/2
 Accept: application/json
@@ -395,6 +371,30 @@ Accept: application/json
 
 
 
+
+
+
+
+
+
+//--------------------LOGIN
+##### Login
+POST http://localhost:8080/embalagensinteligentes/api/auth/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "logistic_operator 1",
+  "password": "pass123"
+}
+
+
+
+
+
+
+
+
 ######################################## NOVASSSSSSS ROTAASSSSSSS ##########################################
 
 
@@ -412,5 +412,8 @@ GET http://localhost:8080/embalagensinteligentes/api/packages/product/1
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbmRfY29uc3VtZXIgMSIsImlhdCI6MTcwNTc1OTE3NywiZXhwIjoxNzA1Nzg3OTc3fQ.n8XCdzp1MupyyX86K-kvjudMQXxDURtLujhsvgo2w2qJLB-27aOV-g_muPajbL3a
 
-
+####GetPackageByOrder
+GET http://localhost:8080/embalagensinteligentes/api/packages/order/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJsb2dpc3RpY19vcGVyYXRvciAxIiwiaWF0IjoxNzA1NzcwMDM3LCJleHAiOjE3MDU3OTg4MzZ9.6VYzB2mGHXDPXQANtKC8Tas1SYpItMGiRnOXJ04N5ZzV42uV8yEcELcSY4dPOPFw
 

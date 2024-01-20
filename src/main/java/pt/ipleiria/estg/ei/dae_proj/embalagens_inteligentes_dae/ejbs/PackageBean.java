@@ -187,4 +187,15 @@ public class PackageBean {
         query.setParameter("username", username);
         return query.getResultList();
     }
+
+    public List<Package> getPackagesByOrder(long orderId) throws MyEntityNotFoundException {
+        Order order = entityManager.find(Order.class, orderId);
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + orderId + " not found");
+
+        Query query = entityManager.createQuery("SELECT p FROM Package p WHERE p.order.id = :orderId", Package.class);
+        query.setParameter("orderId", orderId);
+        return query.getResultList();
+
+    }
 }

@@ -78,14 +78,14 @@ public class PackageService {
         return sensors.stream().map(this::sensor_toDTO).collect(Collectors.toList());
     }
 
-    @RolesAllowed({"LogisticOperator","ProductManufacturer"})
+    @RolesAllowed({"LogisticsOperator","ProductManufacturer"})
     @GET
     @Path("/")
     public Response getAllPackage() {
         return Response.status(Response.Status.OK).entity(toDTOs(packageBean.getAll())).build();
     }
 
-    @RolesAllowed({"LogisticOperator","ProductManufacturer"})
+    @RolesAllowed({"LogisticsOperator","ProductManufacturer"})
     @GET
     @Path("/{id}")
     public Response getPackageDetails(@PathParam("id") long id) {
@@ -205,7 +205,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity(toDTOs(packages)).build();
     }
 
-    @RolesAllowed({"LogisticOperator","ProductManufacturer"})
+    @RolesAllowed({"LogisticsOperator","ProductManufacturer"})
     @GET
     @Path("/{id}/sensors")
     public Response getSensorsByPackage(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -220,7 +220,7 @@ public class PackageService {
         return Response.status(Response.Status.OK).entity(sensors_toDTOs(sensors)).build();
     }
 
-    @RolesAllowed({"LogisticOperator", "EndConsumer","ProductManufacturer"})
+    @RolesAllowed({"LogisticsOperator", "EndConsumer","ProductManufacturer"})
     @GET
     @Path("/product/{id}")
     public Response getPackageByProduct(@PathParam("id") long id) throws MyEntityNotFoundException {
@@ -234,4 +234,19 @@ public class PackageService {
 
         return Response.status(Response.Status.OK).entity(toDTO(_package)).build();
     }
+
+    @RolesAllowed({"LogisticsOperator"})
+    @GET
+    @Path("/order/{id}")
+    public Response getPackageByOrder(@PathParam("id") long order_id) throws MyEntityNotFoundException {
+        Order order = orderBean.find(order_id);
+        if(order == null)
+            throw new MyEntityNotFoundException("Order with id: " + order_id + " not found");
+
+        List<Package> _package = packageBean.getPackagesByOrder(order_id);
+
+        return Response.status(Response.Status.OK).entity(toDTOs(_package)).build();
+    }
+
+
 }
