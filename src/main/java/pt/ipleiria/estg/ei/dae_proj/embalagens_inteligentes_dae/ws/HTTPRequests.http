@@ -146,6 +146,7 @@ Accept: application/json
 ##### AllSensors
 GET http://localhost:8080/embalagensinteligentes/api/sensors
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJsb2dpc3RpY19vcGVyYXRvciAxIiwiaWF0IjoxNzA1NzcyNDI5LCJleHAiOjE3MDU4MDEyMjl9.Xoq_UP-TnaC0Do8DLTrz-BqCTvTDnJ9gsFJIj9pk0ENv35LZtFx3cqyd0JNWEkoV
 
 ##### GetSensor
 GET http://localhost:8080/embalagensinteligentes/api/sensors/1
@@ -402,7 +403,6 @@ Content-Type: application/json
 GET http://localhost:8080/embalagensinteligentes/api/products/order/1
 Accept: application/json
 
-/{id}/endconsumer/{username}
 ####GetOrdersByIdByEndConsumer
 GET http://localhost:8080/embalagensinteligentes/api/orders/2/endconsumer/danicarias_outro
 Accept: application/json
@@ -413,7 +413,7 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbmRfY29uc3VtZXIgMSIsImlhdCI6MTcwNTc1OTE3NywiZXhwIjoxNzA1Nzg3OTc3fQ.n8XCdzp1MupyyX86K-kvjudMQXxDURtLujhsvgo2w2qJLB-27aOV-g_muPajbL3a
 
 ####GetPackageByOrder
-GET http://localhost:8080/embalagensinteligentes/api/packages/order/1
+GET http://localhost:8080/embalagensinteligentes/api/packages/order/2
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJsb2dpc3RpY19vcGVyYXRvciAxIiwiaWF0IjoxNzA1NzcwMDM3LCJleHAiOjE3MDU3OTg4MzZ9.6VYzB2mGHXDPXQANtKC8Tas1SYpItMGiRnOXJ04N5ZzV42uV8yEcELcSY4dPOPFw
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJsb2dpc3RpY19vcGVyYXRvciAxIiwiaWF0IjoxNzA1NzczMDcwLCJleHAiOjE3MDU4MDE4NzB9._lPH6N1QGsn74iVN6W37BPotilKS5ryQjDVkFvy0WNbEgZVm03DBxIeudANBg5gc
 

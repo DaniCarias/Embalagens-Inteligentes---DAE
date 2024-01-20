@@ -54,8 +54,8 @@ public class PackageService {
                 _package.getPackageType(),
                 _package.getLastTimeOpened(),
                 _package.getMaterial(),
-                order_id,
                 product_id,
+                order_id,
                 _package.getManufacturer().getUsername()
         );
 

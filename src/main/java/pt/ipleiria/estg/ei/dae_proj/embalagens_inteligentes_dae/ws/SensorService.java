@@ -60,7 +60,7 @@ public class SensorService {
     }
 
 
-    @RolesAllowed({"ProductManufacturer", "LogisticsOperator"})
+    @RolesAllowed({"ProductManufacturer", "LogisticsOperator", "EndConsumer"})
     @GET
     @Path("/{id}")
     public Response getSensorDetails(@PathParam("id") long id) {
