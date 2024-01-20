@@ -131,6 +131,7 @@ Content-Type: application/json
 ##### DeleteOrder
 DELETE http://localhost:8080/embalagensinteligentes/api/orders/1
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJlbmRfY29uc3VtZXIgMSIsImlhdCI6MTcwNTc1NDg3NiwiZXhwIjoxNzA1NzgzNjc2fQ.uhY0vLODARd8NZvoCuiFDzy-2tqPcX3Yp8gCz3uqmYvuTVX902c4GdcOtlrblxbM
 
 ##### GetPackages
 GET http://localhost:8080/embalagensinteligentes/api/orders/1/packages
@@ -177,7 +178,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "username": "danicarias",
+    "username": "end_consumer 1",
     "password": "pass123"
 }
 

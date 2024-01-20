@@ -8,6 +8,7 @@ import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.hibernate.Hibernate;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.dtos.OrderDTO;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.EndConsumerBean;
 import pt.ipleiria.estg.ei.dae_proj.embalagens_inteligentes_dae.ejbs.OrderBean;
@@ -129,15 +130,17 @@ public class OrderService {
     @DELETE
     @Path("/{id}")
     public Response deleteOrder(@PathParam("id") long id) throws MyEntityNotFoundException {
-        Order order = orderBean.find(id);
+        Order order = orderBean.getOrderPackages(id);
         if(order == null)
             return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
+
+        packageBean.removeAllPackages(order);
 
         boolean isDeleted = orderBean.delete(id);
         if(!isDeleted)
             return Response.status(Response.Status.BAD_REQUEST).entity("Not possible to delete").build();
 
-        return Response.status(Response.Status.OK).entity("Package deleted").build();
+        return Response.status(Response.Status.OK).entity("Order deleted").build();
     }
 
     @RolesAllowed({"EndConsumer"})

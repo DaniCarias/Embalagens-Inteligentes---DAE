@@ -102,6 +102,14 @@ public class PackageBean {
     }
 
 
+    public void removeAllPackages(Order order) throws MyEntityNotFoundException {
+
+        for (var pck : order.getPackage()){
+            removeOrder(pck.getId());
+        }
+
+    }
+
     public void removeOrder(long id) throws MyEntityNotFoundException {
 
         Package _package = entityManager.find(Package.class, id);

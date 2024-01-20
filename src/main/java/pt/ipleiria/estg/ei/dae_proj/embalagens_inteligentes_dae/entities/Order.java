@@ -26,7 +26,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "order")
     private List<Package> packages;
     @ManyToOne
     private EndConsumer endConsumer;
