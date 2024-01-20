@@ -44,7 +44,7 @@ public class SensorService {
         return sensors.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    @RolesAllowed({"ProductManufacturer", "LogisticOperator"})
+    @RolesAllowed({"ProductManufacturer", "LogisticsOperator"})
     @GET
     @Path("/")
     public List<SensorDTO> getAllSensors() {
@@ -52,7 +52,7 @@ public class SensorService {
     }
 
 
-    @RolesAllowed({"ProductManufacturer", "LogisticOperator"})
+    @RolesAllowed({"ProductManufacturer", "LogisticsOperator"})
     @GET
     @Path("/manufacturer/{username}")
     public List<SensorDTO> getSensorsByManufactor(@PathParam("username") String username) {
@@ -60,7 +60,7 @@ public class SensorService {
     }
 
 
-    @RolesAllowed({"ProductManufacturer", "LogisticOperator"})
+    @RolesAllowed({"ProductManufacturer", "LogisticsOperator"})
     @GET
     @Path("/{id}")
     public Response getSensorDetails(@PathParam("id") long id) {

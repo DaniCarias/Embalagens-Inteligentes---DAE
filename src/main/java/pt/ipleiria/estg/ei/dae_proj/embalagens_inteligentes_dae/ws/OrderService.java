@@ -58,7 +58,7 @@ public class OrderService {
         return packages.stream().map(this::package_toDTO).collect(Collectors.toList());
     }
 
-    @RolesAllowed({"LogisticOperator"})
+    @RolesAllowed({"LogisticsOperator"})
     @GET
     @Path("/")
     public Response getAllOrders() {
@@ -78,7 +78,7 @@ public class OrderService {
         return Response.status(Response.Status.OK).entity(toDTOs(orders)).build();
     }
 
-    @RolesAllowed({"LogisticOperator", "EndConsumer"})
+    @RolesAllowed({"LogisticsOperator", "EndConsumer"})
     @GET
     @Path("/{id}")
     public Response getOrderDetails(@PathParam("id") long id) {
@@ -110,7 +110,7 @@ public class OrderService {
         }
     }
 
-    @RolesAllowed({"LogisticOperator"})
+    @RolesAllowed({"LogisticsOperator"})
     @PUT
     @Path("/{id}")
     public Response editOrder(@PathParam("id") long id, OrderDTO orderDTO) throws MyEntityNotFoundException {
