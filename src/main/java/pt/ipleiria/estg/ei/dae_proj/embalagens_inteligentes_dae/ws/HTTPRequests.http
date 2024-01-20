@@ -95,7 +95,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "id": 2
+    "id": 1
 }
 
 ##### RemoveOrder
@@ -172,20 +172,6 @@ Content-Type: application/json
 DELETE http://localhost:8080/embalagensinteligentes/api/sensors/1
 Accept: application/json
 
-
-
-
-
-
-
-####################################### NOVAS ROTAS #######################################
-
-
-
-
-
-
-
 //--------------------LOGIN
 ##### Login
 POST http://localhost:8080/embalagensinteligentes/api/auth/login
@@ -196,9 +182,6 @@ Content-Type: application/json
     "username": "danicarias",
     "password": "pass123"
 }
-
-
-
 
 ##### GetEndConsumers
 GET http://localhost:8080/embalagensinteligentes/api/endconsumers
@@ -346,10 +329,6 @@ Accept: application/json
 GET http://localhost:8080/embalagensinteligentes/api/packages/1/sensors
 Accept: application/json
 
-
-
-
-######################################## NOVASSSSSSS ROTAASSSSSSS ##########################################
 ####GetAllSensorReadings
 GET http://localhost:8080/embalagensinteligentes/api/sensor_readings
 Accept: application/json
@@ -398,9 +377,12 @@ Accept: application/json
 
 
 
+######################################## NOVASSSSSSS ROTAASSSSSSS ##########################################
 
 
-
+####getProductsByOrder
+GET http://localhost:8080/embalagensinteligentes/api/products/order/1
+Accept: application/json
 
 
 

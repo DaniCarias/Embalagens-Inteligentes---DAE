@@ -205,6 +205,10 @@ public class ProductService {
         return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllProductsEndConsumerById(id))).build();
     }
 
-
+    @GET
+    @Path("/order/{id}")
+    public Response getProductsByOrder(@PathParam("id") long id) {
+        return Response.status(Response.Status.OK).entity(toDTOs(productBean.getAllProductsByOrder(id))).build();
+    }
 
 }
