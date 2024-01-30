@@ -1,0 +1,40 @@
+#####GetEndConsumers
+GET http://localhost:8080/embalagensinteligentes/api/endconsumers
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####GetEndConsumer
+GET http://localhost:8080/embalagensinteligentes/api/endconsumers/end_consumer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+#####CreateEndConsumer
+POST http://localhost:8080/embalagensinteligentes/api/endconsumers
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "username": "novo_endconsumer",
+  "name": "Novo Cliente",
+  "password": "pass123",
+  "address": "Rua 1",
+  "phoneNumber": 123456789
+}
+
+#####EditEndConsumer
+PUT http://localhost:8080/embalagensinteligentes/api/endconsumers/end_consumer 1
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
+
+{
+  "name": "Cliente Senior",
+  "address": "Rua 2",
+  "phoneNumber": 111111111
+}
+
+#####DeleteEndConsumer
+DELETE http://localhost:8080/embalagensinteligentes/api/endconsumers/end_consumer 1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJkYW5pY2FyaWFzIiwiaWF0IjoxNzA1NjIxNzk1LCJleHAiOjE3MDU2NTA1OTV9.54NXIEt5e9_BWfkLNgRYFM_Lxzbatw2uETjgWD7U5rjTs78Er5s96-t34p_Md82b
